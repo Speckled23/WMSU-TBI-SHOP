@@ -10,7 +10,7 @@ function renderSales(){
             'Jannuary',
             'February',
             'April',
-            'May'
+            'june'
           ],
           datasets: [{
             label: 'Overall Revenue',
