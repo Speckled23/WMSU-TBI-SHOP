@@ -1,4 +1,6 @@
 
+
+
 function renderSales(){
 
     const ctx = document.getElementById('barchart');

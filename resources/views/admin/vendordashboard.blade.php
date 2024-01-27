@@ -1,4 +1,4 @@
-@extends('admin.layout.layout')
+@extends('admin.layout.vendorlayout')
 @section('content')
 <div class="main-panel">
     <div class="content-wrapper">
@@ -6,7 +6,7 @@
             <div class="col-md-12 grid-margin">
                 <div class="row">
                     <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                        <h3 class="font-weight-bold">Welcome Vendor{{ Auth::guard('admin')->user()->name }}</h3>
+                        <h3 class="font-weight-bold">Welcome {{ Auth::guard('admin')->user()->name }}</h3>
                     </div>
                 </div>
             </div>
@@ -84,10 +84,70 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
-                            <p class="card-title">Overall Revenue</p>
+                            <p class="card-title">Sales</p>
                         </div>
                             <div id="sales-legend" class="chartjs-legend mt-4 mb-2"></div>
                         <canvas id="vendorsales"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <p class="card-title">Average Order Value</p>
+                        </div>
+                            <div id="sales-legend" class="chartjs-legend mt-4 mb-2"></div>
+                        <canvas id="vendorave"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <p class="card-title">Top Selling Products</p>
+                        </div>
+                            <div id="sales-legend" class="chartjs-legend mt-4 mb-2"></div>
+                        <canvas id="topselling"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <p class="card-title">Inventory Turn Over</p>
+                        </div>
+                            <div id="sales-legend" class="chartjs-legend mt-4 mb-2"></div>
+                        <canvas id="inventory"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <p class="card-title">Inventory Turn Over</p>
+                        </div>
+                            <div id="sales-legend" class="chartjs-legend mt-4 mb-2"></div>
+                        <canvas id="cancelation"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <p class="card-title">Sales Growth Over Time</p>
+                        </div>
+                            <div id="sales-legend" class="chartjs-legend mt-4 mb-2"></div>
+                        <canvas id="salesgrowth"></canvas>
                     </div>
                 </div>
             </div>

@@ -29,7 +29,7 @@ class AdminController extends Controller
 {
     //K
     public function vendordashboard(){
-        Session::put('page','dashboard');
+        Session::put('page','vendordashboard');
         $sectionsCount = Section::count();
         $categoriesCount = Category::count();
         $productsCount = Product::count();
