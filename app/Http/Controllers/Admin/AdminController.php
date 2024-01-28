@@ -25,10 +25,12 @@ use Carbon\Carbon;//K
 use Image;
 use Session;
 
+
 class AdminController extends Controller
 {
     //K
-    public function vendordashboard(){
+    public function vendordashboard(Request $request){
+        $data = $request->session()->all();
         Session::put('page','vendordashboard');
         $sectionsCount = Section::count();
         $categoriesCount = Category::count();
@@ -40,8 +42,396 @@ class AdminController extends Controller
         $couponsCount = Coupon::count();
         $brandsCount = Brand::count();
         $usersCount = User::count();
-        return view('admin.vendordashboard')->with(compact('sectionsCount','categoriesCount','productsCount','ordersCount','salesTotal','couponsCount','brandsCount','usersCount'));
+
+        $years = DB::table('orders_products')
+            ->select(   
+                DB::raw('YEAR(created_at) as year'),
+               
+            )
+            ->where('vendor_id','=',$data['id'])
+            ->groupby(DB::raw('YEAR(created_at)'))
+            ->orderBy(DB::raw('YEAR(created_at)'),'desc')
+            ->get()
+            ->toArray();
+        return view('admin.vendordashboard')->with(compact('years','sectionsCount','categoriesCount','productsCount','ordersCount','salesTotal','couponsCount','brandsCount','usersCount'));
     }
+
+    public function adminoverallRevenue(){
+        return(DB::table('orders_products')
+            ->select(   
+                DB::raw('YEAR(created_at) as year'),
+                DB::raw('MONTH(created_at) as month'),
+                DB::raw('sum(product_qty*product_price) as total_per_month'),
+            )
+            ->groupby(DB::raw('YEAR(created_at), MONTH(created_at)'))
+            ->get()
+            ->toArray()
+
+            );
+        return 'adminoverallRevenue';
+    }
+
+    public function adminoverallRevenueYear($year){
+        return(DB::table('orders_products')
+            ->select(   
+                DB::raw('YEAR(created_at) as year'),
+                DB::raw('MONTH(created_at) as month'),
+                DB::raw('sum(product_qty*product_price) as total_per_month'),
+            )
+            ->where( DB::raw('YEAR(created_at)'),'=',$year)
+            ->groupby(DB::raw('YEAR(created_at), MONTH(created_at)'))
+            ->get()
+            ->toArray()
+            );
+        return 'adminoverallRevenue';
+    }
+    public function admintopProducts(){
+        return (DB::table('orders_products as od')
+            ->select(
+                'p.id',
+                DB::raw('p.product_name,count(*) as total_product_sales')
+            )
+            ->join('products as p','p.id','od.product_id')
+            ->groupby('p.id')
+            ->orderBy('total_product_sales','desc')
+            ->limit(10)
+            ->get()
+            ->toArray()
+            );
+        return 'admintopProducts';
+    }
+
+    public function admintopProductsYear($year){
+        return (DB::table('orders_products as od')
+            ->select(
+                'p.id',
+                DB::raw('p.product_name,count(*) as total_product_sales')
+            )
+            ->join('products as p','p.id','od.product_id')
+            ->where( DB::raw('YEAR(od.created_at)'),'=',$year)
+            ->groupby('p.id')
+            ->orderBy('total_product_sales','desc')
+            ->limit(10)
+            ->get()
+            ->toArray()
+            );
+        return 'admintopProducts';
+    }
+    public function admintopSellers(){
+        return (DB::table('orders_products as od')
+            ->select(
+                'vendor_id',
+                'v.name',
+                'v.email',
+                DB::raw('count(*) as total_orders')
+            )
+            ->join('vendors as v','v.id','od.vendor_id')
+            ->groupby('vendor_id')
+            ->orderBy(DB::raw('count(*)'),'desc')
+            ->limit(10)
+            ->get()
+            ->toArray()
+            );
+        return 'admintopSellers';
+    }
+    public function admintopSellersYear($year){
+        return (DB::table('orders_products as od')
+            ->select(
+                'vendor_id',
+                'v.name',
+                'v.email',
+                DB::raw('count(*) as total_orders'),
+                DB::raw('sum(product_qty*product_price) as total_revenue')
+            )
+            ->join('vendors as v','v.id','od.vendor_id')
+            ->where( DB::raw('YEAR(od.created_at)'),'=',$year)
+            ->groupby('vendor_id')
+            ->orderBy(DB::raw('count(*)'),'desc')
+            ->limit(10)
+            ->get()
+            ->toArray()
+            );
+        return 'admintopSellers';
+    }
+    public function adminretension(){
+        return 'adminretension';
+    }
+    public function admintopCategory(){
+        return (DB::table('orders_products as od')
+        ->select(
+            'c.id',
+            'c.category_name',
+            DB::raw('count(*) as total_category_count') ,
+            DB::raw('sum(product_qty) as total_product_qty')
+        )
+        ->join('products as p','p.id','od.product_id')
+        ->join('categories as c','c.id','p.category_id')
+        ->groupby('c.id')
+        ->get()
+        ->toArray()
+        );
+        
+        return 'admintopCategory';
+    }
+    public function admintopCategoryYear($year){
+        return (DB::table('orders_products as od')
+        ->select(
+            'c.id',
+            'c.category_name',
+            DB::raw('count(*) as total_category_count') ,
+            DB::raw('sum(product_qty) as total_product_qty')
+        )
+        ->join('products as p','p.id','od.product_id')
+        ->join('categories as c','c.id','p.category_id')
+        ->where( DB::raw('YEAR(od.created_at)'),'=',$year)
+        ->groupby('c.id')
+        ->get()
+        ->toArray()
+        );
+        
+        return 'admintopCategory';
+    }
+    public function adminfulfilledOrders(){
+        return 'adminfulfilledOrders';
+    }
+    public function adminorderStatus(){
+        return (DB::table('orders_products as od')
+        ->select(
+            'item_status',
+            DB::raw('count(*) as item_status_count')
+        )
+        ->join('vendors as v','v.id','od.vendor_id')
+        ->groupby('item_status')
+        ->get()
+        ->toArray()
+        );
+      
+
+        return 'adminorderStatus';
+    }
+    public function adminorderStatusYear($year){
+        return (DB::table('orders_products as od')
+        ->select(
+            'item_status',
+            DB::raw('count(*) as item_status_count')
+        )
+        ->join('vendors as v','v.id','od.vendor_id')
+        ->where( DB::raw('YEAR(od.created_at)'),'=',$year)
+        ->groupby('item_status')
+        ->get()
+        ->toArray()
+        );
+      
+
+        return 'adminorderStatus';
+    }
+
+
+
+    public function vendorsales(Request $request){
+        $data = $request->session()->all();
+        return (DB::table('orders_products as od')
+        ->select(
+            DB::raw('YEAR(created_at)'),
+            DB::raw('MONTH(created_at)'),
+            DB::raw('MONTH(created_at) as month_num'),
+            DB::raw('sum(product_qty*product_price) as total_per_month') 
+        )
+        ->where('vendor_id','=',$data['id'])
+        ->groupby(DB::raw('YEAR(created_at), MONTH(created_at)'))
+        ->get()
+        ->toArray()
+        );
+          return 'vendorsales';
+      }
+      public function vendoraverageOrderValue(Request $request){
+        $data = $request->session()->all();
+        return (DB::table('orders_products as od')
+        ->select(
+            DB::raw('YEAR(created_at) as YEAR'),
+            DB::raw('MONTH(created_at) as MONTH'),
+            DB::raw('MONTH(created_at) as month_num'),
+            DB::raw('sum(product_qty*product_price) as total_per_month_value'),
+            DB::raw('count(*) as total_order_per_month'),
+            DB::raw('sum(product_qty*product_price)/count(*) as average_order_value_per_month')
+        )
+        ->where('vendor_id','=',$data['id'])
+        ->groupby(DB::raw('YEAR(created_at), MONTH(created_at)'))
+        ->get()
+        ->toArray()
+        );
+          return 'vendoraverageOrderValue';
+      }
+      public function vendortopSellingProducts(Request $request){
+        $data = $request->session()->all();
+        return (DB::table('orders_products as od')
+        ->select(
+            'product_id',
+            'product_name',
+            DB::raw('sum(product_qty) as total_quantity_orders'),
+            DB::raw('count(*) as total_orders')
+        )
+        ->where('vendor_id','=',$data['id'])
+        ->groupby('product_id')
+        ->orderBy('total_quantity_orders','desc')
+        ->get()
+        ->toArray()
+    );
+          return 'vendortopSellingProducts';
+      }
+      public function vendorinventoryTurnOver(Request $request){
+        $data = $request->session()->all();
+      
+          return 'vendorinventoryTurnOver';
+      }
+      public function vendororderStatus(Request $request){
+        $data = $request->session()->all();
+        return (DB::table('orders_products as od')
+        ->select(
+            'item_status',
+            DB::raw('count(*) as item_status_count')
+        )
+        ->join('vendors as v','v.id','od.vendor_id')
+        ->where('vendor_id','=',$data['id'])
+        ->groupby('item_status')
+        ->get()
+        ->toArray()
+        );
+          return 'vendororderStatus';
+      }
+      public function vendorsalesGrowthOverTime(Request $request){
+        $data = $request->session()->all();
+
+        return (DB::table('orders_products as od')
+        ->select(
+            DB::raw('YEAR(created_at)'),
+            DB::raw('MONTH(created_at)'),
+            DB::raw('sum(product_qty*product_price) as total_per_month')
+        )
+        ->where('vendor_id','=',$data['id'])
+        ->groupby(DB::raw('YEAR(created_at), MONTH(created_at)'))
+        ->get()
+        ->toArray()
+        );
+          return 'vendorsalesGrowthOverTime';
+      }
+
+
+    public function vendorsalesYear(Request $request,$year){
+        $data = $request->session()->all();
+        return (DB::table('orders_products as od')
+        ->select(
+            DB::raw('YEAR(created_at) as year'),
+            DB::raw('MONTHNAME(created_at) as month'),
+            DB::raw('MONTH(created_at) as month_num'),
+            DB::raw('sum(product_qty*product_price) as total_per_month') 
+        )
+        ->where('vendor_id','=',$data['id'])
+        ->where(DB::raw('YEAR(created_at)'),'=',$year)
+        ->groupby(DB::raw('YEAR(created_at), MONTH(created_at)'))
+        ->get()
+        ->toArray()
+        );
+        return 'vendorsales';
+    }
+    public function vendoraverageOrderValueYear(Request $request,$year){
+        $data = $request->session()->all();
+        return (DB::table('orders_products as od')
+        ->select(
+            DB::raw('YEAR(created_at) as year'),
+            DB::raw('MONTHNAME(created_at) as month'),
+            DB::raw('MONTH(created_at) as month_num'),
+            DB::raw('sum(product_qty*product_price) as total_per_month_value'),
+            DB::raw('count(*) as total_order_per_month'),
+            DB::raw('sum(product_qty*product_price)/count(*) as average_order_value_per_month')
+        )
+        ->where('vendor_id','=',$data['id'])
+        ->where(DB::raw('YEAR(created_at)'),'=',$year)
+        ->groupby(DB::raw('YEAR(created_at), MONTH(created_at)'))
+        ->get()
+        ->toArray()
+        );
+        return 'vendoraverageOrderValue';
+    }
+    public function vendortopSellingProductsYear(Request $request,$year){
+        $data = $request->session()->all();
+
+        return (DB::table('orders_products as od')
+        ->select(
+            'product_id',
+            'product_name',
+            DB::raw('sum(product_qty) as total_quantity_orders'),
+            DB::raw('count(*) as total_orders')
+        )
+        ->where('vendor_id','=',$data['id'])
+        ->where(DB::raw('YEAR(created_at)'),'=',$year)
+        ->groupby('product_name')
+        ->orderBy('total_quantity_orders','desc')
+        ->get()
+        ->toArray()
+        );
+        return 'vendortopSellingProducts';
+    }
+    public function vendorinventoryTurnOverYear(Request $request,$year){
+        $data = $request->session()->all();
+        return 'vendorinventoryTurnOver';
+    }
+    public function vendororderStatusYear(Request $request,$year){
+        $data = $request->session()->all();
+
+        return (DB::table('orders_products as od')
+        ->select(
+            'item_status',
+            DB::raw('count(*) as item_status_count')
+        )
+        ->where('vendor_id','=',$data['id'])
+        ->where(DB::raw('YEAR(created_at)'),'=',$year)
+        ->groupby('item_status')
+        ->get()
+        ->toArray()
+        );
+        return 'vendororderStatus';
+    }
+    public function vendorsalesGrowthOverTimeYearPrev(Request $request,$year){
+        $data = $request->session()->all();
+
+        return (DB::table('orders_products as od')
+        ->select(
+            DB::raw('YEAR(created_at) as year'), 
+            DB::raw('MONTHNAME(created_at) as month'),
+            DB::raw('MONTH(created_at) as month_num'),
+            DB::raw('sum(product_qty*product_price) as total_per_month')
+        )
+        ->where('vendor_id','=',$data['id'])
+        ->where(DB::raw('YEAR(created_at)'),'<',$year)
+        ->groupby(DB::raw('YEAR(created_at), MONTH(created_at)'))
+        ->get()
+        ->toArray()
+        );
+        
+        return 'vendorsalesGrowthOverTime';
+    }
+    public function vendorsalesGrowthOverTimeYear(Request $request,$year){
+        $data = $request->session()->all();
+
+        return (DB::table('orders_products as od')
+        ->select(
+            DB::raw('YEAR(created_at) year'), 
+            DB::raw('MONTHNAME(created_at) month'),
+            DB::raw('MONTH(created_at) as month_num'),
+            DB::raw('sum(product_qty*product_price) as total_per_month')
+        )
+        ->where('vendor_id','=',$data['id'])
+        ->where(DB::raw('YEAR(created_at)'),'=',$year)
+        ->groupby(DB::raw('YEAR(created_at), MONTH(created_at)'))
+        ->get()
+        ->toArray()
+        );
+        
+        return 'vendorsalesGrowthOverTime';
+    }
+
+
 
     public function getOrdersData(Request $request)
     {
@@ -106,7 +496,8 @@ class AdminController extends Controller
 
     //K
 
-    public function dashboard(){
+    public function dashboard(Request $request){
+        $data = $request->session()->all();
         Session::put('page','dashboard');
         $sectionsCount = Section::count();
         $categoriesCount = Category::count();
@@ -118,7 +509,18 @@ class AdminController extends Controller
         $couponsCount = Coupon::count();
         $brandsCount = Brand::count();
         $usersCount = User::count();
-        return view('admin.dashboard')->with(compact('sectionsCount','categoriesCount','productsCount','ordersCount','salesTotal','couponsCount','brandsCount','usersCount'));
+
+        $years = DB::table('orders_products')
+        ->select(   
+            DB::raw('YEAR(created_at) as year'),
+           
+        )
+        ->groupby(DB::raw('YEAR(created_at)'))
+        ->orderBy(DB::raw('YEAR(created_at)'),'desc')
+        ->get()
+        ->toArray();
+
+        return view('admin.dashboard')->with(compact('years','sectionsCount','categoriesCount','productsCount','ordersCount','salesTotal','couponsCount','brandsCount','usersCount'));
     }
 
 
@@ -390,6 +792,7 @@ class AdminController extends Controller
             }*/
 
             if(Auth::guard('admin')->attempt(['email'=>$data['email'],'password'=>$data['password']])){
+                $request->session()->put('id',  Auth::guard('admin')->user()->vendor_id);
                 if(Auth::guard('admin')->user()->type=="vendor" && Auth::guard('admin')->user()->confirm=="No"){
                     return redirect()->back()->with('error_message','Please confirm your email to activate your Seller Account');
                 }else if(Auth::guard('admin')->user()->type!="vendor" && Auth::guard('admin')->user()->status=="0"){

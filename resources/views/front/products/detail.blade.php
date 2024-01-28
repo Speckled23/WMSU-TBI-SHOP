@@ -223,7 +223,7 @@ $productFilters = ProductsFilter::productFilters();
                         @endif
                     </div>
                     @if(isset($productDetails['vendor']))
-                        <div>Sold by <a href="/products/{{ $productDetails['vendor']['id'] }}">{{ $productDetails['vendor']['vendorbusinessdetails']['shop_name'] }}</a></div>
+                        <div>Sold by <a href="/products/{{ $productDetails['vendor']['id'] }}"> @if($productDetails['vendor']['vendorbusinessdetails']['shop_name'] ) {{ $productDetails['vendor']['vendorbusinessdetails']['shop_name'] }} @else $productDetails['vendor']['name'] @endif</a></div>
                     @endif
                     <form action="{{ url('cart/add') }}" class="post-form" method="Post">@csrf
                         <input type="hidden" name="product_id" value="{{ $productDetails['id'] }}">

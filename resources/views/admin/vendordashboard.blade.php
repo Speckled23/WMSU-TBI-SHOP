@@ -87,6 +87,14 @@
                             <p class="card-title">Sales</p>
                         </div>
                             <div id="sales-legend" class="chartjs-legend mt-4 mb-2"></div>
+                            <div class="row d-flex">
+                                <button class="btn btn-outline-dark col-2 ml-5"  onclick="rendervendorsales()">Refresh</button>
+                                <select class="form-control col-2 mx-2" name="" onchange="rendervendorsales()" id="vendorYear" @if($years) value="$years[0]->year" @endif>
+                                    @foreach($years as $key =>$value)
+                                        <option value="{{$value->year}}">{{$value->year}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         <canvas id="vendorsales"></canvas>
                     </div>
                 </div>
@@ -99,6 +107,14 @@
                             <p class="card-title">Average Order Value</p>
                         </div>
                             <div id="sales-legend" class="chartjs-legend mt-4 mb-2"></div>
+                            <div class="row d-flex">
+                                <button class="btn btn-outline-dark col-2 ml-5"  onclick="rendervendorAve()">Refresh</button>
+                                <select class="form-control col-2 mx-2" name="" onchange="rendervendorAve()" id="AverageOrderValue" @if($years) value="$years[0]->year" @endif>
+                                    @foreach($years as $key =>$value)
+                                        <option value="{{$value->year}}">{{$value->year}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         <canvas id="vendorave"></canvas>
                     </div>
                 </div>
@@ -111,6 +127,14 @@
                             <p class="card-title">Top Selling Products</p>
                         </div>
                             <div id="sales-legend" class="chartjs-legend mt-4 mb-2"></div>
+                            <div class="row d-flex">
+                                <button class="btn btn-outline-dark col-2 ml-5"  onclick="rendervendorTop()">Refresh</button>
+                                <select class="form-control col-2 mx-2" name="" onchange="rendervendorTop()" id="TopSellingProducts" @if($years) value="$years[0]->year" @endif>
+                                    @foreach($years as $key =>$value)
+                                        <option value="{{$value->year}}">{{$value->year}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         <canvas id="topselling"></canvas>
                     </div>
                 </div>
@@ -123,6 +147,14 @@
                             <p class="card-title">Inventory Turn Over</p>
                         </div>
                             <div id="sales-legend" class="chartjs-legend mt-4 mb-2"></div>
+                            <div class="row d-flex">
+                                <button class="btn btn-outline-dark col-2 ml-5"  onclick="renderCategory()">Refresh</button>
+                                <select class="form-control col-2 mx-2" name="" onchange="renderCategory()" id="topCategory" @if($years) value="$years[0]->year" @endif>
+                                    @foreach($years as $key =>$value)
+                                        <option value="{{$value->year}}">{{$value->year}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         <canvas id="inventory"></canvas>
                     </div>
                 </div>
@@ -132,9 +164,17 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
-                            <p class="card-title">Inventory Turn Over</p>
+                            <p class="card-title">Order Status</p>
                         </div>
                             <div id="sales-legend" class="chartjs-legend mt-4 mb-2"></div>
+                            <div class="row d-flex">
+                                <button class="btn btn-outline-dark col-2 ml-5"  onclick="renderCancelation()">Refresh</button>
+                                <select class="form-control col-2 mx-2" name="" onchange="renderCancelation()" id="OrderStatusYear" @if($years) value="$years[0]->year" @endif>
+                                    @foreach($years as $key =>$value)
+                                        <option value="{{$value->year}}">{{$value->year}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         <canvas id="cancelation"></canvas>
                     </div>
                 </div>
@@ -147,6 +187,14 @@
                             <p class="card-title">Sales Growth Over Time</p>
                         </div>
                             <div id="sales-legend" class="chartjs-legend mt-4 mb-2"></div>
+                            <div class="row d-flex">
+                            <button class="btn btn-outline-dark col-2  ml-5"  onclick="renderSalesGrownth()">Refresh</button>
+                            <select class="form-control col-2 mx-2" name="" onchange="renderSalesGrownth()" id="SalesGrowthOverTime" @if($years) value="$years[0]->year" @endif>
+                                @foreach($years as $key =>$value)
+                                    <option value="{{$value->year}}">{{$value->year}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <canvas id="salesgrowth"></canvas>
                     </div>
                 </div>

@@ -215,7 +215,6 @@ class ProductsController extends Controller
             $query->where('stock','>',0)->where('status',1);
         },'images','vendor'])->find($id)->toArray();
         $categoryDetails = Category::categoryDetails($productDetails['category']['url']);
-        dd($productDetails);
 
         // Get Similar Products
         $similarProducts = Product::with('brand')->where('category_id',$productDetails['category']['id'])->where('id','!=',$id)->limit(4)->inRandomOrder()->get()->toArray();

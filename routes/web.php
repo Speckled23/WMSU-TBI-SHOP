@@ -40,6 +40,42 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         // Admin Dashboard Route
         Route::get('dashboard','AdminController@dashboard');
 
+
+        // dashboard stuff
+        Route::get('dashboard-adminoverallRevenue/{year}','AdminController@adminoverallRevenueYear');
+        Route::get('dashboard-admintopProducts/{year}','AdminController@admintopProductsYear');
+        Route::get('dashboard-admintopSellers/{year}','AdminController@admintopSellersYear');
+        Route::get('dashboard-adminretension/{year}','AdminController@adminretensionYear');
+        Route::get('dashboard-admintopCategory/{year}','AdminController@admintopCategoryYear');
+        Route::get('dashboard-adminfulfilledOrders/{year}','AdminController@adminfulfilledOrdersYear');
+        Route::get('dashboard-adminorderStatus/{year}','AdminController@adminorderStatusYear');
+
+        Route::get('dashboard-adminoverallRevenue','AdminController@adminoverallRevenue');
+        Route::get('dashboard-admintopProducts','AdminController@admintopProducts');
+        Route::get('dashboard-admintopSellers','AdminController@admintopSellers');
+        Route::get('dashboard-adminretension','AdminController@adminretension');
+        Route::get('dashboard-admintopCategory','AdminController@admintopCategory');
+        Route::get('dashboard-adminfulfilledOrders','AdminController@adminfulfilledOrders');
+        Route::get('dashboard-adminorderStatus','AdminController@adminorderStatus');
+
+
+        Route::get('dashboard-vendorsales','AdminController@vendorsales');
+        Route::get('dashboard-vendoraverageOrderValue','AdminController@vendoraverageOrderValue');
+        Route::get('dashboard-vendortopSellingProducts','AdminController@vendortopSellingProducts');
+        Route::get('dashboard-vendorinventoryTurnOver','AdminController@vendorinventoryTurnOver');
+        Route::get('dashboard-vendororderStatus','AdminController@vendororderStatus');
+        Route::get('dashboard-vendorsalesGrowthOverTime','AdminController@vendorsalesGrowthOverTime');
+
+        Route::get('dashboard-vendorsales/{year}','AdminController@vendorsalesYear');
+        Route::get('dashboard-vendoraverageOrderValue/{year}','AdminController@vendoraverageOrderValueYear');
+        Route::get('dashboard-vendortopSellingProducts/{year}','AdminController@vendortopSellingProductsYear');
+        Route::get('dashboard-vendorinventoryTurnOver/{year}','AdminController@vendorinventoryTurnOverYear');
+        Route::get('dashboard-vendororderStatus/{year}','AdminController@vendororderStatusYear');
+        Route::get('dashboard-vendorsalesGrowthOverTime/{year}','AdminController@vendorsalesGrowthOverTimeYear');
+        Route::get('dashboard-vendorsalesGrowthOverTimePrev/{year}','AdminController@vendorsalesGrowthOverTimeYearPrev');
+        
+        // dashboard stuff
+
         Route::get('vendordashboard','AdminController@vendordashboard');
 
         // Update Admin Password

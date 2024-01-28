@@ -1,100 +1,125 @@
-
+var vendorsales = document.getElementById('vendorsales');
+var vendorsalesVar;
 function rendervendorsales() {
-  const ctx = document.getElementById('vendorsales');
-
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['January', 'February', 'April', 'May'],
-      datasets: [{
-        label: 'Revenue',
-        data: [52, 48, 40, 58, 0],
-        backgroundColor: [
-          'rgb(255, 86, 86)',
-          'rgb(255, 213, 86)',
-          'rgb(86, 255, 125)',
-          'rgb(86, 230, 255)',
-        ],
-        borderWidth: 1,
-      }],
-    },
+  var year = $('#vendorYear').val()
+  var data = [0,0,0,0,0,0,0,0,0,0,0,0];
+  var labels = ['January','February','March','April','May','June','July','August','September','October','November','December']
+  var color = []
+  const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
+  $.ajax({url: 'dashboard-vendorsales/'+year, 
+    success: function(result){
+      result.forEach(element  => {
+        data[element.month_num-1] = element.total_per_month;
+        color.push('rgb('+(randomBetween(0, 255))+','+(randomBetween(0, 255))+','+(randomBetween(0, 255))+')')
+      });
+      if(vendorsalesVar){
+        vendorsalesVar.destroy();
+      }
+      vendorsalesVar = new Chart(vendorsales, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Revenue',
+            data: data,
+            backgroundColor: color,
+            borderWidth: 1,
+          }],
+        },
+      });
+    }
   });
 }
 rendervendorsales();
 
 
+var vendorave = document.getElementById('vendorave');
+var vendoraveVar;
 function rendervendorAve(){
+  var year = $('#AverageOrderValue').val()
+  var data = [0,0,0,0,0,0,0,0,0,0,0,0];
+  var labels = ['January','February','March','April','May','June','July','August','September','October','November','December']
+  var color = []
+  const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
+  $.ajax({url: 'dashboard-vendoraverageOrderValue/'+year, 
+    success: function(result){
+      result.forEach(element  => {
+        data[element.month_num-1] = element.average_order_value_per_month;
+        color.push('rgb('+(randomBetween(0, 255))+','+(randomBetween(0, 255))+','+(randomBetween(0, 255))+')')
+      });
+      if(vendoraveVar){
+        vendoraveVar.destroy();
+      }
+      vendoraveVar = new Chart(vendorave, {
+        type: 'bar',
+        data: {
+            labels: labels,
+              datasets: [{
+                label: 'Average Order Value',
+                data: data,
+                backgroundColor: color,
+                borderWidth: 1,
+              }]
+        }
+      });
+    }
+  });
 
-  const ctx = document.getElementById('vendorave');
-
-  new Chart(ctx, {
-  type: 'bar',
-  data: {
-      labels: [
-          'Jannuary',
-          'February',
-          'April',
-          'May'
-        ],
-        datasets: [{
-          label: 'Average Order Value',
-          data: [ 80, 78, 69, 80, 0],
-          backgroundColor: [
-            'rgb(255, 86, 86)',
-            'rgb(255, 213, 86)',
-            'rgb(86, 255, 125)',
-            'rgb(86, 230, 255)'
-          ],
-          borderWidth: 1,
-        }]
-  }
-});
+  
 
 }
 rendervendorAve()
 
+var TopSellingProducts = document.getElementById('topselling');
+var TopSellingProductsVar;
 function rendervendorTop() {
-  const ctx = document.getElementById('topselling');
-
-  new Chart(ctx, {
-      type: 'bar',
-      data: {
-          labels: [
-              'Mushroom Chips',
-              'Vermicast',
-              'ZAMPEN Native Chicken',
-              'Fresh Mushroom'
-          ],
-          datasets: [{
-              label: 'Top Products By Sales',
-              data: [178, 168, 158, 138],
-              backgroundColor: [
-                  'rgb(255, 86, 86)',
-                  'rgb(255, 213, 86)',
-                  'rgb(86, 255, 125)',
-                  'rgb(86, 230, 255)'
-              ],
-              borderWidth: 1,
-          }]
-      },
-      options: {
-          indexAxis: 'y',  // Set the index axis to 'y' for horizontal bar chart
-          elements: {
-              bar: {
-                  borderWidth: 2,
-              }
-          },
-          responsive: true,
-          plugins: {
-              legend: {
-                  position: 'right',
-              },
-              title: {
-                  display: true,
-                  text: 'Chart.js Horizontal Bar Chart'
-              }
-          }
-      },
+  var year = $('#TopSellingProducts').val()
+  var data = [];
+  var labels = [];
+  var color = []
+  const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
+  $.ajax({url: 'dashboard-vendortopSellingProducts/'+year, 
+    success: function(result){
+      result.forEach(element  => {
+        labels.push(element.product_name)
+        data.push(element.total_quantity_orders)
+        color.push('rgb('+(randomBetween(0, 255))+','+(randomBetween(0, 255))+','+(randomBetween(0, 255))+')')
+      });
+      if(TopSellingProductsVar){
+        TopSellingProductsVar.destroy();
+      }
+      
+      TopSellingProductsVar = new Chart(TopSellingProducts, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Top Products By Sales',
+                data: data,
+                backgroundColor: color,
+                borderWidth: 1,
+            }]
+        },
+        options: {
+            indexAxis: 'y',  // Set the index axis to 'y' for horizontal bar chart
+            elements: {
+                bar: {
+                    borderWidth: 2,
+                }
+            },
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'right',
+                },
+                title: {
+                    display: true,
+                    text: 'Horizontal Bar Chart'
+                }
+            }
+        },
+      });
+    }
   });
 }
 rendervendorTop();
@@ -124,56 +149,124 @@ function renderTurnOver(){
 }
 renderTurnOver()
 
-
+var OrderStatus = document.getElementById('cancelation');
+var orderStatusVar;
 function renderCancelation(){
-  var ctx = document.getElementById('cancelation');
-
-  new Chart(ctx,{
-    type: 'pie',
-    data: { 
-      labels: [
-      'Pending',
-      'In Process',
-      'Shipped',
-      'Delivered'
-    ],
-    datasets: [{
-      data: [300, 20, 300, 1200],
-      backgroundColor: [
-        'rgb(255, 99, 132)',
-        'rgb(54, 162, 235)',
-        'rgb(255, 205, 86)',
-        'rgb(82, 94, 250)'
-      ],
-      hoverOffset: 4,
-      borderWidth: 0.08,
-      borderColor: ('#111112')
-    }]},
+  var year = $('#OrderStatusYear').val()
+  var data = [];
+  var labels = [];
+  var color = []
+  const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
+  $.ajax({url: 'dashboard-vendororderStatus/'+year, 
+    success: function(result){
+      result.forEach(element  => {
+        if(element.item_status == null || element.item_status == '' || element.item_status == 'Pending'){
+          if(!labels.find(element  => {
+            if(element == 'Pending'){
+              return true;
+            }
+          })){
+            labels.push('Pending')
+            data.push(element.item_status_count)
+          }else{
+            for (let index = 0; index < labels.length; index++) {
+              if(labels[index] == 'Pending'){
+                data[index]+=element.item_status_count;
+              }
+            }
+          }
+        }else{
+          labels.push(element.item_status)
+          data.push(element.item_status_count)
+        }
+        color.push('rgb('+(randomBetween(0, 255))+','+(randomBetween(0, 255))+','+(randomBetween(0, 255))+')')
+      });
+      if(orderStatusVar){
+        orderStatusVar.destroy();
+      }
+      orderStatusVar = new Chart(OrderStatus,{
+        type: 'pie',
+        data: { 
+          labels: labels,
+          datasets: [{
+            data: data,
+            backgroundColor:color,
+            hoverOffset: 4,
+            borderWidth: 0.08,
+            borderColor: ('#111112')
+          }
+        ]},
+        }
+      );
+    }
   });
 }
 renderCancelation()
 
-function renderSalesGrownth(){
-  const ctx = document.getElementById('salesgrowth');
 
-  new Chart(ctx,{
-    type: 'line',
-    data: {
-      labels: [
-        'Jannuary',
-        'February',
-        'April',
-        'May'
-      ],
-      datasets: [{
-        label: '',
-        data: [65, 59, 80, 81, 56, 55, 40],
-        fill: false,
-        borderColor: 'rgb(75, 192, 192)',
-        tension: 0.1,
-        borderWidth: 1,
-      }]
-    },
+var salesgrowth = document.getElementById('salesgrowth');
+var salesgrowthVar;
+function renderSalesGrownth(){
+  var year = $('#SalesGrowthOverTime').val()
+  var data = [0,0,0,0,0,0,0,0,0,0,0,0];
+  var labels = ['January','February','March','April','May','June','July','August','September','October','November','December']
+  var color = []
+  let prev_year_month = 0;
+  const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
+  for (let index = 0; index < labels.length; index++) {
+    color.push('rgb('+(randomBetween(0, 255))+','+(randomBetween(0, 255))+','+(randomBetween(0, 255))+')')
+  }
+  $.ajax({url: 'dashboard-vendorsalesGrowthOverTimePrev/'+year, 
+  success: function(result){
+    result.forEach(element  => {
+      if(element.month == 'December'){
+        prev_year_month = element.total_per_month
+      }
+    });
+    $.ajax({url: 'dashboard-vendorsalesGrowthOverTime/'+year, 
+    success: function(result){
+      result.forEach(element  => {
+        labels.push(element.product_name)
+        data[element.month_num-1] = element.total_per_month;
+       
+      });
+      if(salesgrowthVar){
+        salesgrowthVar.destroy();
+      }
+      prev_year_month = data[0];
+      for (let index = 0; index < data.length; index++) {
+        var value;
+        if(data[index] == 0){
+          value = 0
+        }else{
+          if(prev_year_month == 0){
+            value =  data[index];
+          }else{
+            value = ((data[index] - prev_year_month) / prev_year_month) *100;
+          }
+        }
+        prev_year_month = data[index]
+        data[index] = value
+      }
+      salesgrowthVar = new Chart(salesgrowth,{
+        type: 'line',
+        data: {
+          labels:labels,
+          datasets: [{
+            label: '',
+            data: data,
+            fill: true,
+            borderColor: color,
+            tension: 0.1,
+            borderWidth: 1,
+          }]
+        },
+      });
+    }
   });
+    }
+  });
+
+ 
 }
 renderSalesGrownth()

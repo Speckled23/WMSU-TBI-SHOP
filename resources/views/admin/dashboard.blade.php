@@ -116,6 +116,14 @@
                         <div class="d-flex justify-content-between">
                             <p class="card-title">Overall Revenue</p>
                         </div>
+                            <div class="row d-flex">
+                                <button class="btn btn-outline-dark col-2  ml-5"  onclick="renderSales()">Refresh</button>
+                                <select class="form-control col-2 mx-2" name="" onchange="renderSales()" id="overallRevenue" @if($years) value="$years[0]->year" @endif>
+                                    @foreach($years as $key =>$value)
+                                        <option value="{{$value->year}}">{{$value->year}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                             <div id="sales-legend" class="chartjs-legend mt-4 mb-2"></div>
                         <canvas id="barchart"></canvas>
                     </div>
@@ -125,7 +133,17 @@
                     <div class="card">
                         <div class="card-body">
                             <p class="card-title">Top Products</p>
-                        <canvas id="topProdChart"></canvas>
+                            <div class="row d-flex">
+                                <button class="btn btn-outline-dark col-2 ml-5"  onclick="renderTopProducts()">Refresh</button>
+                                <select class="form-control col-2 mx-2" name="" onchange="renderTopProducts()" id="topProducts" @if($years) value="$years[0]->year" @endif>
+                                    @foreach($years as $key =>$value)
+                                        <option value="{{$value->year}}">{{$value->year}}</option>
+                                    @endforeach
+                                </select>
+                               
+                            </div>
+                            <canvas id="topProdChart"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -138,6 +156,14 @@
                             <p class="card-title">Top Seller</p>
                         </div>
                             <div id="sales-legend" class="chartjs-legend mt-4 mb-2"></div>
+                            <div class="row d-flex">
+                                <button class="btn btn-outline-dark col-2 ml-5"  onclick="renderTopSeller()">Refresh</button>
+                                <select class="form-control col-2 mx-2" name="" onchange="renderTopSeller()" id="topSellers" @if($years) value="$years[0]->year" @endif>
+                                    @foreach($years as $key =>$value)
+                                        <option value="{{$value->year}}">{{$value->year}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         <canvas id="topSeller"></canvas>
                     </div>
                 </div>
@@ -157,6 +183,14 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <p class="card-title">Top Category</p>
+                        </div>
+                        <div class="row d-flex">
+                            <button class="btn btn-outline-dark col-2 ml-5"  onclick="renderCategory()">Refresh</button>
+                            <select class="form-control col-2 mx-2" name="" onchange="renderCategory()" id="topCategory" @if($years) value="$years[0]->year" @endif>
+                                @foreach($years as $key =>$value)
+                                    <option value="{{$value->year}}">{{$value->year}}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <canvas id="category"></canvas>
                     </div>
@@ -178,6 +212,14 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <p class="card-title">Order Status</p>
+                        </div>
+                        <div class="row d-flex">
+                            <button class="btn btn-outline-dark col-2 ml-5"  onclick="renderStatus()">Refresh</button>
+                            <select class="form-control col-2 mx-2" name="" onchange="renderStatus()" id="orderStatus" @if($years) value="$years[0]->year" @endif>
+                                @foreach($years as $key =>$value)
+                                    <option value="{{$value->year}}">{{$value->year}}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <canvas id="sellTrough"></canvas>
                     </div>
