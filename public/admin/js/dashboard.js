@@ -263,25 +263,8 @@ function renderStatus(){
   $.ajax({url: 'dashboard-adminorderStatus/'+year, 
     success: function(result){
       result.forEach(element  => {
-        if(element.item_status == null || element.item_status == '' || element.item_status == 'Pending'){
-          if(!labels.find(element  => {
-            if(element == 'Pending'){
-              return true;
-            }
-          })){
-            labels.push('Pending')
-            data.push(element.item_status_count)
-          }else{
-            for (let index = 0; index < labels.length; index++) {
-              if(labels[index] == 'Pending'){
-                data[index]+=element.item_status_count;
-              }
-            }
-          }
-        }else{
-          labels.push(element.item_status)
-          data.push(element.item_status_count)
-        }
+        labels.push(element.item_status+' ('+element.item_status_count+') '+)
+        data.push(element.item_status_count)
         colors.push('rgb('+(randomBetween(0, 255))+','+(randomBetween(0, 255))+','+(randomBetween(0, 255))+')')
       });
       if(orderStatusVar){
