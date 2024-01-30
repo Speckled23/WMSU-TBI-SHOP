@@ -94,6 +94,14 @@
                                         <option value="{{$value->year}}">{{$value->year}}</option>
                                     @endforeach
                                 </select>
+                                <div class="col-3">
+                                    <div class="form-check ">
+                                        <input class="form-check-input" type="checkbox" value="1" id="vendorsalesPaid" onchange="rendervendorsales()">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Paid
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         <canvas id="vendorsales"></canvas>
                     </div>
@@ -114,6 +122,14 @@
                                         <option value="{{$value->year}}">{{$value->year}}</option>
                                     @endforeach
                                 </select>
+                                <div class="col-3">
+                                    <div class="form-check ">
+                                        <input class="form-check-input" type="checkbox" value="1" id="vendorAvePaid" onchange="rendervendorAve()">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Paid
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         <canvas id="vendorave"></canvas>
                     </div>
@@ -134,13 +150,21 @@
                                         <option value="{{$value->year}}">{{$value->year}}</option>
                                     @endforeach
                                 </select>
+                                <div class="col-3">
+                                    <div class="form-check ">
+                                        <input class="form-check-input" type="checkbox" value="1" id="vendorTopPaid" onchange="rendervendorTop()">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Paid
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         <canvas id="topselling"></canvas>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-6 grid-margin stretch-card">
+            <div class="col-md-6 grid-margin stretch-card d-none">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">

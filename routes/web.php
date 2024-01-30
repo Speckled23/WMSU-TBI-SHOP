@@ -42,12 +42,12 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
 
 
         // dashboard stuff
-        Route::get('dashboard-adminoverallRevenue/{year}','AdminController@adminoverallRevenueYear');
-        Route::get('dashboard-admintopProducts/{year}','AdminController@admintopProductsYear');
-        Route::get('dashboard-admintopSellers/{year}','AdminController@admintopSellersYear');
+        Route::get('dashboard-adminoverallRevenue/{year}/{paid}','AdminController@adminoverallRevenueYear');
+        Route::get('dashboard-admintopProducts/{year}/{paid}','AdminController@admintopProductsYear');
+        Route::get('dashboard-admintopSellers/{year}/{paid}','AdminController@admintopSellersYear');
         Route::get('dashboard-adminretension/{year}','AdminController@adminretensionYear');
-        Route::get('dashboard-admintopCategory/{year}','AdminController@admintopCategoryYear');
-        Route::get('dashboard-adminfulfilledOrders/{year}','AdminController@adminfulfilledOrdersYear');
+        Route::get('dashboard-admintopCategory/{year}/{paid}','AdminController@admintopCategoryYear');
+        Route::get('dashboard-adminfulfilledOrders/{year}/{paid}','AdminController@adminfulfilledOrdersYear');
         Route::get('dashboard-adminorderStatus/{year}','AdminController@adminorderStatusYear');
 
         Route::get('dashboard-adminoverallRevenue','AdminController@adminoverallRevenue');
@@ -66,9 +66,9 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::get('dashboard-vendororderStatus','AdminController@vendororderStatus');
         Route::get('dashboard-vendorsalesGrowthOverTime','AdminController@vendorsalesGrowthOverTime');
 
-        Route::get('dashboard-vendorsales/{year}','AdminController@vendorsalesYear');
-        Route::get('dashboard-vendoraverageOrderValue/{year}','AdminController@vendoraverageOrderValueYear');
-        Route::get('dashboard-vendortopSellingProducts/{year}','AdminController@vendortopSellingProductsYear');
+        Route::get('dashboard-vendorsales/{year}/{paid}','AdminController@vendorsalesYear');
+        Route::get('dashboard-vendoraverageOrderValue/{year}/{paid}','AdminController@vendoraverageOrderValueYear');
+        Route::get('dashboard-vendortopSellingProducts/{year}/{paid}','AdminController@vendortopSellingProductsYear');
         Route::get('dashboard-vendorinventoryTurnOver/{year}','AdminController@vendorinventoryTurnOverYear');
         Route::get('dashboard-vendororderStatus/{year}','AdminController@vendororderStatusYear');
         Route::get('dashboard-vendorsalesGrowthOverTime/{year}','AdminController@vendorsalesGrowthOverTimeYear');

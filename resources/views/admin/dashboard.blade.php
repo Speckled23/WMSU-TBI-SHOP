@@ -123,6 +123,14 @@
                                         <option value="{{$value->year}}">{{$value->year}}</option>
                                     @endforeach
                                 </select>
+                                <div class="col-3">
+                                    <div class="form-check ">
+                                        <input class="form-check-input" type="checkbox" value="1" id="Salespaid" onchange="renderSales()">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Paid
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                             <div id="sales-legend" class="chartjs-legend mt-4 mb-2"></div>
                         <canvas id="barchart"></canvas>
@@ -140,7 +148,14 @@
                                         <option value="{{$value->year}}">{{$value->year}}</option>
                                     @endforeach
                                 </select>
-                               
+                                <div class="col-3">
+                                    <div class="form-check ">
+                                        <input class="form-check-input" type="checkbox" value="1" id="TopProductspaid" onchange="renderTopProducts()">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Paid
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                             <canvas id="topProdChart"></canvas>
                         </div>
@@ -163,12 +178,20 @@
                                         <option value="{{$value->year}}">{{$value->year}}</option>
                                     @endforeach
                                 </select>
+                                <div class="col-3">
+                                    <div class="form-check ">
+                                        <input class="form-check-input" type="checkbox" value="1" id="TopSellerpaid" onchange="renderTopSeller()">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Paid
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         <canvas id="topSeller"></canvas>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 grid-margin stretch-card">
+            <div class="col-md-6 grid-margin stretch-card d-none">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
@@ -191,6 +214,14 @@
                                     <option value="{{$value->year}}">{{$value->year}}</option>
                                 @endforeach
                             </select>
+                            <div class="col-3">
+                                <div class="form-check ">
+                                    <input class="form-check-input" type="checkbox" value="1" id="Categorypaid" onchange="renderCategory()">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        Paid
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                         <canvas id="category"></canvas>
                     </div>
@@ -201,6 +232,22 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <p class="card-title">Fulfilled Orders</p>
+                        </div>
+                        <div class="row d-flex">
+                            <button class="btn btn-outline-dark col-2 ml-5"  onclick="renderFulfilledOrders()">Refresh</button>
+                            <select class="form-control col-2 mx-2" name="" onchange="renderFulfilledOrders()" id="FulfilledOrders" @if($years) value="$years[0]->year" @endif>
+                                @foreach($years as $key =>$value)
+                                    <option value="{{$value->year}}">{{$value->year}}</option>
+                                @endforeach
+                            </select>
+                            <div class="col-3">
+                                <div class="form-check ">
+                                    <input class="form-check-input" type="checkbox" value="1" id="OrderStatuspaid" onchange="renderFulfilledOrders()">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        Paid
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                             <div id="sales-legend" class="chartjs-legend mt-4 mb-2"></div>
                         <canvas id="barangay"></canvas>

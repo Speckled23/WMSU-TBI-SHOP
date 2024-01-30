@@ -5,8 +5,9 @@ function rendervendorsales() {
   var data = [0,0,0,0,0,0,0,0,0,0,0,0];
   var labels = ['January','February','March','April','May','June','July','August','September','October','November','December']
   var color = []
+  var paid = $('#vendorsalesPaid').is(":checked")
   const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
-  $.ajax({url: 'dashboard-vendorsales/'+year, 
+  $.ajax({url: 'dashboard-vendorsales/'+year+'/'+paid, 
     success: function(result){
       result.forEach(element  => {
         data[element.month_num-1] = element.total_per_month;
@@ -40,8 +41,9 @@ function rendervendorAve(){
   var data = [0,0,0,0,0,0,0,0,0,0,0,0];
   var labels = ['January','February','March','April','May','June','July','August','September','October','November','December']
   var color = []
+  var paid = $('#vendorAvePaid').is(":checked")
   const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
-  $.ajax({url: 'dashboard-vendoraverageOrderValue/'+year, 
+  $.ajax({url: 'dashboard-vendoraverageOrderValue/'+year+'/'+paid, 
     success: function(result){
       result.forEach(element  => {
         data[element.month_num-1] = element.average_order_value_per_month;
@@ -77,9 +79,11 @@ function rendervendorTop() {
   var data = [];
   var labels = [];
   var color = []
+  var paid = $('#vendorTopPaid').is(":checked")
   const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
-  $.ajax({url: 'dashboard-vendortopSellingProducts/'+year, 
+  $.ajax({url: 'dashboard-vendortopSellingProducts/'+year+'/'+paid, 
     success: function(result){
+      console.log(result)
       result.forEach(element  => {
         labels.push(element.product_name)
         data.push(element.total_quantity_orders)
@@ -160,25 +164,8 @@ function renderCancelation(){
   $.ajax({url: 'dashboard-vendororderStatus/'+year, 
     success: function(result){
       result.forEach(element  => {
-        if(element.item_status == null || element.item_status == '' || element.item_status == 'Pending'){
-          if(!labels.find(element  => {
-            if(element == 'Pending'){
-              return true;
-            }
-          })){
-            labels.push('Pending')
-            data.push(element.item_status_count)
-          }else{
-            for (let index = 0; index < labels.length; index++) {
-              if(labels[index] == 'Pending'){
-                data[index]+=element.item_status_count;
-              }
-            }
-          }
-        }else{
-          labels.push(element.item_status)
-          data.push(element.item_status_count)
-        }
+        labels.push(element.item_status)
+        data.push(element.item_status_count)
         color.push('rgb('+(randomBetween(0, 255))+','+(randomBetween(0, 255))+','+(randomBetween(0, 255))+')')
       });
       if(orderStatusVar){

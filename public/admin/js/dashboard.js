@@ -4,11 +4,12 @@ var OverallRevenueChart = document.getElementById('barchart');
 var OverallRevenueChartVar ;
 function renderSales(){
     var year = $('#overallRevenue').val()
+    var paid = $('#Salespaid').is(":checked")
     var monthdata = [0,0,0,0,0,0,0,0,0,0,0,0]
     var monthlabel = ['January','February','March','April','May','June','July','August','September','October','November','December']
     var bgcolor = []
     const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
-    $.ajax({url: 'dashboard-adminoverallRevenue/'+year, 
+    $.ajax({url: 'dashboard-adminoverallRevenue/'+year+'/'+paid, 
       success: function(result){
         result.forEach(element  => {
           monthdata[element.month-1] = element.total_per_month
@@ -46,11 +47,12 @@ var TopProducts = document.getElementById('topProdChart');
 var TopProductsVar ;
 function renderTopProducts(){
   var year = $('#topProducts').val()
+  var paid = $('#TopProductspaid').is(":checked")
   var labels = []
   var data = []
   var color = [];
   const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
-  $.ajax({url: 'dashboard-admintopProducts/'+year, 
+  $.ajax({url: 'dashboard-admintopProducts/'+year+'/'+paid, 
     success: function(result){
       result.forEach(element  => {
         labels.push(element.product_name)
@@ -106,8 +108,9 @@ function renderTopSeller(){
   var sellerTotolOrders = [];
   var color = [];
   var year = $('#topSellers').val()
+  var paid = $('#TopSellerpaid').is(":checked")
   const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
-  $.ajax({url: 'dashboard-admintopSellers/'+year, 
+  $.ajax({url: 'dashboard-admintopSellers/'+year+'/'+paid, 
     success: function(result){
       result.forEach(element  => {
         sellerLabels.push(element.name)
@@ -172,8 +175,9 @@ function renderCategory(){
   var data = [];
   var colors = [];
   var year = $('#topCategory').val()
+  var paid = $('#Categorypaid').is(":checked")
   const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
-  $.ajax({url: 'dashboard-admintopCategory/'+year, 
+  $.ajax({url: 'dashboard-admintopCategory/'+year+'/'+paid, 
     success: function(result){
       result.forEach(element  => {
         labels.push(element.category_name)
@@ -204,40 +208,49 @@ function renderCategory(){
 }
 renderCategory()
 
-function renderBarangay(){
-  
-  const ctx = document.getElementById('barangay');    
-    
+var FulfilledOrders = document.getElementById('barangay');    
+var FulfilledOrdersVar;
+function renderFulfilledOrders(){
+  var year = $('#FulfilledOrders').val()
+  var paid = $('#OrderStatuspaid').is(":checked")
+  var data = []
+  var label = []
+  var color = []
+  const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
+  $.ajax({url: 'dashboard-adminfulfilledOrders/'+year+'/'+paid, 
+    success: function(result){
+      console.log(result)
+      result.forEach(element  => {
+        label.push(element.date_ordered)
+        data.push(element.total_ordered_per_day
+          )
+        color.push('rgb('+(randomBetween(0, 255))+','+(randomBetween(0, 255))+','+(randomBetween(0, 255))+')')
+      });
+      if(FulfilledOrdersVar){
+        FulfilledOrdersVar.destroy();
+      }
 
-  new Chart(ctx, {
-  type: 'bar',
-  data: {
-      labels: [
-          'Mercedes',
-          'Divisoria',
-          'Pasonanca',
-          'Zambowood'
-        ],
-        datasets: [{
-          axis: 'y',
-          label: 'Top Barangay',
-          data: [1800, 1547, 1201, 1120],
-          fill: false,
-          backgroundColor: [
-            'rgb(255, 86, 86)',
-            'rgb(255, 213, 86)',
-            'rgb(86, 255, 125)',
-            'rgb(86, 230, 255)'
-          ],
-          borderWidth: 1,
-        }]
-  },
-  options: {
-    indexAxis: 'y',
-  }
-});
+      FulfilledOrdersVar = new Chart(FulfilledOrders, {
+        type: 'bar',
+        data: {
+            labels: label,
+              datasets: [{
+                axis: 'y',
+                label: 'Orders per day',
+                data: data,
+                fill: false,
+                backgroundColor: color,
+                borderWidth: 1,
+              }]
+        },
+        options: {
+          indexAxis: 'x',
+        }
+      });
+    }
+  });
 }
-renderBarangay()
+renderFulfilledOrders()
 
 var orderStatus = document.getElementById('sellTrough');
 var orderStatusVar ;
