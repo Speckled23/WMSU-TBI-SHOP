@@ -263,7 +263,7 @@ function renderStatus(){
   $.ajax({url: 'dashboard-adminorderStatus/'+year, 
     success: function(result){
       result.forEach(element  => {
-        labels.push(element.item_status+' ('+element.item_status_count+') '+)
+        labels.push(element.item_status+' ('+element.item_status_count+') ')
         data.push(element.item_status_count)
         colors.push('rgb('+(randomBetween(0, 255))+','+(randomBetween(0, 255))+','+(randomBetween(0, 255))+')')
       });
