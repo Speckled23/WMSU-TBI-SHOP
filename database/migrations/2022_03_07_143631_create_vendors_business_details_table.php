@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('shop_name');
             $table->string('shop_address');
             $table->string('shop_city');
-            $table->string('shop_state');
+            $table->string('shop_barangay');
             $table->string('shop_country');
             $table->string('shop_pincode');
             $table->string('shop_mobile');

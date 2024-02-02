@@ -52,7 +52,7 @@
                     <select class="select-box" id="delivery_country" name="delivery_country">
                         <option value="">Select Country</option>
                     @foreach($countries as $country)
-                      <option value="{{ $country['country_name'] }}" @if($country['country_name']==Auth::user()->country) selected @endif>{{ $country['country_name'] }}</option>
+                    <option value="{{ $country['country_name'] }}" @if($country['country_name']=="Philippines") selected @endif>{{ $country['country_name'] }}</option>
                     @endforeach
                   </select>
                   <p id="delivery-delivery_country"></p>

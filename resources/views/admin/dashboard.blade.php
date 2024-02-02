@@ -191,16 +191,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 grid-margin stretch-card d-none">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <p class="card-title">Retension</p>
-                        </div>
-                        <canvas id="retension"></canvas>
-                    </div>
-                </div>
-            </div>
+           
             <div class="col-md-6 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">

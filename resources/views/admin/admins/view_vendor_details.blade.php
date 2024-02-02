@@ -96,7 +96,7 @@
                     </div>
                     <div class="form-group">
                       <label for="vendor_state">Shop State</label>
-                      <input type="text" class="form-control" @if(isset($vendorDetails['vendor_business']['shop_state'])) value="{{ $vendorDetails['vendor_business']['shop_state'] }}" @endif readonly="">
+                      <input type="text" class="form-control" @if(isset($vendorDetails['vendor_business']['shop_barangay'])) value="{{ $vendorDetails['vendor_business']['shop_barangay'] }}" @endif readonly="">
                     </div>
                     <div class="form-group">
                       <label for="vendor_country">Shop Country</label>
