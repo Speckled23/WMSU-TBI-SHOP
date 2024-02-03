@@ -11,6 +11,7 @@ function rendervendorsales() {
     success: function(result){
       result.forEach(element  => {
         data[element.month_num-1] = element.total_per_month;
+        labels[element.month_num-1] = labels[element.month_num-1]+' ('+element.total_per_month+')'
         color.push('rgb('+(randomBetween(0, 255))+','+(randomBetween(0, 255))+','+(randomBetween(0, 255))+')')
       });
       if(vendorsalesVar){
@@ -47,6 +48,7 @@ function rendervendorAve(){
     success: function(result){
       result.forEach(element  => {
         data[element.month_num-1] = element.average_order_value_per_month;
+        labels[element.month_num-1] = labels[element.month_num-1]+' ('+element.average_order_value_per_month+')'
         color.push('rgb('+(randomBetween(0, 255))+','+(randomBetween(0, 255))+','+(randomBetween(0, 255))+')')
       });
       if(vendoraveVar){
@@ -85,7 +87,7 @@ function rendervendorTop() {
     success: function(result){
       console.log(result)
       result.forEach(element  => {
-        labels.push(element.product_name)
+        labels.push(element.product_name+' ('+element.total_quantity_orders+')')
         data.push(element.total_quantity_orders)
         color.push('rgb('+(randomBetween(0, 255))+','+(randomBetween(0, 255))+','+(randomBetween(0, 255))+')')
       });
@@ -234,6 +236,9 @@ function renderSalesGrownth(){
         }
         prev_year_month = data[index]
         data[index] = value
+        if(data[index]>0){
+          labels[index] = labels[index]+' ('+data[index]+')'
+        }
       }
       salesgrowthVar = new Chart(salesgrowth,{
         type: 'line',

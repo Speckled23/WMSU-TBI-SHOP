@@ -50,6 +50,9 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::get('dashboard-adminfulfilledOrders/{year}/{paid}','AdminController@adminfulfilledOrdersYear');
         Route::get('dashboard-adminorderStatus/{year}','AdminController@adminorderStatusYear');
 
+        Route::get('dashboard-drillAnalyticsRevenue/{year}/{vendor}/{paid}','AdminController@drillAnalyticsRevenueYear');
+        Route::get('dashboard-getVendorDetails/{year}','AdminController@getVendorDetails');
+
         Route::get('dashboard-adminoverallRevenue','AdminController@adminoverallRevenue');
         Route::get('dashboard-admintopProducts','AdminController@admintopProducts');
         Route::get('dashboard-admintopSellers','AdminController@admintopSellers');
@@ -57,6 +60,8 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::get('dashboard-admintopCategory','AdminController@admintopCategory');
         Route::get('dashboard-adminfulfilledOrders','AdminController@adminfulfilledOrders');
         Route::get('dashboard-adminorderStatus','AdminController@adminorderStatus');
+
+
 
 
         Route::get('dashboard-vendorsales','AdminController@vendorsales');

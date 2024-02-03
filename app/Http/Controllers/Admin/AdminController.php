@@ -35,7 +35,7 @@ class AdminController extends Controller
         $sectionsCount = Section::count();
         $categoriesCount = Category::count();
         $productsCount = Product::count();
-        $orders =DB::table('orders_products as op')
+        $orders = DB::table('orders_products as op')
         ->select(
             'item_status',
             DB::raw('count(*) as item_status_count')
@@ -51,9 +51,24 @@ class AdminController extends Controller
             }
         }
         // $ordersCount = Order::count('id');
-        $salesTotal = Order::where('order_status', 'New')
-                ->orWhere('order_status', 'Shipped')
-                ->sum('grand_total');
+        $sales = DB::table('orders_products as op')
+        ->select(
+            'item_status',
+            DB::raw('count(*) as item_status_count')
+        )
+        ->where('vendor_id','=',$data['id'])
+        ->groupby('item_status')
+        ->get()
+        ->toArray();
+        $salesTotal = 0;
+        foreach ($orders as $key => $value) {
+            if($value->item_status == 'Shipped' ){
+                $salesTotal += $value->item_status_count;
+            }elseif($value->item_status == 'Delivered' ){
+                $salesTotal += $value->item_status_count;
+
+            }
+        }
         $couponsCount = Coupon::count();
         $brandsCount = Brand::count();
         $usersCount = User::count();
@@ -126,6 +141,7 @@ class AdminController extends Controller
                 DB::raw('p.product_name,count(*) as total_product_sales')
             )
             ->join('products as p','p.id','op.product_id')
+            ->join('orders as o','o.id','op.order_id')
             ->groupby('p.id')
             ->orderBy('total_product_sales','desc')
             ->limit(10)
@@ -161,6 +177,7 @@ class AdminController extends Controller
                     DB::raw('(count(*) * op.product_qty) as total_product_sales')
                 )
                 ->join('products as p','p.id','op.product_id')
+                ->join('orders as o','o.id','op.order_id')
                 ->where( DB::raw('YEAR(op.created_at)'),'=',$year)
                 ->groupby('p.id')
                 ->orderBy('total_product_sales','desc')
@@ -171,6 +188,90 @@ class AdminController extends Controller
         }
         return 'admintopProducts';
     }
+
+    public function drillAnalyticsRevenueYear($year,$vendor,$paid){
+        if($vendor == 'All'){
+            if($paid == 'true'){
+                return DB::table('orders_products as op')
+                ->select(
+                    DB::raw('DATE_FORMAT(op.created_at, "%M %d, %Y") as date_ordered ') ,
+                    DB::raw('count(*) total_ordered_per_day '),
+                    DB::raw('sum(product_qty*product_price) as revenue')
+                )
+                ->join('orders as o','o.id','op.order_id')
+                ->where( DB::raw('YEAR(op.created_at)'),'=',$year)
+                ->where('o.order_status','=','Paid')
+                ->groupby(DB::raw('DATE_FORMAT(op.created_at, "%Y%m%d")'))
+                ->orderBy(DB::raw('DATE_FORMAT(op.created_at, "%Y%m%d")'),'ASC')
+                ->get()
+                ->toArray()
+                ;
+            }else{
+                return (DB::table('orders_products as op')
+                ->select(
+                    DB::raw('DATE_FORMAT(op.created_at, "%M %d, %Y") as date_ordered ') ,
+                    DB::raw('count(*) total_ordered_per_day '),
+                    DB::raw('sum(product_qty*product_price) as revenue')
+                )    
+                ->join('orders as o','o.id','op.order_id')
+                ->where( DB::raw('YEAR(op.created_at)'),'=',$year)
+                ->groupby(DB::raw('DATE_FORMAT(op.created_at, "%Y%m%d")'))
+                ->orderBy(DB::raw('DATE_FORMAT(op.created_at, "%Y%m%d")'),'ASC')
+                ->get()
+                ->toArray()
+                );
+            }
+           
+        }else{
+            if($paid == 'true'){
+                return DB::table('orders_products as op')
+                ->select(
+                    DB::raw('DATE_FORMAT(op.created_at, "%M %d, %Y") as date_ordered ') ,
+                    DB::raw('count(*) total_ordered_per_day '),
+                    DB::raw('sum(product_qty*product_price) as revenue')
+                )
+                ->join('orders as o','o.id','op.order_id')
+                ->where( DB::raw('YEAR(op.created_at)'),'=',$year)
+                ->where('o.order_status','=','Paid')
+                ->where('op.vendor_id','=',$vendor)
+                ->groupby(DB::raw('DATE_FORMAT(op.created_at, "%Y%m%d")'))
+                ->orderBy(DB::raw('DATE_FORMAT(op.created_at, "%Y%m%d")'),'ASC')
+                ->get()
+                ->toArray()
+                ;
+            }else{
+                return (DB::table('orders_products as op')
+                ->select(
+                    DB::raw('DATE_FORMAT(op.created_at, "%M %d, %Y") as date_ordered ') ,
+                    DB::raw('count(*) total_ordered_per_day '),
+                    DB::raw('sum(product_qty*product_price) as revenue')
+                )
+                ->join('orders as o','o.id','op.order_id')
+                ->where( DB::raw('YEAR(op.created_at)'),'=',$year)
+                ->where('op.vendor_id','=',$vendor)
+                ->groupby(DB::raw('DATE_FORMAT(op.created_at, "%Y%m%d")'))
+                ->orderBy(DB::raw('DATE_FORMAT(op.created_at, "%Y%m%d")'),'ASC')
+                ->get()
+                ->toArray()
+                );
+            }
+        }
+        return 'sadfsda';
+    }
+
+    public function getVendorDetails($year){
+        return  DB::table('orders_products as op')
+        ->select(   
+            'v.name',
+            'v.id'
+        )
+        ->join('vendors as v','v.id','op.vendor_id')
+        ->join('orders as o','o.id','op.order_id')
+        ->groupby('vendor_id')
+        ->where(DB::raw('YEAR(op.created_at)'),$year)
+        ->get()
+        ->toArray();   ;
+    }
     public function admintopSellers(){
         return (DB::table('orders_products as op')
             ->select(
@@ -180,6 +281,7 @@ class AdminController extends Controller
                 DB::raw('count(*) as total_orders')
             )
             ->join('vendors as v','v.id','op.vendor_id')
+            ->join('orders as o','o.id','op.order_id')
             ->groupby('vendor_id')
             ->orderBy(DB::raw('count(*)'),'desc')
             ->limit(10)
@@ -218,6 +320,7 @@ class AdminController extends Controller
                     DB::raw('sum(product_qty*product_price) as total_revenue')
                 )
                 ->join('vendors as v','v.id','op.vendor_id')
+                ->join('orders as o','o.id','op.order_id')
                 ->where( DB::raw('YEAR(op.created_at)'),'=',$year)
                 ->groupby('vendor_id')
                 ->orderBy(DB::raw('count(*)'),'desc')
@@ -241,6 +344,7 @@ class AdminController extends Controller
         )
         ->join('products as p','p.id','op.product_id')
         ->join('categories as c','c.id','p.category_id')
+        ->join('orders as o','o.id','op.order_id')
         ->groupby('c.id')
         ->get()
         ->toArray()
@@ -276,6 +380,7 @@ class AdminController extends Controller
                 )
                 ->join('products as p','p.id','op.product_id')
                 ->join('categories as c','c.id','p.category_id')
+                ->join('orders as o','o.id','op.order_id')
                 ->where( DB::raw('YEAR(op.created_at)'),'=',$year)
                 ->groupby('c.id')
                 ->get()
@@ -305,12 +410,13 @@ class AdminController extends Controller
         }else{
             return (DB::table('orders_products as op')
             ->select(
-                DB::raw('DATE_FORMAT(created_at, "%M %d, %Y") as date_ordered ') ,
+                DB::raw('DATE_FORMAT(op.created_at, "%M %d, %Y") as date_ordered ') ,
                 DB::raw('count(*) total_ordered_per_day ')
             )
+            ->join('orders as o','o.id','op.order_id')
             ->where( DB::raw('YEAR(op.created_at)'),'=',$year)
-            ->groupby(DB::raw('DATE_FORMAT(created_at, "%Y%m%d")'))
-            ->orderBy(DB::raw('DATE_FORMAT(created_at, "%Y%m%d")'),'ASC')
+            ->groupby(DB::raw('DATE_FORMAT(op.created_at, "%Y%m%d")'))
+            ->orderBy(DB::raw('DATE_FORMAT(op.created_at, "%Y%m%d")'),'ASC')
             ->get()
             ->toArray()
             );
@@ -700,8 +806,22 @@ class AdminController extends Controller
         ->orderBy(DB::raw('YEAR(created_at)'),'desc')
         ->get()
         ->toArray();
+        $vendors = [];
+        if($years) {
+            $vendors =DB::table('orders_products as op')
+            ->select(   
+                'v.name',
+                'v.id'
+            )
+            ->join('vendors as v','v.id','op.vendor_id')
+            ->join('orders as o','o.id','op.order_id')
+            ->groupby('vendor_id')
+            ->where(DB::raw('YEAR(op.created_at)'),$years[0]->year)
+            ->get()
+            ->toArray();   
+         }
 
-        return view('admin.dashboard')->with(compact('years','sectionsCount','categoriesCount','productsCount','ordersCount','salesTotal','couponsCount','brandsCount','usersCount'));
+        return view('admin.dashboard')->with(compact('years','vendors','sectionsCount','categoriesCount','productsCount','ordersCount','salesTotal','couponsCount','brandsCount','usersCount'));
     }
 
 

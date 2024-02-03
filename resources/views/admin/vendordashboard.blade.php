@@ -18,7 +18,7 @@
                         <div class="card card-tale">
                             <div class="card-body">
                                 <p class="mb-4">Sales</p>
-                                <p class="fs-30 mb-2">{{$sectionsCount}}</p>
+                                <p class="fs-30 mb-2">{{$salesTotal}}</p>
                             </div>
                         </div>
                     </div>

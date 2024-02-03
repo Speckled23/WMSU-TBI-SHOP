@@ -137,33 +137,66 @@
                     </div>
                 </div>
             </div>
-                <div class="col-md-6 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <p class="card-title">Top Products</p>
-                            <div class="row d-flex">
-                                <button class="btn btn-outline-dark col-2 ml-5"  onclick="renderTopProducts()">Refresh</button>
-                                <select class="form-control col-2 mx-2" name="" onchange="renderTopProducts()" id="topProducts" @if($years) value="$years[0]->year" @endif>
-                                    @foreach($years as $key =>$value)
-                                        <option value="{{$value->year}}">{{$value->year}}</option>
-                                    @endforeach
-                                </select>
-                                <div class="col-3">
-                                    <div class="form-check ">
-                                        <input class="form-check-input" type="checkbox" value="1" id="TopProductspaid" onchange="renderTopProducts()">
-                                        <label class="form-check-label" for="flexCheckDefault">
-                                            Paid
-                                        </label>
-                                    </div>
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-title">Top Products</p>
+                        <div class="row d-flex">
+                            <button class="btn btn-outline-dark col-2 ml-5"  onclick="renderTopProducts()">Refresh</button>
+                            <select class="form-control col-2 mx-2" name="" onchange="renderTopProducts()" id="topProducts" @if($years) value="$years[0]->year" @endif>
+                                @foreach($years as $key =>$value)
+                                    <option value="{{$value->year}}">{{$value->year}}</option>
+                                @endforeach
+                            </select>
+                            <div class="col-3">
+                                <div class="form-check ">
+                                    <input class="form-check-input" type="checkbox" value="1" id="TopProductspaid" onchange="renderTopProducts()">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        Paid
+                                    </label>
                                 </div>
                             </div>
-                            <canvas id="topProdChart"></canvas>
                         </div>
+                        <canvas id="topProdChart"></canvas>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class = 'row'>
+
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-title">Drill Analytics</p>
+                        <div class="row d-flex">
+                            <button class="btn btn-outline-dark col-2 ml-5"  onclick="renderDrillAnalyticsRevenue()">Refresh</button>
+                            <select class="form-control col-2 mx-2" name="" onchange="DrillAnalyticsRevenueChangeYear()" id="DrillAnalyticsRevenueYear" @if($years) value="$years[0]->year" @endif>
+                                @foreach($years as $key =>$value)
+                                    <option value="{{$value->year}}">{{$value->year}}</option>
+                                @endforeach
+                            </select>
+                            <select class="form-control col-2 mx-2" name="" onchange="renderDrillAnalyticsRevenue()" id="DrillAnalyticsRevenueVendor" @if($years) value="$years[0]->year" @endif>
+                                <option value="All">All Vendor</option>    
+                                @foreach($vendors as $key =>$value)
+                                    <option value="{{$value->id}}">{{$value->name}}</option>
+                                @endforeach
+                            </select>
+                            <div class="col-2">
+                                <div class="form-check ">
+                                    <input class="form-check-input" type="checkbox" value="1" id="DrillAnalyticsRevenueVendorpaid" onchange="renderDrillAnalyticsRevenue()">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        Paid
+                                    </label>
+                                </div>
+                            </div>
+                            <select class="form-control col-2 mx-2" name="" onchange="renderDrillAnalyticsRevenue()" id="chatX" value="REVENUE">
+                                <option value="REVENUE">REVENUE</option>    
+                                <option value="FULFULLEDORDERS">FULFULLED ORDERS</option>   
+                            
+                            </select>
+                        </div>
+                        <canvas id="DrillAnalyticschart"></canvas>
+                    </div>
+                </div>
+            </div>
             <div class="col-md-6 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">

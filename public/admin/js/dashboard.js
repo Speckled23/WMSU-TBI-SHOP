@@ -13,6 +13,7 @@ function renderSales(){
       success: function(result){
         result.forEach(element  => {
           monthdata[element.month-1] = element.total_per_month
+          monthlabel[element.month-1] = monthlabel[element.month-1]+' ('+element.total_per_month+')'
           bgcolor.push('rgb('+(randomBetween(0, 255))+','+(randomBetween(0, 255))+','+(randomBetween(0, 255))+')')
         });
         if(OverallRevenueChartVar){
@@ -55,7 +56,7 @@ function renderTopProducts(){
   $.ajax({url: 'dashboard-admintopProducts/'+year+'/'+paid, 
     success: function(result){
       result.forEach(element  => {
-        labels.push(element.product_name)
+        labels.push(element.product_name+' ('+element.total_product_sales+')')
         data.push(element.total_product_sales)
         color.push('rgb('+(randomBetween(0, 255))+','+(randomBetween(0, 255))+','+(randomBetween(0, 255))+')')
        
@@ -113,7 +114,7 @@ function renderTopSeller(){
   $.ajax({url: 'dashboard-admintopSellers/'+year+'/'+paid, 
     success: function(result){
       result.forEach(element  => {
-        sellerLabels.push(element.name)
+        sellerLabels.push(element.name+' ('+element.total_revenue+')')
         sellerTotolOrders.push(element.total_revenue)
         color.push('rgb('+(randomBetween(0, 255))+','+(randomBetween(0, 255))+','+(randomBetween(0, 255))+')')
       });
@@ -156,7 +157,7 @@ function renderCategory(){
   $.ajax({url: 'dashboard-admintopCategory/'+year+'/'+paid, 
     success: function(result){
       result.forEach(element  => {
-        labels.push(element.category_name)
+        labels.push(element.category_name+' ('+element.total_product_qty+')')
         data.push(element.total_product_qty)
         colors.push('rgb('+(randomBetween(0, 255))+','+(randomBetween(0, 255))+','+(randomBetween(0, 255))+')')
       });
@@ -195,9 +196,8 @@ function renderFulfilledOrders(){
   const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
   $.ajax({url: 'dashboard-adminfulfilledOrders/'+year+'/'+paid, 
     success: function(result){
-      console.log(result)
       result.forEach(element  => {
-        label.push(element.date_ordered)
+        label.push(element.date_ordered+' ('+element.total_ordered_per_day+')')
         data.push(element.total_ordered_per_day
           )
         color.push('rgb('+(randomBetween(0, 255))+','+(randomBetween(0, 255))+','+(randomBetween(0, 255))+')')
@@ -262,3 +262,69 @@ function renderStatus(){
   });  
 }
 renderStatus()
+
+
+var DrillAnalyticsRevenue = document.getElementById('DrillAnalyticschart');
+var DrillAnalyticsRevenueVar ;
+
+function DrillAnalyticsRevenueChangeYear(){
+  var year = $('#DrillAnalyticsRevenueYear').val()
+  var vendor = $('#DrillAnalyticsRevenueVendor').val('All');
+  $.ajax({url: 'dashboard-getVendorDetails/'+year,
+    success: function(result){
+    console.log(result)
+    $('#DrillAnalyticsRevenueVendor').html('<option value="All">All Vendor</option>')
+    result.forEach(element  => {
+      $('#DrillAnalyticsRevenueVendor').append('<option value="'+element.id+'">'+element.name+'</option>')
+    });
+    renderDrillAnalyticsRevenue()
+    }
+  });
+}
+
+function renderDrillAnalyticsRevenue(){
+  var labels =[];
+  var data = [];
+  var colors = [];
+  var year = $('#DrillAnalyticsRevenueYear').val()
+  var vendor = $('#DrillAnalyticsRevenueVendor').val()
+  var paid = $('#DrillAnalyticsRevenueVendorpaid').is(":checked")
+  console.log(vendor);
+  const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
+  $.ajax({url: 'dashboard-drillAnalyticsRevenue/'+year+'/'+vendor+'/'+paid, 
+    success: function(result){
+      result.forEach(element  => {
+        var chatX = $('#chatX').val();
+        if( chatX == 'REVENUE'){
+          labels.push(element.date_ordered+' ('+element.revenue+') ')
+          data.push(element.revenue)
+        }else if(chatX == 'FULFULLEDORDERS'){
+          labels.push(element.date_ordered+' ('+element.total_ordered_per_day+') ')
+          data.push(element.total_ordered_per_day)
+        }
+        colors.push('rgb('+(randomBetween(0, 255))+','+(randomBetween(0, 255))+','+(randomBetween(0, 255))+')')
+      });
+      if(DrillAnalyticsRevenueVar){
+        DrillAnalyticsRevenueVar.destroy();
+      }
+      DrillAnalyticsRevenueVar= new Chart(DrillAnalyticsRevenue, {
+        type: 'bar',
+        data: {
+            labels: labels,
+              datasets: [{
+                axis: 'y',
+                label: 'Date',
+                data: data,
+                fill: false,
+                backgroundColor: colors,
+                borderWidth: 1,
+              }]
+        },
+        options: {
+          indexAxis: 'x',
+        }
+      });
+    }
+  });  
+}
+renderDrillAnalyticsRevenue()
