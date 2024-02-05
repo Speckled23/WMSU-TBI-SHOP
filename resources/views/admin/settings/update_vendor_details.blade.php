@@ -127,7 +127,7 @@
       </div>
     @elseif($slug=="business")
     <div class="row">
-        <div class="col-md-6 grid-margin stretch-card">
+        <div class="col-md-12 grid-margin stretch-card">
           <div class="card">
             <div class="card-body">
               <h4 class="card-title">Update Business Information</h4>
@@ -161,27 +161,31 @@
               @endif
               
               <form class="forms-sample" action="{{ url('admin/update-vendor-details/business') }}" method="post" enctype="multipart/form-data">@csrf
-                <div class="form-group">
-                  <label>Vendor Username/Email</label>
-                  <input class="form-control" value="{{ Auth::guard('admin')->user()->email }}" readonly="">
+              <div class="row">
+              <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Vendor Username/Email</label>
+                    <input class="form-control" value="{{ Auth::guard('admin')->user()->email }}" readonly="">
+                  </div>
+                  <div class="form-group">
+                    <label for="shop_name">Shop Name</label>
+                    <input type="text" class="form-control" id="shop_name" placeholder="Enter Shop Name" name="shop_name" @if(isset($vendorDetails['shop_name'])) value="{{ $vendorDetails['shop_name'] }}" @endif>
+                  </div>
+                  <div class="form-group">
+                    <label for="shop_address">Shop Address</label>
+                    <input type="text" class="form-control" id="shop_address" placeholder="Enter Shop Address" name="shop_address" @if(isset($vendorDetails['shop_address'])) value="{{ $vendorDetails['shop_address'] }}" @endif>
+                  </div>
+                  <div class="form-group">
+                    <label for="shop_city">Shop City</label>
+                    <input type="text" class="form-control" id="shop_city" placeholder="Enter Shop City" name="shop_city" @if(isset($vendorDetails['shop_city'])) value="{{ $vendorDetails['shop_city'] }}" @endif>
+                  </div>
+                  <div class="form-group">
+                    <label for="shop_barangay">Shop Barangay</label>
+                    <input type="text" class="form-control" id="shop_barangay" placeholder="Enter Shop Barangay" name="shop_barangay" @if(isset($vendorDetails['shop_barangay'])) value="{{ $vendorDetails['shop_barangay'] }}" @endif>
+                  </div>
                 </div>
-                <div class="form-group">
-                  <label for="shop_name">Shop Name</label>
-                  <input type="text" class="form-control" id="shop_name" placeholder="Enter Shop Name" name="shop_name" @if(isset($vendorDetails['shop_name'])) value="{{ $vendorDetails['shop_name'] }}" @endif>
-                </div>
-                <div class="form-group">
-                  <label for="shop_address">Shop Address</label>
-                  <input type="text" class="form-control" id="shop_address" placeholder="Enter Shop Address" name="shop_address" @if(isset($vendorDetails['shop_address'])) value="{{ $vendorDetails['shop_address'] }}" @endif>
-                </div>
-                <div class="form-group">
-                  <label for="shop_city">Shop City</label>
-                  <input type="text" class="form-control" id="shop_city" placeholder="Enter Shop City" name="shop_city" @if(isset($vendorDetails['shop_city'])) value="{{ $vendorDetails['shop_city'] }}" @endif>
-                </div>
-                <div class="form-group">
-                  <label for="shop_barangay">Shop Barangay</label>
-                  <input type="text" class="form-control" id="shop_barangay" placeholder="Enter Shop Barangay" name="shop_barangay" @if(isset($vendorDetails['shop_barangay'])) value="{{ $vendorDetails['shop_barangay'] }}" @endif>
-                </div>
-                <div class="form-group">
+               <div class="col-md-6">
+               <div class="form-group">
                   <label for="shop_country">Shop Country</label>
                   <select class="form-control" id="shop_country" name="shop_country" style="color: #495057;">
                     <option value="">Select Country</option>
@@ -228,6 +232,8 @@
                     <input type="hidden" name="current_address_proof" value="{{ $vendorDetails['address_proof_image'] }}">
                   @endif
                 </div>
+               </div>
+              </div>
                 <button type="submit" class="btn btn-primary mr-2">Submit</button>
                 <button type="reset" class="btn btn-light">Cancel</button>
               </form>
