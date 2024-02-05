@@ -174,14 +174,14 @@ class AdminController extends Controller
                 ->select(
                     'p.id',
                     'p.product_name',
-                    DB::raw('(count(*) * op.product_qty) as total_product_sales')
+                    DB::raw('sum(op.product_qty) as total_product_sales')
                 )
                 ->join('products as p','p.id','op.product_id')
                 ->join('orders as o','o.id','op.order_id')
                 ->where( DB::raw('YEAR(op.created_at)'),'=',$year)
                 ->groupby('p.id')
-                ->orderBy(DB::raw('(count(*) * op.product_qty)'),'desc')
-                ->limit(10)
+                ->orderBy(DB::raw('sum(op.product_qty)'),'desc')
+                ->limit(20)
                 ->get()
                 ->toArray()
                 );
