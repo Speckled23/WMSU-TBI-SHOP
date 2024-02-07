@@ -12,6 +12,7 @@ use App\Models\Vendor;
 use App\Models\VendorsBusinessDetail;
 use App\Models\VendorsBankDetail;
 use App\Models\Country;
+use App\Models\Barangay;
 use App\Models\Section;
 use App\Models\Category;
 use App\Models\Product;
@@ -1054,7 +1055,8 @@ class AdminController extends Controller
             }
         }
         $countries = Country::where('status',1)->get()->toArray();
-        return view('admin.settings.update_vendor_details')->with(compact('slug','vendorDetails','countries'));
+        $barangay = Barangay::all()->toArray();
+        return view('admin.settings.update_vendor_details')->with(compact('slug','vendorDetails','countries','barangay'));
     }
 
     public function updateVendorCommission(Request $request){

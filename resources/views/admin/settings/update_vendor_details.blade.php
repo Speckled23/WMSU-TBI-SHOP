@@ -1,7 +1,7 @@
 @extends('admin.layout.layout')
 @section('content')
 <div class="main-panel">
-    <div class="content-wrapper">
+    <div class="content-wrapper"> 
         <div class="row">
             <div class="col-md-12 grid-margin">
                 <div class="row">
@@ -86,8 +86,12 @@
                         <div class="col-lg-6">
                           <div class="form-group">
                             <label for="vendor_barangay">Barangay</label>
-                            <input type="text" class="form-control" id="vendor_barangay" placeholder="Enter Barangay" name="vendor_barangay" value="{{ $vendorDetails['barangay'] }}">
-                          </div>
+                            <select class="form-control" id="vendor_barangay" name="vendor_barangay"  style="color: #495057;">
+                              <option value="">Select Barangay</option>
+                              @foreach($barangay as $zcbarangay)
+                                <option value="{{ $zcbarangay['barangay_name'] }}" @if($zcbarangay['barangay_name']==$zcbarangay['barangay_name']) selected @endif>{{ $zcbarangay['barangay_name'] }}</option>
+                              @endforeach
+                            </select>                          </div>
                           <div class="form-group">
                             <label for="vendor_country">Country</label>
                             <select class="form-control" id="vendor_country" name="vendor_country"  style="color: #495057;">
@@ -177,11 +181,16 @@
                   </div>
                   <div class="form-group">
                     <label for="shop_city">Shop City</label>
-                    <input type="text" class="form-control" id="shop_city" placeholder="Enter Shop City" name="shop_city" @if(isset($vendorDetails['shop_city'])) value="{{ $vendorDetails['shop_city'] }}" @endif>
+                    <input type="text" class="form-control" id="shop_city" placeholder="Enter Shop City" name="shop_city"  value="Zamboanga City" >
                   </div>
                   <div class="form-group">
                     <label for="shop_barangay">Shop Barangay</label>
-                    <input type="text" class="form-control" id="shop_barangay" placeholder="Enter Shop Barangay" name="shop_barangay" @if(isset($vendorDetails['shop_barangay'])) value="{{ $vendorDetails['shop_barangay'] }}" @endif>
+                    <select class="form-control" id="shop_barangay" name="shop_barangay"  style="color: #495057;">
+                              <option value="">Select Barangay</option>
+                              @foreach($barangay as $zcbarangay)
+                                <option value="{{ $zcbarangay['barangay_name'] }}" @if($zcbarangay['barangay_name']==$zcbarangay['barangay_name']) selected @endif>{{ $zcbarangay['barangay_name'] }}</option>
+                              @endforeach
+                      </select> 
                   </div>
                 </div>
                <div class="col-md-6">
@@ -196,7 +205,7 @@
                 </div>
                 <div class="form-group">
                   <label for="shop_pincode">Shop Zipcode</label>
-                  <input type="text" class="form-control" id="shop_pincode" placeholder="Enter Shop Zipcode" name="shop_pincode" @if(isset($vendorDetails['shop_pincode'])) value="{{ $vendorDetails['shop_pincode'] }}" @endif>
+                  <input type="text" class="form-control" id="shop_pincode" placeholder="Enter Shop Zipcode" name="shop_pincode" value = "7000">
                 </div>
                 <div class="form-group">
                   <label for="shop_mobile">Shop Contact No.</label>
