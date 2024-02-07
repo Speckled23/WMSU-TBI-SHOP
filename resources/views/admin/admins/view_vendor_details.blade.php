@@ -51,8 +51,8 @@
                       <input type="text" class="form-control" value="{{ $vendorDetails['vendor_personal']['city'] }}" readonly="">
                     </div>
                     <div class="form-group">
-                      <label for="vendor_state">State</label>
-                      <input type="text" class="form-control" value="{{ $vendorDetails['vendor_personal']['state'] }}" readonly="">
+                      <label for="vendor_barangay">Barangay</label>
+                      <input type="text" class="form-control" value="{{ $vendorDetails['vendor_personal']['barangay'] }}" readonly="">
                     </div>
                     <div class="form-group">
                       <label for="vendor_country">Country</label>

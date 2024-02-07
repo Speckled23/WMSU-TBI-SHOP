@@ -85,8 +85,8 @@
                         </div>
                         <div class="col-lg-6">
                           <div class="form-group">
-                            <label for="vendor_state">Barangay</label>
-                            <input type="text" class="form-control" id="vendor_state" placeholder="Enter Barangay" name="vendor_state" value="{{ $vendorDetails['state'] }}">
+                            <label for="vendor_barangay">Barangay</label>
+                            <input type="text" class="form-control" id="vendor_barangay" placeholder="Enter Barangay" name="vendor_barangay" value="{{ $vendorDetails['barangay'] }}">
                           </div>
                           <div class="form-group">
                             <label for="vendor_country">Country</label>
