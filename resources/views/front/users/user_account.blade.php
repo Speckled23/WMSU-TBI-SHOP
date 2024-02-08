@@ -54,7 +54,7 @@
                         <p id="account-success"></p>
                         <form id="accountForm" action="javascript:;" method="post">@csrf
                             <div class="u-s-m-b-30">
-                                <label for="user-email">Email
+                                <label for="user-email">Emailx
                                     <span class="astk">*</span>
                                 </label>
                                 <input class="text-field" value="{{ Auth::user()->email }}" readonly="" disabled="" style="background-color: #e9e9e9;">
@@ -75,18 +75,23 @@
                                 <p id="account-address"></p>
                             </div>
                             <div class="u-s-m-b-30">
-                                <label for="user-city">Province
+                                <label for="user-barangay">Barangay
                                     <span class="astk">*</span>
                                 </label>
-                                <input class="text-field" type="text" id="user-city" name="city" value="{{ Auth::user()->city }}">
-                                <p id="account-city"></p>
+                                <select class="text-field" id="user-barangay" name="barangay"  style="color: #495057;">
+                                    <option value="">Select Country</option>
+                                @foreach($zcbarangay as $barangay)
+                                    <option value="{{ $barangay['barangay_name'] }}" @if($barangay['barangay_name']==$barangay['barangay_name']) selected @endif>{{ $barangay['barangay_name'] }}</option>
+                                @endforeach
+                              </select>
+                                <p id="account-barangay"></p>
                             </div>
                             <div class="u-s-m-b-30">
-                                <label for="user-state">City
+                                <label for="user-city">City
                                     <span class="astk">*</span>
                                 </label>
-                                <input class="text-field" type="text" id="user-state" name="state" value="{{ Auth::user()->state }}">
-                                <p id="account-state"></p>
+                                <input class="text-field" type="text" id="user-city" name="city" value="Zamboanga City">
+                                <p id="account-city"></p>
                             </div>
                             <div class="u-s-m-b-30">
                                 <label for="user-country">Country
@@ -104,7 +109,7 @@
                                 <label for="user-pincode">Zipcode
                                     <span class="astk">*</span>
                                 </label>
-                                <input class="text-field" type="text" id="user-pincode" name="pincode" value="{{ Auth::user()->pincode }}">
+                                <input class="text-field" type="text" id="user-pincode" name="pincode" value="7000">
                                 <p id="account-pincode"></p>
                             </div>
                             <div class="u-s-m-b-30">

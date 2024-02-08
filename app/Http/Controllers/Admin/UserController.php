@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+
 use App\Models\User;
+use App\Models\Barangay;
 use Session;
 
 class UserController extends Controller
@@ -12,6 +14,7 @@ class UserController extends Controller
     public function users(){
         Session::put('page','users');
         $users = User::get()->toArray();
+        
         /*dd($users);*/
         return view('admin.users.users')->with(compact('users'));
     }

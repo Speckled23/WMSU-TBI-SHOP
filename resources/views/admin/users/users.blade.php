@@ -32,7 +32,7 @@
                                             Address
                                         </th>
                                         <th>
-                                            Province
+                                            Barangay
                                         </th>
                                         <th>
                                             City

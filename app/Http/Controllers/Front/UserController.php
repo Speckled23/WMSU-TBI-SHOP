@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use App\Models\User;
 use App\Models\Cart;
 use App\Models\Country;
+use App\Models\Barangay;
 use Auth;
 use Validator;
 use Session;
@@ -101,7 +102,7 @@ class UserController extends Controller
             $validator = Validator::make($request->all(), [
                     'name' => 'required|string|max:100',
                     'city' => 'required|string|max:100',
-                    'state' => 'required|string|max:100',
+                    'barangay' => 'required|string|max:100',
                     'address' => 'required|string|max:100',
                     'country' => 'required|string|max:100',
                     'mobile' => 'required|numeric|digits:11',
@@ -113,7 +114,7 @@ class UserController extends Controller
             if($validator->passes()){
 
                 // Update User Details
-                User::where('id',Auth::user()->id)->update(['name'=>$data['name'],'mobile'=>$data['mobile'],'city'=>$data['city'],'state'=>$data['state'],'country'=>$data['country'],'pincode'=>$data['pincode'],'address'=>$data['address']]);
+                User::where('id',Auth::user()->id)->update(['name'=>$data['name'],'mobile'=>$data['mobile'],'city'=>$data['city'],'state'=>$data['barangay'],'country'=>$data['country'],'pincode'=>$data['pincode'],'address'=>$data['address']]);
 
                 // Redirect back user with success message
                 return response()->json(['type'=>'success','message'=>'Your contact/billing details successfully updated!']);
@@ -123,8 +124,9 @@ class UserController extends Controller
             }
 
         }else{
+            $zcbarangay = Barangay::all()->toArray();
             $countries = Country::where('status',1)->get()->toArray();
-            return view('front.users.user_account')->with(compact('countries'));
+            return view('front.users.user_account')->with(compact('countries','zcbarangay'));
         }
     }
 

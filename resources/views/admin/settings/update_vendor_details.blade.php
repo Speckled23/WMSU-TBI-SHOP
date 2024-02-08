@@ -205,7 +205,7 @@
                 </div>
                 <div class="form-group">
                   <label for="shop_pincode">Shop Zipcode</label>
-                  <input type="text" class="form-control" id="shop_pincode" placeholder="Enter Shop Zipcode" name="shop_pincode" value = "7000">
+                  <input type="text" class="form-control" id="shop_pincode" placeholder="Enter Shop Zipcode" name="shop_pincode" value = "7000f">
                 </div>
                 <div class="form-group">
                   <label for="shop_mobile">Shop Contact No.</label>
