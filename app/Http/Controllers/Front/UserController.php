@@ -114,7 +114,7 @@ class UserController extends Controller
             if($validator->passes()){
 
                 // Update User Details
-                User::where('id',Auth::user()->id)->update(['name'=>$data['name'],'mobile'=>$data['mobile'],'city'=>$data['city'],'state'=>$data['barangay'],'country'=>$data['country'],'pincode'=>$data['pincode'],'address'=>$data['address']]);
+                User::where('id',Auth::user()->id)->update(['name'=>$data['name'],'mobile'=>$data['mobile'],'city'=>$data['city'],'barangay'=>$data['barangay'],'country'=>$data['country'],'pincode'=>$data['pincode'],'address'=>$data['address']]);
 
                 // Redirect back user with success message
                 return response()->json(['type'=>'success','message'=>'Your contact/billing details successfully updated!']);
