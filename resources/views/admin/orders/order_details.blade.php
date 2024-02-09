@@ -112,10 +112,10 @@ use App\Models\Coupon;
                       <label>{{ $userDetails['city'] }}</label>
                     </div>
                     @endif
-                    @if(!empty($userDetails['state']))
+                    @if(!empty($userDetails['barangay']))
                     <div class="form-group" style="height: 15px;">
-                      <label style="font-weight: 550;">State: </label>
-                      <label>{{ $userDetails['state'] }}</label>
+                      <label style="font-weight: 550;">Barangay: </label>
+                      <label>{{ $userDetails['barangay'] }}</label>
                     </div>
                     @endif
                     @if(!empty($userDetails['country']))

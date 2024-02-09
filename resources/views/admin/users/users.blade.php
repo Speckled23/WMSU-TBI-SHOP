@@ -70,7 +70,7 @@
                                             {{ $user['city'] }}
                                         </td>
                                         <td>
-                                            {{ $user['state'] }}
+                                            {{ $user['barangay'] }}
                                         </td>
                                         <td>
                                             {{ $user['country'] }}

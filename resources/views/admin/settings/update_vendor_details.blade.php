@@ -91,7 +91,8 @@
                               @foreach($barangay as $zcbarangay)
                                 <option value="{{ $zcbarangay['barangay_name'] }}" @if($zcbarangay['barangay_name']==$zcbarangay['barangay_name']) selected @endif>{{ $zcbarangay['barangay_name'] }}</option>
                               @endforeach
-                            </select>                          </div>
+                            </select>                          
+                          </div>
                           <div class="form-group">
                             <label for="vendor_country">Country</label>
                             <select class="form-control" id="vendor_country" name="vendor_country"  style="color: #495057;">

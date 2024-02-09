@@ -30,18 +30,25 @@
             </div>
             <div class="group-inline u-s-m-b-13">
                 <div class="group-1 u-s-p-r-16">
-                    <label for="first-name-extra">Province
+                    <label for="first-name-extra">City
                         <span class="astk">*</span>
                     </label>
-                    <input type="text" name="delivery_city" id="delivery_city" class="text-field">
+                    <input type="text" name="delivery_city" id="delivery_city" class="text-field" value="Zamboanga City">
                     <p id="delivery-delivery_city"></p>
                 </div>
                 <div class="group-2">
-                    <label for="last-name-extra">City
+                    <label for="last-name-extra">Barangay
                         <span class="astk">*</span>
                     </label>
-                    <input type="text" name="delivery_state" id="delivery_state" class="text-field">
-                    <p id="delivery-delivery_state"></p>
+                    <div class="select-box-wrapper">
+                    <select class="select-box" id="delivery_barangay" name="delivery_barangay">
+                        <option value="">Select Country</option>
+                    @foreach($barangay as $zcbarangay)
+                    <option value="{{ $zcbarangay['barangay_name'] }}" @if($zcbarangay['barangay_name']==$zcbarangay['barangay_name']) selected @endif>{{ $zcbarangay['barangay_name'] }}</option>
+                    @endforeach
+                  </select>
+                  <p id="delivery-delivery_barangay"></p>
+                </div>
                 </div>
             </div>
             <div class="u-s-m-b-13">
@@ -62,7 +69,7 @@
                 <label for="postcode-extra">Zipcode
                     <span class="astk">*</span>
                 </label>
-                <input type="text" id="delivery_pincode" name="delivery_pincode" class="text-field">
+                <input type="text" id="delivery_pincode" name="delivery_pincode" class="text-field" value="7000">
                 <p id="delivery-delivery_pincode"></p>
             </div>
             <div class="u-s-m-b-13">

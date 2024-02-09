@@ -22,6 +22,7 @@ use App\Models\OrdersProduct;
 use App\Models\Sms;
 use App\Models\ShippingCharge;
 use App\Models\Currency;
+use App\Models\Barangay;
 use App\Models\Rating;
 use Session;
 use DB;
@@ -580,6 +581,7 @@ class ProductsController extends Controller
     public function checkout(Request $request){
 
         $countries = Country::where('status',1)->get()->toArray();
+        $barangay = Barangay::all()->toArray();
         $getCartItems = Cart::getCartItems();
         /*dd($getCartItems);*/
 
@@ -600,7 +602,7 @@ class ProductsController extends Controller
 
         $deliveryAddresses = DeliveryAddress::deliveryAddresses();
         foreach ($deliveryAddresses as $key => $value) {
-            $shippingCharges = ShippingCharge::getShippingCharges($total_weight,$value['country']);
+            $shippingCharges = ShippingCharge::getShippingCharges($total_weight,$value['barangay']);
             $deliveryAddresses[$key]['shipping_charges'] = $shippingCharges;
 
             // COD Pincode is Available or Not
@@ -813,7 +815,7 @@ class ProductsController extends Controller
         }
 
         
-        return view('front.products.checkout')->with(compact('deliveryAddresses','countries','getCartItems','total_price'));
+        return view('front.products.checkout')->with(compact('deliveryAddresses','countries','getCartItems','total_price', 'barangay'));
     }
 
     public function thanks(){

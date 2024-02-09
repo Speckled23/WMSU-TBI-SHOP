@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\DeliveryAddress;
 use App\Models\Country;
+use App\Models\Barangay;
 use Auth;
 use Validator;
 
@@ -27,20 +28,20 @@ class AddressController extends Controller
                 'delivery_name'=>'required|string|max:100',
                 'delivery_address'=>'required|string|max:100',
                 'delivery_city'=>'required|string|max:100',
-                'delivery_state'=>'required|string|max:100',
+                'delivery_barangay'=>'required|string|max:100',
                 'delivery_country'=>'required|string|max:100',
                 'delivery_pincode'=>'required|digits:4',
                 'delivery_mobile'=>'required|numeric|digits:11',
             ]);
             if($validator->passes()){
                 $data = $request->all();
-                /*echo "<pre>"; print_r($data); die;*/
+                echo "<pre>"; print_r($data); die;
                 $address = array();
                 $address['user_id']=Auth::user()->id;
                 $address['name']=$data['delivery_name'];
                 $address['address']=$data['delivery_address'];
                 $address['city']=$data['delivery_city'];
-                $address['state']=$data['delivery_state'];
+                $address['state']=$data['delivery_barangay'];
                 $address['country']=$data['delivery_country'];
                 $address['pincode']=$data['delivery_pincode'];
                 $address['mobile']=$data['delivery_mobile'];
@@ -54,8 +55,9 @@ class AddressController extends Controller
                 }
                 $deliveryAddresses = DeliveryAddress::deliveryAddresses();
                 $countries = Country::where('status',1)->get()->toArray();
+                $barangay = Barangay::all()->toArray();
                 return response()->json([
-                    'view'=>(String)View::make('front.products.delivery_addresses')->with(compact('deliveryAddresses','countries'))
+                    'view'=>(String)View::make('front.products.delivery_addresses')->with(compact('deliveryAddresses','countries','barangay'))
                 ]);
             }else{
                 return response()->json(['type'=>'error','errors'=>$validator->messages()]);
@@ -71,8 +73,9 @@ class AddressController extends Controller
             DeliveryAddress::where('id',$data['addressid'])->delete();
             $deliveryAddresses = DeliveryAddress::deliveryAddresses();
             $countries = Country::where('status',1)->get()->toArray();
+            $barangay = Barangay::all()->toArray();
             return response()->json([
-                'view'=>(String)View::make('front.products.delivery_addresses')->with(compact('deliveryAddresses','countries'))
+                'view'=>(String)View::make('front.products.delivery_addresses')->with(compact('deliveryAddresses','countries','barangay'))
             ]);
         }
     }
