@@ -152,7 +152,7 @@ class AdminController extends Controller
         return 'admintopProducts';
     }
 
-    public function admintopProductsYear($year,$paid){
+    public function admintopProductsYear($year,$paid,$limit){
         if($paid == 'true'){
             return (DB::table('orders_products as op')
             ->select(
@@ -166,7 +166,7 @@ class AdminController extends Controller
             ->where( DB::raw('YEAR(op.created_at)'),'=',$year)
             ->groupby('p.id')
             ->orderBy(DB::raw('(count(*) * op.product_qty)'),'desc')
-            ->limit(10)
+            ->limit($limit)
             ->get()
             ->toArray()
             );
@@ -182,7 +182,7 @@ class AdminController extends Controller
                 ->where( DB::raw('YEAR(op.created_at)'),'=',$year)
                 ->groupby('p.id')
                 ->orderBy(DB::raw('sum(op.product_qty)'),'desc')
-                ->limit(20)
+                ->limit($limit)
                 ->get()
                 ->toArray()
                 );

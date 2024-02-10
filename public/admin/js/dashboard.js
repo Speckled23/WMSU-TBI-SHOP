@@ -47,19 +47,22 @@ renderSales()
 var TopProducts = document.getElementById('topProdChart');  
 var TopProductsVar ;
 function renderTopProducts(){
+  console.log($('#TopProductspaid').is(":checked"));
   var year = $('#topProducts').val()
   var paid = $('#TopProductspaid').is(":checked")
+  var limit = $('#topProductLimit').val()
   var labels = []
   var data = []
   var color = [];
   const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
-  $.ajax({url: 'dashboard-admintopProducts/'+year+'/'+paid, 
+  $.ajax({url: 'dashboard-admintopProducts/'+year+'/'+paid+'/'+limit, 
     success: function(result){
+      console.log(result);
       result.forEach(element  => {
         labels.push(element.product_name+' ('+element.total_product_sales+')')
         data.push(element.total_product_sales)
         color.push('rgb('+(randomBetween(0, 255))+','+(randomBetween(0, 255))+','+(randomBetween(0, 255))+')')
-       
+      });
         if(TopProductsVar){
           TopProductsVar.destroy();
         }
@@ -92,7 +95,7 @@ function renderTopProducts(){
               }
             }
           },
-        });
+       
       });
     }
   });
