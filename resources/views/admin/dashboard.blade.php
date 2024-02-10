@@ -156,8 +156,12 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-2">
+                            <div class="col-3 d-flex">
+                                <label class="form-label my-auto mx-2" for="flexCheckDefault">
+                                        Limit
+                                </label>
                                 <input class="form-control" type="number" id="topProductLimit" value="10" onchange="renderTopProducts()" min="1" max="20">
+                                   
                             </div>
                         </div>
                         <canvas id="topProdChart"></canvas>
