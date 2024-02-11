@@ -31,9 +31,9 @@
             <div class="group-inline u-s-m-b-13">
                 <div class="group-1 u-s-p-r-16">
                     <label for="first-name-extra">City
-                        <span class="astk">*</span>
+                        
                     </label>
-                    <input type="text" name="delivery_city" id="delivery_city" class="text-field" value="Zamboanga City">
+                    <input type="text" name="delivery_city" id="delivery_city" class="text-field" value="Zamboanga City" readonly="">
                     <p id="delivery-delivery_city"></p>
                 </div>
                 <div class="group-2">
@@ -42,7 +42,7 @@
                     </label>
                     <div class="select-box-wrapper">
                     <select class="select-box" id="delivery_barangay" name="delivery_barangay">
-                        <option value="">Select Country</option>
+                        <option value="">Select Barangay</option>
                     @foreach($barangay as $zcbarangay)
                     <option value="{{ $zcbarangay['barangay_name'] }}" @if($zcbarangay['barangay_name']==$zcbarangay['barangay_name']) selected @endif>{{ $zcbarangay['barangay_name'] }}</option>
                     @endforeach
@@ -52,24 +52,24 @@
                 </div>
             </div>
             <div class="u-s-m-b-13">
-                <label for="select-country-extra">Country
-                    <span class="astk">*</span>
+                <label for="select-country-extra">Province
+                    
                 </label>
                 <div class="select-box-wrapper">
-                    <select class="select-box" id="delivery_country" name="delivery_country">
+                    <select class="select-box" id="delivery_country" name="delivery_country" readonly="">
                         <option value="">Select Country</option>
                     @foreach($countries as $country)
-                    <option value="{{ $country['country_name'] }}" @if($country['country_name']=="Philippines") selected @endif>{{ $country['country_name'] }}</option>
+                    <option value="{{ $country['country_name'] }}" @if($country['country_name']=="ZAMBOANGA DEL SUR") selected @endif>{{ $country['country_name'] }}</option>
                     @endforeach
                   </select>
                   <p id="delivery-delivery_country"></p>
                 </div>
             </div>
             <div class="u-s-m-b-13">
-                <label for="postcode-extra">Zipcode
-                    <span class="astk">*</span>
+                <label for="postcode-extra">Zip code
+                    
                 </label>
-                <input type="text" id="delivery_pincode" name="delivery_pincode" class="text-field" value="7000">
+                <input type="text" id="delivery_pincode" name="delivery_pincode" class="text-field" value="7000" readonly="">
                 <p id="delivery-delivery_pincode"></p>
             </div>
             <div class="u-s-m-b-13">

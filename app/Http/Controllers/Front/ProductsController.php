@@ -704,7 +704,7 @@ class ProductsController extends Controller
             $shipping_charges = 0;
 
             // Get Shipping Charges
-            $shipping_charges = ShippingCharge::getShippingCharges($total_weight,$deliveryAddress['country']);
+            $shipping_charges = ShippingCharge::getShippingCharges($total_weight,$deliveryAddress['barangay']);
 
             // Calculate Grand Total
             $grand_total = $total_price + $shipping_charges - Session::get('couponAmount');
@@ -718,7 +718,7 @@ class ProductsController extends Controller
             $order->name = $deliveryAddress['name'];
             $order->address = $deliveryAddress['address'];
             $order->city = $deliveryAddress['city'];
-            $order->state = $deliveryAddress['state'];
+            $order->state = $deliveryAddress['barangay'];
             $order->country = $deliveryAddress['country'];
             $order->pincode = $deliveryAddress['pincode'];
             $order->mobile = $deliveryAddress['mobile'];

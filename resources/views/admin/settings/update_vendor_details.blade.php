@@ -80,7 +80,7 @@
                           </div>
                           <div class="form-group">
                             <label for="vendor_city">City</label>
-                            <input type="text" class="form-control" id="vendor_city" placeholder="Enter City" name="vendor_city" value="Zamboanga City">
+                            <input type="text" class="form-control" id="vendor_city" placeholder="Enter City" name="vendor_city" value="Zamboanga City" readonly="">
                           </div>
                         </div>
                         <div class="col-lg-6">
@@ -91,20 +91,20 @@
                               @foreach($barangay as $zcbarangay)
                                 <option value="{{ $zcbarangay['barangay_name'] }}" @if($zcbarangay['barangay_name']==$zcbarangay['barangay_name']) selected @endif>{{ $zcbarangay['barangay_name'] }}</option>
                               @endforeach
-                            </select>                          
-                          </div>
+                            </select>                         
+                           </div>
                           <div class="form-group">
                             <label for="vendor_country">Country</label>
-                            <select class="form-control" id="vendor_country" name="vendor_country"  style="color: #495057;">
+                            <select class="form-control" id="vendor_country" name="vendor_country"  style="color: #495057;" disabled>
                               <option value="">Select Country</option>
                               @foreach($countries as $country)
-                                <option value="{{ $country['country_name'] }}" @if($country['country_name']=="Philippines") selected @endif>{{ $country['country_name'] }}</option>
+                                <option value="{{ $country['country_name'] }}" @if($country['country_name']=="ZAMBOANGA DEL SUR") selected @endif>{{ $country['country_name'] }}</option>
                               @endforeach
                             </select>
                           </div>
                           <div class="form-group">
-                            <label for="vendor_pincode">Zipcode</label>
-                            <input type="text" class="form-control" id="vendor_pincode" placeholder="Enter Pincode" name="vendor_pincode" value="7000">
+                            <label for="vendor_pincode">Zip code</label>
+                            <input type="text" class="form-control" id="vendor_pincode" placeholder="Enter Pincode" name="vendor_pincode" value="7000" readonly="">
                           </div>
                           <div class="form-group">
                             <label for="vendor_mobile">Mobile</label>

@@ -35,13 +35,13 @@ class AddressController extends Controller
             ]);
             if($validator->passes()){
                 $data = $request->all();
-                echo "<pre>"; print_r($data); die;
+                //echo "<pre>"; print_r($data); die;
                 $address = array();
                 $address['user_id']=Auth::user()->id;
                 $address['name']=$data['delivery_name'];
                 $address['address']=$data['delivery_address'];
                 $address['city']=$data['delivery_city'];
-                $address['state']=$data['delivery_barangay'];
+                $address['barangay']=$data['delivery_barangay'];
                 $address['country']=$data['delivery_country'];
                 $address['pincode']=$data['delivery_pincode'];
                 $address['mobile']=$data['delivery_mobile'];

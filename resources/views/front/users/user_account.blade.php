@@ -79,7 +79,7 @@
                                     <span class="astk">*</span>
                                 </label>
                                 <select class="text-field" id="user-barangay" name="barangay"  style="color: #495057;">
-                                    <option value="">Select Country</option>
+                                    <option value="">Select Barangay</option>
                                 @foreach($zcbarangay as $barangay)
                                     <option value="{{ $barangay['barangay_name'] }}" @if($barangay['barangay_name']==$barangay['barangay_name']) selected @endif>{{ $barangay['barangay_name'] }}</option>
                                 @endforeach
@@ -100,7 +100,7 @@
                                 <select class="text-field" id="user-country" name="country"  style="color: #495057;">
                                     <option value="">Select Country</option>
                                 @foreach($countries as $country)
-                                    <option value="{{ $country['country_name'] }}" @if($country['country_name']=="Philippines") selected @endif>{{ $country['country_name'] }}</option>
+                                    <option value="{{ $country['country_name'] }}" @if($country['country_name']=="ZAMBOANGA DEL SUR") selected @endif>{{ $country['country_name'] }}</option>
                                 @endforeach
                               </select>
                                 <p id="account-country"></p>
