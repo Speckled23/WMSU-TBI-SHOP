@@ -43,7 +43,7 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
 
         // dashboard stuff
         Route::get('dashboard-adminoverallRevenue/{year}/{paid}','AdminController@adminoverallRevenueYear');
-        Route::get('dashboard-admintopProducts/{year}/{paid}','AdminController@admintopProductsYear');
+        Route::get('dashboard-admintopProducts/{year}/{paid}/{limit}','AdminController@admintopProductsYear');
         Route::get('dashboard-admintopSellers/{year}/{paid}','AdminController@admintopSellersYear');
         Route::get('dashboard-adminretension/{year}','AdminController@adminretensionYear');
         Route::get('dashboard-admintopCategory/{year}/{paid}','AdminController@admintopCategoryYear');

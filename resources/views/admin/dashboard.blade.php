@@ -150,11 +150,18 @@
                             </select>
                             <div class="col-3">
                                 <div class="form-check ">
-                                    <input class="form-check-input" type="checkbox" value="1" id="TopProductspaid" onchange="renderTopProducts()">
+                                    <input class="form-check-input" type="checkbox" value="1" id="TopProductspaid" onclick="renderTopProducts()">
                                     <label class="form-check-label" for="flexCheckDefault">
                                         Paid
                                     </label>
                                 </div>
+                            </div>
+                            <div class="col-3 d-flex">
+                                <label class="form-label my-auto mx-2" for="flexCheckDefault">
+                                        Limit
+                                </label>
+                                <input class="form-control" type="number" id="topProductLimit" value="10" onchange="renderTopProducts()" min="1" max="20">
+                                   
                             </div>
                         </div>
                         <canvas id="topProdChart"></canvas>
