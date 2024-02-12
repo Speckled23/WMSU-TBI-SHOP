@@ -252,40 +252,11 @@ $productFilters = ProductsFilter::productFilters();
                             </div>
                         </div>
                         <div class="section-6-social-media-quantity-actions u-s-p-y-14">
-                            <?php /* <div class="quick-social-media-wrapper u-s-m-b-22">
-                                <span>Share:</span>
-                                <ul class="social-media-list">
-                                    <li>
-                                        <a href="#">
-                                            <i class="fab fa-facebook-f"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fab fa-twitter"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fab fa-google-plus-g"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fas fa-rss"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fab fa-pinterest"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div> */ ?>
+                          
                             <div class="quantity-wrapper u-s-m-b-22">
                                 <span>Quantity:</span>
                                 <div class="quantity">
-                                    <input type="number" class="quantity-text-field" name="quantity" value="1">
+                                    <input type="number" class="quantity-text-field" name="quantity" value="1" min="1">
                                 </div>
                             </div>
                             <div>
