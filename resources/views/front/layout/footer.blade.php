@@ -33,27 +33,34 @@
                                 <a href="{{ url('contact')}}">Contact Us</a>
                             </li>
                             <li>
+                                <a href="{{ url('service')}}">Services</a>
+                            </li>
+                            <li>
                                 <a href="{{ url('faq')}}">FAQ</a>
                             </li>
                         </ul>
+                        </ul>
                     </div>
                 </div>
-                <!--<div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="col-lg-3 col-md-3 col-sm-12">
                     <div class="footer-list">
-                        <h6>COLLECTION</h6>
+                        <h6>PRODUCT</h6>
                         <ul>
                             <li>
-                                <a href="{{url('men')}}">Men Clothing</a>
+                                <a href="{{url('search-products?search=new-arrivals')}}">New Arrivals</a>
                             </li>
                             <li>
-                                <a href="{{url('women')}}"">Women Clothing</a>
+                                <a href="{{url('search-products?search=best-sellers')}}">Best Seller</a>
                             </li>
                             <li>
-                                <a href="{{url('kids')}}"">Kids Clothing</a>
+                                <a href="{{url('search-products?search=featured')}}">Featured</a>
+                            </li>
+                            <li>
+                                <a href="{{url('search-products?search=discounted')}}">Discounted</a>
                             </li>
                         </ul>
                     </div> 
-                </div>-->
+                </div>
                 <div class="col-lg-3 col-md-3 col-sm-12">
                     <div class="footer-list">
                         <h6>ACCOUNT</h6>

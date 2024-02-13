@@ -108,7 +108,7 @@ class ProductsController extends Controller
                 }
 
                 $categoryProducts = $categoryProducts->paginate(30);
-                /*dd($categoryDetails);
+                dd($categoryDetails);
                 /*echo "Category exists"; die;*/
                 $meta_title = $categoryDetails['categoryDetails']['meta_title'];
                 $meta_keywords = $categoryDetails['categoryDetails']['meta_keywords'];
@@ -286,7 +286,6 @@ class ProductsController extends Controller
             /*echo "<pre>"; print_r($data); die;*/
             $getDiscountAttributePrice = Product::getDiscountAttributePrice($data['product_id'],$data['size']);
             /*echo "<pre>"; print_r($getDiscountAttributePrice); die;*/
-            echo "<pre>"; print_r($getDiscountAttributePrice); die;
             if($data['currency']!="INR"){
                 $getCurrency = Currency::where('currency_code',$data['currency'])->first()->toArray();
                 $getDiscountAttributePrice['product_price'] =  round($getDiscountAttributePrice['product_price']/$getCurrency['exchange_rate'],2);
