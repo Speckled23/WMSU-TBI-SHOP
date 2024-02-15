@@ -28904,6 +28904,7 @@ div.tagsinput span.tag a {
 }
 
 .navbar .navbar-menu-wrapper .navbar-nav .nav-item .nav-link {
+  padding-right: 50px;
   color: inherit;
   font-size: 1rem;
 }
@@ -29010,6 +29011,8 @@ div.tagsinput span.tag a {
   width: 40px;
   height: 40px;
   border-radius: 100%;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .navbar .navbar-menu-wrapper .navbar-nav .nav-item.nav-profile.dropdown .dropdown-toggle:after {
@@ -29968,7 +29971,7 @@ div.tagsinput span.tag a {
     display: inline-block;
   }
   .sidebar-icon-only .navbar .navbar-menu-wrapper {
-    width: calc(100% - 70px);
+    width: calc(100% - 100px);
   }
   .sidebar-icon-only .sidebar {
     width: 70px;

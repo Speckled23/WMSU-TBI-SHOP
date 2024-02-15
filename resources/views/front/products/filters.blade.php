@@ -6,16 +6,16 @@ $productFilters = ProductsFilter::productFilters();
 <div class="col-lg-3 col-md-3 col-sm-12">
     <!-- Fetch-Categories-from-Root-Category  -->
     <div class="fetch-categories">
-        <h3 class="title-name">Browse Categories</h3>
+        <h3 class="title-name"></h3>
         <!-- Level 1 -->
         <h3 class="fetch-mark-category">
-            <a href="listing.html">Food
+            <a href="listing.html"> 
                 <span class="total-fetch-items"></span>
             </a>
         </h3>
         <ul>
             <li>
-                <a href="shop-v3-sub-sub-category.html">Mushroom
+                <a href="shop-v3-sub-sub-category.html"> 
                     <span class="total-fetch-items"></span>
                 </a>
             </li>
@@ -28,13 +28,13 @@ $productFilters = ProductsFilter::productFilters();
         <!-- //end Level 1 -->
         <!-- Level 2 -->
         <h3 class="fetch-mark-category">
-            <a href="listing.html">Fertilizers
+            <a href="listing.html"> 
                 <span class="total-fetch-items"></span>
             </a>
         </h3>
         <ul>
             <li>
-                <a href="shop-v3-sub-sub-category.html">Vermicast
+                <a href="shop-v3-sub-sub-category.html"> 
                     <span class="total-fetch-items"></span>
                 </a>
             </li>

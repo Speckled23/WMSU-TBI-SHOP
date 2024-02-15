@@ -1534,6 +1534,7 @@
         },
         {
             "name": "laravel/framework",
+<<<<<<< Updated upstream
             "version": "v10.43.0",
             "source": {
                 "type": "git",
@@ -1544,6 +1545,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/framework/zipball/4f7802dfc9993cb57cf69615491ce1a7eb2e9529",
                 "reference": "4f7802dfc9993cb57cf69615491ce1a7eb2e9529",
+=======
+            "version": "v10.44.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/framework.git",
+                "reference": "1199dbe361787bbe9648131a79f53921b4148cf6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/1199dbe361787bbe9648131a79f53921b4148cf6",
+                "reference": "1199dbe361787bbe9648131a79f53921b4148cf6",
+>>>>>>> Stashed changes
                 "shasum": ""
             },
             "require": {
@@ -1591,6 +1604,10 @@
             "conflict": {
                 "carbonphp/carbon-doctrine-types": ">=3.0",
                 "doctrine/dbal": ">=4.0",
+<<<<<<< Updated upstream
+=======
+                "phpunit/phpunit": ">=11.0.0",
+>>>>>>> Stashed changes
                 "tightenco/collect": "<5.5.33"
             },
             "provide": {
@@ -1735,7 +1752,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
+<<<<<<< Updated upstream
             "time": "2024-01-30T16:25:02+00:00"
+=======
+            "time": "2024-02-13T16:01:16+00:00"
+>>>>>>> Stashed changes
         },
         {
             "name": "laravel/helpers",

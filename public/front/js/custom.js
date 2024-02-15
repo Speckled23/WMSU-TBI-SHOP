@@ -4,7 +4,7 @@ $(document).ready(function(){
 		var product_id = $(this).attr("product-id");
 		var currency = $(this).attr("currency");
 		if(currency=="" || currency==undefined){
-			var currency = "PHP ";	
+			var currency = "PHP";	
 		}
 		$.ajax({
 			headers: {
@@ -21,7 +21,7 @@ $(document).ready(function(){
 					$(".getAttributePrice").html("<div class='price'><h4>"+currency+" "+resp['final_price']+"</h4></div>");
 				}
 			},error:function(){
-				alert("Error");
+				alert("HELLOW");
 			}
 		});
 	});

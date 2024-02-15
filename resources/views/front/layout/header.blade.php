@@ -34,21 +34,21 @@ $page_url = Request::url();
                             <i class="fas fa-chevron-down u-s-m-l-9"></i>
                         </a>
                         <ul class="g-dropdown" style="width:200px">
-                            <li>
+                            <!-- <li>
                                 <a href="{{ url('cart') }}">
                                     <i class="fas fa-cog u-s-m-r-9"></i>
                                     My Cart</a>
-                            </li>
+                            </li> -->
                             <!-- <li>
                                 <a href="wishlist.html">
                                     <i class="far fa-heart u-s-m-r-9"></i>
                                     My Wishlist</a>
                             </li> -->
-                            <li>
+                            <!-- <li>
                                 <a href="{{ url('checkout') }}">
                                     <i class="far fa-check-circle u-s-m-r-9"></i>
                                     Checkout</a>
-                            </li>
+                            </li> -->
                             @if(Auth::check())
                                 <li>
                                     <a href="{{ url('user/account') }}">
@@ -283,6 +283,9 @@ $page_url = Request::url();
                                     </li>
                                     <li>
                                         <a href="{{url('contact')}}">Contact Us</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{url('service')}}">Services</a>
                                     </li>
                                     <li>
                                         <a href="{{url('faq')}}">FAQ</a>

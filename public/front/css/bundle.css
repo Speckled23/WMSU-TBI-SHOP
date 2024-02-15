@@ -13,13 +13,15 @@ html, body {
  * Basic styles for headings
  */
 h1, h2, h3, h4, h5, h6 {
-  color: #292929; }
+  color: #292929;
+  }
 
 /**
  * Basic styles for links
  */
 a {
-  color: #292929; }
+  color: #292929;
+  }
   a:hover {
     color: #d90429;
     text-decoration: none; }
@@ -48,7 +50,8 @@ img {
  */
 body {
   color: #707070;
-  font-family: "Open Sans", sans-serif; }
+  font-family: "Open Sans", sans-serif;
+  }
 
 /*--------------------------------------------------------------
 3.0 Pre-configured styles
@@ -561,14 +564,15 @@ body {
 
 .v-drop-right {
   display: none;
-  padding: 30px 35px;
+  padding: 30px 30px;
   background: #ffffff;
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
   position: absolute;
   top: 0;
   left: 100%;
   width: 220px;
-  z-index: 999; }
+  z-index: 999;
+  }
   .v-drop-right:before {
     content: "";
     position: absolute;
@@ -2080,9 +2084,10 @@ body {
     content: '';
     display: block;
     width: 100%;
-    height: 23px;
+    height: 40px;
     margin-bottom: 14px;
-    background: url(../images/payment/pay-3.png) center center no-repeat; }
+    background: url(../images/payment/pay-3.png) center center no-repeat;
+    }
 
 .social-media-wrapper {
   margin-bottom: 6px; }
@@ -3208,12 +3213,14 @@ body {
   margin-bottom: 12px;
   padding-bottom: 12px;
   font-weight: bold;
-  border-bottom: 1px solid #DCDCDD; }
+  border-bottom: 1px solid white;
+  }
 
 /* 23.1 Extract-Categories */
 .fetch-categories > .fetch-mark-category {
   font-size: 13px;
-  font-weight: bold; }
+  font-weight: bold;
+  }
   .fetch-categories > .fetch-mark-category.yes-single {
     margin-bottom: 25px; }
 
@@ -3221,7 +3228,8 @@ body {
   list-style: none;
   margin-bottom: 32px;
   padding: 0 0 16px;
-  border-bottom: 1px solid #DCDCDD; }
+  border-bottom: 1px solid white;
+  }
   .fetch-categories > ul > li > a {
     font-size: 13px; }
   .fetch-categories > ul > li > ul > li > a {
@@ -3272,7 +3280,9 @@ body {
 
 /* 23.3 Shop-Grid-View */
 .grid-style .product-item {
-  display: flex; }
+  display: flex;
+  flex-direction: column;
+  }
 
 .grid-style .item {
   margin: 0 0 30px; }
