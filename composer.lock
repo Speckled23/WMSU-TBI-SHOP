@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6e13508f90e1199ca05c8fbaf01de3af",
+    "content-hash": "b03c6a60171a45c32fa79974a6f3e984",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -1477,6 +1477,64 @@
             "time": "2022-05-21T17:30:32+00:00"
         },
         {
+            "name": "ixudra/curl",
+            "version": "6.22.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ixudra/curl.git",
+                "reference": "0b2cc89ed5eb91d617295e7e745f3acd3ab47180"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ixudra/curl/zipball/0b2cc89ed5eb91d617295e7e745f3acd3ab47180",
+                "reference": "0b2cc89ed5eb91d617295e7e745f3acd3ab47180",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "illuminate/support": ">=4.0",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Ixudra\\Curl\\CurlServiceProvider"
+                    ],
+                    "aliases": {
+                        "Curl": "Ixudra\\Curl\\Facades\\Curl"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ixudra\\Curl\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jan Oris",
+                    "email": "jan.oris@ixudra.be"
+                }
+            ],
+            "description": "Custom PHP Curl library for the Laravel framework - developed by Ixudra",
+            "homepage": "http://ixudra.be",
+            "keywords": [
+                "Ixudra",
+                "curl",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/ixudra/curl/issues",
+                "source": "https://github.com/ixudra/curl/tree/6.22.1"
+            },
+            "time": "2022-07-31T09:58:52+00:00"
+        },
+        {
             "name": "iyzico/iyzipay-php",
             "version": "v2.0.54",
             "source": {
@@ -1534,18 +1592,6 @@
         },
         {
             "name": "laravel/framework",
-<<<<<<< Updated upstream
-            "version": "v10.43.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laravel/framework.git",
-                "reference": "4f7802dfc9993cb57cf69615491ce1a7eb2e9529"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/4f7802dfc9993cb57cf69615491ce1a7eb2e9529",
-                "reference": "4f7802dfc9993cb57cf69615491ce1a7eb2e9529",
-=======
             "version": "v10.44.0",
             "source": {
                 "type": "git",
@@ -1556,7 +1602,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/framework/zipball/1199dbe361787bbe9648131a79f53921b4148cf6",
                 "reference": "1199dbe361787bbe9648131a79f53921b4148cf6",
->>>>>>> Stashed changes
                 "shasum": ""
             },
             "require": {
@@ -1604,10 +1649,7 @@
             "conflict": {
                 "carbonphp/carbon-doctrine-types": ">=3.0",
                 "doctrine/dbal": ">=4.0",
-<<<<<<< Updated upstream
-=======
                 "phpunit/phpunit": ">=11.0.0",
->>>>>>> Stashed changes
                 "tightenco/collect": "<5.5.33"
             },
             "provide": {
@@ -1752,11 +1794,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-<<<<<<< Updated upstream
-            "time": "2024-01-30T16:25:02+00:00"
-=======
             "time": "2024-02-13T16:01:16+00:00"
->>>>>>> Stashed changes
         },
         {
             "name": "laravel/helpers",
@@ -7781,16 +7819,16 @@
         },
         {
             "name": "laravel/breeze",
-            "version": "v1.28.1",
+            "version": "v1.28.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/breeze.git",
-                "reference": "e853918e770822780efd160a73fd676992340aca"
+                "reference": "1e48e29d3f769bb90bbdf2934c52f4612e3b5b47"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/breeze/zipball/e853918e770822780efd160a73fd676992340aca",
-                "reference": "e853918e770822780efd160a73fd676992340aca",
+                "url": "https://api.github.com/repos/laravel/breeze/zipball/1e48e29d3f769bb90bbdf2934c52f4612e3b5b47",
+                "reference": "1e48e29d3f769bb90bbdf2934c52f4612e3b5b47",
                 "shasum": ""
             },
             "require": {
@@ -7839,20 +7877,20 @@
                 "issues": "https://github.com/laravel/breeze/issues",
                 "source": "https://github.com/laravel/breeze"
             },
-            "time": "2024-01-15T16:14:10+00:00"
+            "time": "2024-02-13T02:26:19+00:00"
         },
         {
             "name": "laravel/sail",
-            "version": "v1.27.3",
+            "version": "v1.27.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/sail.git",
-                "reference": "7e01b345072c9604ead9d7aed175bf7ac1d80289"
+                "reference": "3047e1a157fad968cc5f6e620d5cbe5c0867fffd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sail/zipball/7e01b345072c9604ead9d7aed175bf7ac1d80289",
-                "reference": "7e01b345072c9604ead9d7aed175bf7ac1d80289",
+                "url": "https://api.github.com/repos/laravel/sail/zipball/3047e1a157fad968cc5f6e620d5cbe5c0867fffd",
+                "reference": "3047e1a157fad968cc5f6e620d5cbe5c0867fffd",
                 "shasum": ""
             },
             "require": {
@@ -7871,9 +7909,6 @@
             ],
             "type": "library",
             "extra": {
-                "branch-alias": {
-                    "dev-master": "1.x-dev"
-                },
                 "laravel": {
                     "providers": [
                         "Laravel\\Sail\\SailServiceProvider"
@@ -7904,7 +7939,7 @@
                 "issues": "https://github.com/laravel/sail/issues",
                 "source": "https://github.com/laravel/sail"
             },
-            "time": "2024-01-30T03:03:59+00:00"
+            "time": "2024-02-08T15:24:21+00:00"
         },
         {
             "name": "mockery/mockery",
