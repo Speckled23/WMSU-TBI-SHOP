@@ -24,7 +24,7 @@
                                         <th>Product Name</th>
                                         <th>Product Code</th>
                                         <th>Product Color</th>
-                                        <th>Product Image</th>
+                                        <th>Product 1Image</th>
                                         <th>Category</th>
                                         <th>Section</th>
                                         <th>Added by</th>
@@ -38,7 +38,7 @@
                                             <td>{{ $product['id'] ?? 'N/A' }}</td>
                                             <td>{{ $product['product_name'] ?? 'N/A' }}</td>
                                             <td>{{ $product['product_code'] ?? 'N/A' }}</td>
-                                            <td>{{ $product['product_color'] ?? 'N/A' }}</td>
+                                            <td>{{ $product['p'] ?? 'N/A' }}</td>
                                             <td>
                                                 @if(!empty($product['product_image']))
                                                     <img style="width: 120px; height: 120px;" src="{{ asset('front/images/product_images/small/'.$product['product_image']) }}">

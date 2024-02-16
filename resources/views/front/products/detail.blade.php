@@ -82,7 +82,7 @@ $productFilters = ProductsFilter::productFilters();
                 </div>
                 <div class="thumbnails" style="margin-top:30px;">
                         <a href="{{ asset('front/images/product_images/large/'.$productDetails['product_image']) }}" data-standard="{{ asset('front/images/product_images/small/'.$productDetails['product_image']) }}">
-                            <img width="120" height="120" src="{{ asset('front/images/product_images/small/'.$productDetails['product_image']) }}" alt="" />
+                            <img width="120" height="120" src="{{ asset('front/images/  /small/'.$productDetails['product_image']) }}" alt="" />
                         </a>
                         @foreach($productDetails['images'] as $image)
                             <a href="{{ asset('front/images/product_images/large/'.$image['image']) }}" data-standard="{{ asset('front/images/product_images/small/'.$image['image']) }}">

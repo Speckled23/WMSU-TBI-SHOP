@@ -40,6 +40,11 @@
     <link rel="stylesheet" href="{{ url('front/css/easyzoom.css') }}">
     <!-- Custom -->
     <link rel="stylesheet" href="{{ url('front/css/custom.css') }}">
+    <!-- toastr -->
+    <link rel="stylesheet" type="text/css" href="{{ url('front/plugins/toastr/toastr.css') }}">
+
+    <!-- {{-- sweetalert2 --}} -->
+    <link rel="stylesheet" type="text/css" href="{{ url('front/plugins/sweetalert2/sweetalert2.css') }}">
 </head>
 
 <body>
@@ -173,6 +178,51 @@ ga('send', 'pageview')
                 api2._init();
             }
         });
+    </script>
+
+    <script type="text/javascript" src="{{ url('front/plugins/toastr/toastr.min.js') }}"></script>
+    <!-- {{-- sweetalert2 --}} -->
+    <script src="{{ url('front/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+
+    <script>
+        $(document).on("click", "#cancel_product", function(e){
+            e.preventDefault();
+            var link = $(this).attr("href");
+
+            Swal.fire({
+                title: "Are you sure you want to Cancel this?",
+                text: "",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, Cancel",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = link;
+                }
+            });
+        });
+    </script>
+
+    <script>
+        @if(Session::has('message'))
+        var type="{{Session::get('alert-type','info')}}"
+        switch(type){
+            case 'info':
+                toastr.info("{{ Session::get('message') }}");
+                break;
+            case 'success':
+                toastr.success("{{ Session::get('message') }}");
+                break;
+            case 'warning':
+                toastr.warning("{{ Session::get('message') }}");
+                break;
+            case 'error':
+                toastr.error("{{ Session::get('message') }}");
+                break;
+                }
+        @endif
     </script>
 @include('front.layout.scripts')
 

@@ -383,25 +383,38 @@ $(document).ready(function(){
 
     // Remove Delivery Address
     $(document).on('click','.removeAddress',function(){
-    	if(confirm("Are you sure to remove this?")){
-    		var addressid = $(this).data("addressid");
-    		$.ajax({
-    			headers: {
-	        		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	    		},
-    			url:'/remove-delivery-address',
-    			type:'post',
-    			data:{addressid:addressid},
-    			success:function(resp){
-    				$("#deliveryAddresses").html(resp.view);
-    				window.location.href = "checkout";		
-    			},error:function(){
-    				alert("Error");
-    			}
-    		});
-    	}
-    });
-
+		var addressid = $(this).data("addressid");
+		
+		// Show modal confirmation
+		$('#confirmationModal').modal('show');
+	
+		// Handle confirmation
+		$('#confirmRemove').on('click', function() {
+			$.ajax({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				},
+				url:'/remove-delivery-address',
+				type:'post',
+				data:{addressid:addressid},
+				success:function(resp){
+					$("#deliveryAddresses").html(resp.view);
+					window.location.href = "checkout";        
+				},
+				error:function(){
+					alert("Error");
+				}
+			});
+			// Close modal after AJAX request
+			$('#confirmationModal').modal('hide');
+		});
+	});
+	
+	// Optional: Close modal when cancel button is clicked
+	$('#cancelRemove').on('click', function() {
+		$('#confirmationModal').modal('hide');
+	});
+	
     // Calculate Grand Total
     $("input[name=address_id").bind('change',function(){
     	var shipping_charges = $(this).attr("shipping_charges");

@@ -311,7 +311,10 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
         Route::get('thanks','ProductsController@thanks');
 
         // Users Orders
-        Route::get('user/orders/{id?}','OrderController@orders');
+        Route::get('user/orders/{product_id?}','OrderController@orders');
+        Route::match(['get','post'],'cancel-product/{product_id?}','OrderController@cancelProduct');
+        Route::match(['get','post'],'cancel-order/{product_id?}','OrderController@cancelOrder');
+
 
         // Paypal Routes
         Route::get('paypal','PaypalController@paypal');

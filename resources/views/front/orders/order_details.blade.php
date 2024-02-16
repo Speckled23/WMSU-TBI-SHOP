@@ -47,6 +47,7 @@
                     <th>Product Size</th>
                     <th>Product Color</th>
                     <th>Product Qty</th>
+                    <th>Action</th>
                 </tr>
                 @foreach($orderDetails['orders_products'] as $product)
                     <tr>
@@ -59,6 +60,9 @@
                         <td>{{ $product['product_size'] }}</td>
                         <td>{{ $product['product_color'] }}</td>
                         <td>{{ $product['product_qty'] }}</td>
+                        <td>
+                            <a @if($product['item_status']=="Pending" || $product['item_status']=="In Progress") href="{{ url('cancel-product/'.$product['id']) }}" id="cancel_product" @endif><u>Cancel</u></a>
+                        </td>
                     </tr>
                     @if($product['courier_name']!="")
                     <tr><td colspan="6">Courier Name: {{ $product['courier_name']}}, Tracking Number: {{ $product['tracking_number']}} </td></tr>
@@ -75,7 +79,10 @@
                 <tr><td>Pincode</td><td>{{ $orderDetails['pincode']}}</td></tr>
                 <tr><td>Mobile</td><td>{{ $orderDetails['mobile']}}</td></tr>
             </table>
+            <a style="max-width: 150px; float: right; display: inline-block; background-color: red; color: white;"  @if($orderDetails['order_status']!="Cancelled" ) href="{{ url('cancel-order/'.$orderDetails['id']) }}" id="cancel_product" @endif class="btn btn-block btn-primary">Cancel Order</a>
         </div>
+       
+
     </div>
 </div>
 <!-- Cart-Page /- -->

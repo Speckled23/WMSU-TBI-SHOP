@@ -82,6 +82,13 @@ class OrderController extends Controller
         return view('admin.orders.order_details')->with(compact('orderDetails','userDetails','orderStatuses','orderItemStatuses','orderLog','item_discount'));
     }
 
+    public function deleteOrder($id){
+        // Delete Order
+        Order::where('id',$id)->delete();
+        $message = "Order has been deleted successfully!";
+        return redirect()->back()->with('success_message',$message);
+    }
+
     public function updateOrderStatus(Request $request){
         if($request->isMethod('post')){
             $data = $request->all();

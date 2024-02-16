@@ -110,7 +110,7 @@
         <!-- Shop-Right-Wrapper /- -->
 
         <!-- Shop-Pagination -->
-        <?php /* <div class="pagination-area">
+        <div class="pagination-area">
             <div class="pagination-number">
                 <ul>
                     <li style="display: none">
@@ -140,7 +140,7 @@
                     </li>
                 </ul>
             </div>
-        </div> */ ?>
+        </div>  
         <!-- Shop-Pagination /- -->
     </div>
 </div>

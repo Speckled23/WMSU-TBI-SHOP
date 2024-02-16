@@ -25,13 +25,13 @@ class AddressController extends Controller
     public function saveDeliveryAddress(Request $request){
         if($request->ajax()){
             $validator = Validator::make($request->all(),[
-                'delivery_name'=>'required|string|max:100',
+                'delivery_name' => ['required', 'string', 'max:100', 'regex:/^\b\w+\s\w+(\s\w+)?\b$/'],
+                'delivery_mobile' => ['required', 'numeric', 'digits:11', 'regex:/^09\d{9}$/'],                
                 'delivery_address'=>'required|string|max:100',
                 'delivery_city'=>'required|string|max:100',
                 'delivery_barangay'=>'required|string|max:100',
                 'delivery_country'=>'required|string|max:100',
                 'delivery_pincode'=>'required|digits:4',
-                'delivery_mobile'=>'required|numeric|digits:11',
             ]);
             if($validator->passes()){
                 $data = $request->all();
