@@ -43,7 +43,7 @@
                       <input type="text" class="form-control" value="{{ $vendorDetails['vendor_personal']['name'] }}" readonly="">
                     </div>
                     <div class="form-group">
-                      <label for="vendor_address">Address</label>
+                      <label for="vendor_address">Address Details</label>
                       <input type="text" class="form-control" value="{{ $vendorDetails['vendor_personal']['address'] }}" readonly="">
                     </div>
                     <div class="form-group">

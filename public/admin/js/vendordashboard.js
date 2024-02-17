@@ -35,6 +35,8 @@ function rendervendorsales() {
 rendervendorsales();
 
 
+
+
 var vendorave = document.getElementById('vendorave');
 var vendoraveVar;
 function rendervendorAve(){

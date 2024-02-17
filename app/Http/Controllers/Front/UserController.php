@@ -27,14 +27,16 @@ class UserController extends Controller
             /*echo "<pre>"; print_r($data); die;*/
 
             $validator = Validator::make($request->all(), [
-                'name' => 'required|string|max:100',
-                'mobile' => 'required|numeric|digits:11',
-                'email' => 'required|email|max:150|unique:users',
-                'password' => 'required|min:6',
+                'name' => 'required|regex:/^[a-zA-Z\s]+$/|max:100',
+                'mobile' => 'required|numeric|digits:11|unique:users',
+                'email' => 'required|email|max:150|regex:/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/|unique:users',
+                'password' => 'required|confirmed|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/',
                 'accept' => 'required'
             ],
             [
-                'accept.required'=>'Please accept our Terms & Conditions'
+                'accept.required'=>'Please accept our Terms & Conditions',
+                'name.regex'=>'Name should be in valid format.',
+                'email.regex'=>'Email should be in valid format.'
             ]
         );
 

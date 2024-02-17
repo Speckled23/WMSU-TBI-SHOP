@@ -72,14 +72,15 @@
             <table class="table table-striped table-borderless">
                 <tr class="table-danger"><td colspan="2"><strong>Delivery Address</strong></td></tr>
                 <tr><td>Name</td><td>{{ $orderDetails['name']}}</td></tr>
-                <tr><td>Address</td><td>{{ $orderDetails['address']}}</td></tr>
+                <tr><td>Address Details</td><td>{{ $orderDetails['address']}}</td></tr>
                 <tr><td>City</td><td>{{ $orderDetails['city']}}</td></tr>
-                <tr><td>State</td><td>{{ $orderDetails['state']}}</td></tr>
-                <tr><td>Country</td><td>{{ $orderDetails['country']}}</td></tr>
+                <tr><td>Barangay</td><td>{{ $orderDetails['state']}}</td></tr>
+                <tr><td>Province</td><td>{{ $orderDetails['country']}}</td></tr>
                 <tr><td>Pincode</td><td>{{ $orderDetails['pincode']}}</td></tr>
                 <tr><td>Mobile</td><td>{{ $orderDetails['mobile']}}</td></tr>
             </table>
             <a style="max-width: 150px; float: right; display: inline-block; background-color: red; color: white;"  @if($orderDetails['order_status']!="Cancelled" ) href="{{ url('cancel-order/'.$orderDetails['id']) }}" id="cancel_product" @endif class="btn btn-block btn-primary">Cancel Order</a>
+
         </div>
        
 

@@ -68,10 +68,6 @@
                                 <p id="login-password"></p>
                             </div>
                             <div class="group-inline u-s-m-b-30">
-                                <!-- <div class="group-1">
-                                    <input type="checkbox" class="check-box" id="remember-me-token">
-                                    <label class="label-text" for="remember-me-token">Remember me</label>
-                                </div> -->
                                 <div class="group-2 text-right">
                                     <div class="page-anchor">
                                         <a href="{{ url('user/forgot-password') }}">
@@ -86,6 +82,7 @@
                     </div>
                 </div>
                 <!-- Login /- -->
+
                 <!-- Register -->
                 <div class="col-lg-6">
                     <div class="reg-wrapper">
@@ -120,6 +117,13 @@
                                 </label>
                                 <input type="password" id="user-password" name="password" class="text-field" placeholder="Customer Password">
                                 <p id="register-password"></p>
+                            </div>
+                            <div class="u-s-m-b-30">
+                                <label for="userpassword">Confirm Password
+                                    <span class="astk">*</span>
+                                </label>
+                                <input type="password" id="user-password-confirm" name="password_confirmation" class="text-field" placeholder="Confirm Password">
+                                <p id="register-password-confirm"></p>
                             </div>
                             <div class="u-s-m-b-30">
                                 <input type="checkbox" class="check-box" id="accept" name="accept">

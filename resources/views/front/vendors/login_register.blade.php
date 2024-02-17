@@ -114,6 +114,13 @@
                                 <input type="password" id="vendorpassword" name="password" class="text-field" placeholder="Seller Password">
                             </div>
                             <div class="u-s-m-b-30">
+                                <label for="userpassword">Confirm Password
+                                    <span class="astk">*</span>
+                                </label>
+                                <input type="password" id="user-password-confirm" name="password_confirmation" class="text-field" placeholder="Confirm Password">
+                                <p id="register-password-confirm"></p>
+                            </div>
+                            <div class="u-s-m-b-30">
                                 <input type="checkbox" class="check-box" id="accept" name="accept">
                                 <label class="label-text no-color" for="accept">I have carefully reviewed and hereby accept the
                                     <a href="terms-and-conditions.html" class="u-c-brand">terms and conditions.</a>

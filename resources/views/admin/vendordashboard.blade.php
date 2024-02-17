@@ -26,7 +26,7 @@
                         <div class="card card-dark-blue">
                             <div class="card-body">
                                 <p class="mb-4">Current Inventory</p>
-                                <p class="fs-30 mb-2">{{$categoriesCount}}</p>
+                                <p class="fs-30 mb-2">{{$productsCount}}</p>
                             </div>
                         </div>
                     </div>
@@ -53,32 +53,6 @@
                 </div>
             </div>
         </div>
-        <!-- K -->
-        <div style="padding: 30px; color: black; position: static; left: 100px; top: 0;">
-            <div>
-                <div>
-                    <!-- <form id="dateFilterForm">
-                        <label for="startDate" style="color: #000;">Start Date:</label>
-                            <input type="date" id="startDate" name="startDate" style="background-color: #E0F8FF; /* Light Sky Blue */
-                                                                                border: 1px solid #87CEEB; /* Sky Blue */
-                                                                                color: #000; /* Black */
-                                                                                padding: 4px;
-                                                                                border-radius: 5px;
-                                                                                margin-right: 10px;">
-
-                        <label for="endDate" style="color: #000;">End Date:</label>
-                            <input type="date" id="endDate" name="endDate" style="background-color: #E0F8FF; /* Light Sky Blue */
-                                                                            border: 1px solid #87CEEB; /* Sky Blue */
-                                                                            color: #000; /* Black */
-                                                                            padding: 4px;
-                                                                            border-radius: 5px;">
-
-                        <button id="filterButton" style="border-radius: 5px; border: 2px solid #E0F8FF; background-color: skyblue; color: white; padding: 4px 15px; cursor: pointer;">Apply Filter</button>
-                    </form> -->
-                </div>
-            </div>
-        </div>
-        <!-- K -->
         <div class = 'row'>
             <div class="col-md-6 grid-margin stretch-card">
                 <div class="card">

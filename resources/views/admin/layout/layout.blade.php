@@ -26,6 +26,8 @@
   <!-- datatable -->
   <link rel="stylesheet" href="{{ url('admin/css/bootstrap.css') }}">
   <link rel="stylesheet" href="{{ url('admin/css/dataTables.bootstrap4.min.css') }}">
+  <!-- input desing -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 </head>
 <body>
   <div class="container-scroller">
@@ -235,6 +237,26 @@
                     'TableOfContents'
                 ]
             });
+
+            function previewVendorImage(event) {
+                var reader = new FileReader();
+                reader.onload = function(){
+                    var output = document.getElementById('vendorImagePreview');
+                    output.src = reader.result;
+                    document.getElementById('imagePreview').style.display = 'block';
+                }
+                reader.readAsDataURL(event.target.files[0]);
+            }
+
+            function previewImage(event) {
+                var reader = new FileReader();
+                reader.onload = function(){
+                var output = document.getElementById('newImagePreview');
+                output.src = reader.result;
+                document.getElementById('imagePreview').style.display = 'block';
+                }
+                reader.readAsDataURL(event.target.files[0]);
+            }
         </script>
 </body>
 

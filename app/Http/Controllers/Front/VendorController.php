@@ -24,15 +24,18 @@ class VendorController extends Controller
 
             // Validate Vendor 
             $rules = [
-                "name" => "required",
-                "email" => "required|email|unique:admins|unique:vendors",
+                "name" => 'required|regex:/^[a-zA-Z\s]+$/|max:100',
+                "email" => "required|email|regex:/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/|unique:admins|unique:vendors",
                 "mobile" => "required|min:11|numeric|unique:admins|unique:vendors",
+                "password"=> 'required|confirmed|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/',
                 "accept" => "required"
             ];
             $customMessages = [
                 "name.required" => "Name is required",
+                "name.regex" => "Name should be in valid format",
                 "email.required" => "Email is required",
                 "email.unique" => "Email already exists",
+                "email.regex" => "Email should be in valid format",
                 "mobile.required" => "Mobile number is required",
                 "mobile.unique" => "The provided mobile number is already registered in our system.",
                 "accept.required" => "Kindly accept the Terms and Conditions.",
@@ -51,13 +54,15 @@ class VendorController extends Controller
             $vendor->name = $data['name'];
             $vendor->mobile = $data['mobile'];
             $vendor->email = $data['email'];
+            $vendor->commission = 0;
             $vendor->status = 0;
 
             // Set Default Timezone to India
-            date_default_timezone_set("Asia/Kolkata");
+            date_default_timezone_set("Asia/Manila");
             $vendor->created_at = date("Y-m-d H:i:s");
             $vendor->updated_at = date("Y-m-d H:i:s");
             $vendor->save();
+            
 
             $vendor_id = DB::getPdo()->lastInsertId();
 

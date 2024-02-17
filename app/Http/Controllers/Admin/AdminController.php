@@ -34,8 +34,8 @@ class AdminController extends Controller
         $data = $request->session()->all();
         Session::put('page','vendordashboard');
         $sectionsCount = Section::count();
-        $categoriesCount = Category::count();
-        $productsCount = Product::count();
+        $productsCount = Product::where('vendor_id', $data['id'])->count();
+
         $orders = DB::table('orders_products as op')
         ->select(
             'item_status',
@@ -84,7 +84,7 @@ class AdminController extends Controller
             ->orderBy(DB::raw('YEAR(created_at)'),'desc')
             ->get()
             ->toArray();
-        return view('admin.vendordashboard')->with(compact('years','sectionsCount','categoriesCount','productsCount','ordersCount','salesTotal','couponsCount','brandsCount','usersCount'));
+        return view('admin.vendordashboard')->with(compact('years','sectionsCount','productsCount','ordersCount','salesTotal','couponsCount','brandsCount','usersCount'));
     }
 
     public function adminoverallRevenue(){
@@ -920,7 +920,7 @@ class AdminController extends Controller
 
                 $customMessages = [
                     'vendor_name.required' => 'Name is required',
-                    'vendor_city.required' => 'Name is required',
+
                     'vendor_name.regex' => 'Valid Name is required',
                     'vendor_city.regex' => 'Valid City is required',
                     'vendor_mobile.required' => 'Mobile is required',
@@ -949,8 +949,9 @@ class AdminController extends Controller
 
                 // Update in admins table
                 Admin::where('id',Auth::guard('admin')->user()->id)->update(['name'=>$data['vendor_name'],'mobile'=>$data['vendor_mobile'],'image'=>$imageName]);
+                $commision = 0;
                 // Update in vendors table
-                Vendor::where('id',Auth::guard('admin')->user()->vendor_id)->update(['name'=>$data['vendor_name'],'mobile'=>$data['vendor_mobile'],'address'=>$data['vendor_address'],'city'=>$data['vendor_city'],'barangay'=>$data['vendor_barangay'],'country'=>$data['vendor_country'],'pincode'=>$data['vendor_pincode']]);
+                Vendor::where('id',Auth::guard('admin')->user()->vendor_id)->update(['name'=>$data['vendor_name'],'mobile'=>$data['vendor_mobile'],'address'=>$data['vendor_address'],'city'=>$data['vendor_city'],'barangay'=>$data['vendor_barangay'], 'commission'=> $commision,'country'=>$data['vendor_country'],'pincode'=>$data['vendor_pincode']]);
                 return redirect()->back()->with('success_message','Vendor details updated successfully!');
             }
             $vendorDetails = Vendor::where('id',Auth::guard('admin')->user()->vendor_id)->first()->toArray();
@@ -969,7 +970,6 @@ class AdminController extends Controller
 
                 $customMessages = [
                     'shop_name.required' => 'Name is required',
-                    'shop_city.required' => 'Name is required',
                     'shop_name.regex' => 'Valid Name is required',
                     'shop_city.regex' => 'Valid City is required',
                     'shop_mobile.required' => 'Mobile is required',
@@ -997,6 +997,7 @@ class AdminController extends Controller
                 }
                 $vendorCount = VendorsBusinessDetail::where('vendor_id',Auth::guard('admin')->user()->vendor_id)->count();
                 if($vendorCount>0){
+                  
                     // Update in vendors_business_details table
                 VendorsBusinessDetail::where('vendor_id',Auth::guard('admin')->user()->vendor_id)->update(['shop_name'=>$data['shop_name'],'shop_mobile'=>$data['shop_mobile'],'shop_address'=>$data['shop_address'],'shop_city'=>$data['shop_city'],'shop_barangay'=>$data['shop_barangay'],'shop_country'=>$data['shop_country'],'shop_pincode'=>$data['shop_pincode'],'business_license_number'=>$data['business_license_number'],'gst_number'=>$data['gst_number'],'pan_number'=>$data['pan_number'],'address_proof'=>$data['address_proof'],'address_proof_image'=>$imageName]);
                 }else{

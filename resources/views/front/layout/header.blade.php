@@ -34,31 +34,16 @@ $page_url = Request::url();
                             <i class="fas fa-chevron-down u-s-m-l-9"></i>
                         </a>
                         <ul class="g-dropdown" style="width:200px">
-                            <li>
-                                <a href="{{ url('cart') }}">
-                                    <i class="fas fa-cog u-s-m-r-9"></i>
-                                    My Cart</a>
-                            </li>
-                            <!-- <li>
-                                <a href="wishlist.html">
-                                    <i class="far fa-heart u-s-m-r-9"></i>
-                                    My Wishlist</a>
-                            </li> -->
-                            <li>
-                                <a href="{{ url('checkout') }}">
-                                    <i class="far fa-check-circle u-s-m-r-9"></i>
-                                    Checkout</a>
-                            </li>
                             @if(Auth::check())
                                 <li>
                                     <a href="{{ url('user/account') }}">
                                         <i class="fas fa-sign-in-alt u-s-m-r-9"></i>
-                                        My Account</a>
+                                        Account</a>
                                 </li>
                                 <li>
                                     <a href="{{ url('user/orders') }}">
                                         <i class="fas fa-sign-in-alt u-s-m-r-9"></i>
-                                        My Orders</a>
+                                        Orders</a>
                                 </li>
                                 <li>
                                     <a href="{{ url('user/logout') }}">
@@ -69,12 +54,12 @@ $page_url = Request::url();
                                 <li>
                                     <a href="{{ url('user/login-register') }}">
                                         <i class="fas fa-sign-in-alt u-s-m-r-9"></i>
-                                        Customer Login</a>
+                                        Customer</a>
                                 </li>
                                 <li>
                                     <a href="{{ url('vendor/login-register') }}">
                                         <i class="fas fa-sign-in-alt u-s-m-r-9"></i>
-                                        Seller Login</a>
+                                        Seller</a>
                                 </li>
                             @endif
                         </ul>

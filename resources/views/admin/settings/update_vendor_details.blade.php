@@ -9,21 +9,6 @@
                         <h3 class="font-weight-bold">Update Vendor Details</h3>
                         <!-- <h6 class="font-weight-normal mb-0">Update Admin Password</h6> -->
                     </div>
-                    <div class="col-12 col-xl-4">
-                        <div class="justify-content-end d-flex">
-                            <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
-                                <!-- <button class="btn btn-sm btn-light bg-white dropdown-toggle" type="button" id="dropdownMenuDate2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                <i class="mdi mdi-calendar"></i> Today (10 Jan 2021)
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuDate2">
-                                    <a class="dropdown-item" href="#">January - March</a>
-                                    <a class="dropdown-item" href="#">March - June</a>
-                                    <a class="dropdown-item" href="#">June - August</a>
-                                    <a class="dropdown-item" href="#">August - November</a>
-                                </div> -->
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -75,15 +60,13 @@
                             <input type="text" class="form-control" id="vendor_name" placeholder="Enter Name" name="vendor_name" value="{{ Auth::guard('admin')->user()->name }}">
                           </div>
                           <div class="form-group">
-                            <label for="vendor_address">Address</label>
+                            <label for="vendor_address">Address Details</label>
                             <input type="text" class="form-control" id="vendor_address" placeholder="Enter Address" name="vendor_address" value="{{ $vendorDetails['address'] }}">
                           </div>
                           <div class="form-group">
                             <label for="vendor_city">City</label>
                             <input type="text" class="form-control" id="vendor_city" placeholder="Enter City" name="vendor_city" value="Zamboanga City" readonly="">
                           </div>
-                        </div>
-                        <div class="col-lg-6">
                           <div class="form-group">
                             <label for="vendor_barangay">Barangay</label>
                             <select class="form-control" id="vendor_barangay" name="vendor_barangay"  style="color: #495057;">
@@ -94,14 +77,13 @@
                             </select>                         
                            </div>
                           <div class="form-group">
-                            <label for="vendor_country">Country</label>
-                            <select class="form-control" id="vendor_country" name="vendor_country"  style="color: #495057;" disabled>
-                              <option value="">Select Country</option>
-                              @foreach($countries as $country)
-                                <option value="{{ $country['country_name'] }}" @if($country['country_name']=="ZAMBOANGA DEL SUR") selected @endif>{{ $country['country_name'] }}</option>
-                              @endforeach
-                            </select>
+                            <label for="vendor_country">Province</label>
+                            <input type="text" class="form-control" id="vendor_country" placeholder="Enter Pincode" name="vendor_country" value="ZAMBOANGA DEL SUR" readonly="">
                           </div>
+                          
+                        </div>
+                        <div class="col-lg-6">
+                          
                           <div class="form-group">
                             <label for="vendor_pincode">Zip code</label>
                             <input type="text" class="form-control" id="vendor_pincode" placeholder="Enter Pincode" name="vendor_pincode" value="7000" readonly="">
@@ -112,17 +94,32 @@
                           </div>
                           <div class="form-group">
                             <label for="vendor_image">Photo</label>
-                            <input type="file" class="form-control" id="vendor_image" name="vendor_image">
-                            @if(!empty(Auth::guard('admin')->user()->image))
-                              <a target="_blank" href="{{ url('admin/images/photos/'.Auth::guard('admin')->user()->image) }}">View Image</a>
-                              <input type="hidden" name="current_vendor_image" value="{{ Auth::guard('admin')->user()->image }}">
-                            @endif
+                            <div class="custom-file">
+                              <input type="file" class="custom-file-input" id="vendor_image" name="vendor_image" onchange="previewVendorImage(event)">
+                              <label class="custom-file-label" for="vendor_image">Choose file</label>
+                            </div>
+                            <div class="mt-2 row">
+                              @if(!empty(Auth::guard('admin')->user()->image))
+                                <div class="col-md-6">
+                                  <label>Current Image:</label>
+                                  <div>
+                                    <img src="{{ url('admin/images/photos/'.Auth::guard('admin')->user()->image) }}" alt="current_image" class="img-thumbnail" style="max-width: 100%;">
+                                  </div>
+                                </div>
+                              @endif
+                              <div class="col-md-6" id="imagePreview" style="display: none;">
+                                <label>New Image Preview:</label>
+                                <div>
+                                  <img id="vendorImagePreview" src="#" alt="new_image" class="img-thumbnail" style="max-width: 100%;">
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
                       
                       
-                      <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                      <button type="submit" class="btn btn-primary mr-2">Save</button>
                       <button type="reset" class="btn btn-light">Cancel</button>
                     </form>
                   
@@ -182,7 +179,7 @@
                   </div>
                   <div class="form-group">
                     <label for="shop_city">Shop City</label>
-                    <input type="text" class="form-control" id="shop_city" placeholder="Enter Shop City" name="shop_city"  value="Zamboanga City" >
+                    <input type="text" class="form-control" id="shop_city" placeholder="Enter Shop City" name="shop_city"  value="Zamboanga City" readonly="">
                   </div>
                   <div class="form-group">
                     <label for="shop_barangay">Shop Barangay</label>
@@ -196,17 +193,12 @@
                 </div>
                <div class="col-md-6">
                <div class="form-group">
-                  <label for="shop_country">Shop Country</label>
-                  <select class="form-control" id="shop_country" name="shop_country" style="color: #495057;">
-                    <option value="">Select Country</option>
-                    @foreach($countries as $country)
-                      <option value="{{ $country['country_name'] }}" @if(isset($vendorDetails['shop_country']) && $country['country_name']==$vendorDetails['shop_country']) selected @endif>{{ $country['country_name'] }}</option>
-                    @endforeach
-                  </select>
+                  <label for="shop_country">Shop Province</label>
+                  <input type="text" class="form-control" id="shop_country" name="shop_country" value = "ZAMBOANGA DEL SUR" readonly="">
                 </div>
                 <div class="form-group">
                   <label for="shop_pincode">Shop Zipcode</label>
-                  <input type="text" class="form-control" id="shop_pincode" placeholder="Enter Shop Zipcode" name="shop_pincode" value = "7000f">
+                  <input type="text" class="form-control" id="shop_pincode"  name="shop_pincode" value = "7000" readonly="">
                 </div>
                 <div class="form-group">
                   <label for="shop_mobile">Shop Contact No.</label>
