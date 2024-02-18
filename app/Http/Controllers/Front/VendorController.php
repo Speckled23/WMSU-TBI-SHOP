@@ -31,8 +31,8 @@ class VendorController extends Controller
                 "accept" => "required"
             ];
             $customMessages = [
-                "name.required" => "Name is required",
-                "name.regex" => "Name should be in valid format",
+                "name.required" => "Name is required.",
+                "name.regex" => "Name should be in valid format.",
                 "email.required" => "Email is required",
                 "email.unique" => "Email already exists",
                 "email.regex" => "Email should be in valid format",

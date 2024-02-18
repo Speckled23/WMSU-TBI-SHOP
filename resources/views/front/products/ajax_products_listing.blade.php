@@ -15,12 +15,12 @@ use App\Models\Currency;
                     	<img class="img-fluid" src="{{ asset('front/images/product_images/small/no-image.png') }}" alt="Product">
                     @endif
                 </a>
-                <div class="item-action-behaviors">
+                <!-- <div class="item-action-behaviors">
                     <a class="item-quick-look" data-toggle="modal" href="#quick-view">Quick Look</a>
                     <a class="item-mail" href="javascript:void(0)">Mail</a>
                     <a class="item-addwishlist" href="javascript:void(0)">Add to Wishlist</a>
-                    <a class="item-addCart" href="javascript:void(0)">Add to Cart</a>
-                </div>
+                    <a class="item-addCart" href="javascript:void(0)">Add 1to Cart</a>
+                </div> -->
             </div>
             <div class="item-content">
                 <div class="what-product-is">
@@ -42,12 +42,6 @@ use App\Models\Currency;
                         <p>{{ $product['description'] }}
                         </p>
                     </div>
-                    <!-- <div class="item-stars">
-                        <div class='star' title="4.5 out of 5 - based on 23 Reviews">
-                            <span style='width:67px'></span>
-                        </div>
-                        <span>(23)</span>
-                    </div> -->
                 </div>
                 <?php $getDiscountPrice = Product::getDiscountPrice($product['id']); ?>
                 @if(isset($_GET['cy'])&&$_GET['cy']!="PHP ")

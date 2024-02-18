@@ -211,6 +211,75 @@ class ProductsController extends Controller
         return view('front.products.vendor_listing')->with(compact('getVendorShop','vendorProducts'));
     }
 
+    public function indexdetail($id){
+        $productDetails = Product::with(['section','category','brand','attributes'=>function($query){
+            $query->where('stock','>',0)->where('status',1);
+        },'images','vendor'])->find($id)->toArray();
+        $categoryDetails = Category::categoryDetails($productDetails['category']['url']);
+
+        // Get Similar Products
+        $similarProducts = Product::with('brand')->where('category_id',$productDetails['category']['id'])->where('id','!=',$id)->limit(4)->inRandomOrder()->get()->toArray();
+        /*dd($similarProducts);*/
+
+        // Set Session for Recently Viewed Products
+        if(empty(Session::get('session_id'))){
+            $session_id = md5(uniqid(rand(), true));
+        }else{
+            $session_id = Session::get('session_id');
+        }
+
+        Session::put('session_id',$session_id);
+
+        // Insert product in table if not already exists
+        $countRecentlyViewedProducts = DB::table('recently_viewed_products')->where(['product_id'=>$id,'session_id'=>$session_id])->count();
+        if($countRecentlyViewedProducts==0){
+            DB::table('recently_viewed_products')->insert(['product_id'=>$id,'session_id'=>$session_id]);
+        }
+
+        // Get Recently Viewed Products Ids
+        $recentProductsIds = DB::table('recently_viewed_products')->select('product_id')->where('product_id','!=',$id)->where('session_id',$session_id)->inRandomOrder()->get()->take(4)->pluck('product_id');
+        /*dd($recentProductsIds);*/
+
+
+        // Get Recently Viewed Products
+        $recentlyViewedProducts = Product::with('brand')->whereIn('id',$recentProductsIds)->get()->toArray();
+        /*dd($recentlyViewedProducts);*/
+
+        // Get Group Products (Product Colors)
+        $groupProducts = array();
+        if(!empty($productDetails['group_code'])){
+            $groupProducts = Product::select('id','product_image')->where('id','!=',$id)->where(['group_code'=>$productDetails['group_code'],'status'=>1])->get()->toArray();
+            /*dd($groupProducts);*/
+        }
+
+        // Get All Ratings of product 
+        $ratings = Rating::with('user')->where(['product_id'=>$id,'status'=>1])->get()->toArray();
+        
+        // Get Average Rating of product
+        $ratingSum = Rating::where(['product_id'=>$id,'status'=>1])->sum('rating');
+        $ratingCount = Rating::where(['product_id'=>$id,'status'=>1])->count();
+
+        // Get Star Rating
+        $ratingOneStarCount = Rating::where(['product_id'=>$id,'status'=>1,'rating'=>1])->count();
+        $ratingTwoStarCount = Rating::where(['product_id'=>$id,'status'=>1,'rating'=>2])->count();
+        $ratingThreeStarCount = Rating::where(['product_id'=>$id,'status'=>1,'rating'=>3])->count();
+        $ratingFourStarCount = Rating::where(['product_id'=>$id,'status'=>1,'rating'=>4])->count();
+        $ratingFiveStarCount = Rating::where(['product_id'=>$id,'status'=>1,'rating'=>5])->count();
+
+        $avgRating = 0;
+        $avgStarRating = 0;
+        if($ratingCount>0){
+            $avgRating = round($ratingSum/$ratingCount,2);
+            $avgStarRating = round($ratingSum/$ratingCount);
+        }
+
+        $totalStock = ProductsAttribute::where('product_id',$id)->sum('stock');
+        $meta_title = $productDetails['meta_title'];
+        $meta_description = $productDetails['meta_description'];
+        $meta_keywords = $productDetails['meta_keywords'];
+        return view('front.products.detail')->with(compact('productDetails','categoryDetails','totalStock','similarProducts','recentlyViewedProducts','groupProducts','meta_title','meta_description','meta_keywords','ratings','avgRating','avgStarRating','ratingOneStarCount','ratingTwoStarCount','ratingThreeStarCount','ratingFourStarCount','ratingFiveStarCount'));
+    }
+
     public function detail($id){
         $productDetails = Product::with(['section','category','brand','attributes'=>function($query){
             $query->where('stock','>',0)->where('status',1);
@@ -287,7 +356,7 @@ class ProductsController extends Controller
             $getDiscountAttributePrice = Product::getDiscountAttributePrice($data['product_id'],$data['size']);
             /*echo "<pre>"; print_r($getDiscountAttributePrice); die;*/
             echo "<pre>"; print_r($getDiscountAttributePrice); die;
-            if($data['currency']!="INR"){
+            if($data['currency']!="PHP"){
                 $getCurrency = Currency::where('currency_code',$data['currency'])->first()->toArray();
                 $getDiscountAttributePrice['product_price'] =  round($getDiscountAttributePrice['product_price']/$getCurrency['exchange_rate'],2);
                 $getDiscountAttributePrice['final_price'] =  round($getDiscountAttributePrice['final_price']/$getCurrency['exchange_rate'],2);
@@ -433,7 +502,7 @@ class ProductsController extends Controller
             if(!empty($data['currency'])){
                 $currency = $data['currency'];    
             }else{
-                $currency = "INR";
+                $currency = "PHP";
             }
             
             return response()->json([
@@ -800,13 +869,10 @@ class ProductsController extends Controller
                 Sms:sendSms($message,$mobile);*/
 
 
-            }else if($data['payment_gateway']=="Paypal"){
-                // Paypal - Redirect User to Paypal page after saving order
-                return redirect('/paypal');
-            }else if($data['payment_gateway']=="iyzipay"){
-                // iyzipay - Redirect User to iyzipay page after saving order
-                return redirect('/iyzipay');
-            }else{
+            }else if($data['payment_gateway']=="ONLINE"){
+
+                return redirect()->route('gcash.pay');
+            } else{
                 echo "Other Prepaid payment methods coming soon";
             }
 

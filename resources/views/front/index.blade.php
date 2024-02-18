@@ -1,8 +1,13 @@
 <?php use App\Models\Product; 
-use App\Models\Currency; ?>
+use App\Models\Currency; 
+use App\Models\ProductsFilter;
+$productFilters = ProductsFilter::productFilters();
+/*dd($productFilters);*/
+?>
 @extends('front.layout.layout')
 @section('content')
 <!-- Main-Slider -->
+
 <div class="default-height ph-item">
     <div class="slider-main owl-carousel">
         @foreach($sliderBanners as $banner)
@@ -67,13 +72,7 @@ use App\Models\Currency; ?>
                                             <img class="img-fluid" src="{{ asset('front/images/product_images/small/no-image.png') }}" alt="Product">
                                             @endif
                                         </a>
-                                        <div class="item-action-behaviors">
-                                            <a class="item-quick-look" data-toggle="modal" href="#quick-view">Quick Look
-                                            </a>
-                                            <!-- <a class="item-mail" href="javascript:void(0)">Mail</a>
-                                            <a class="item-addwishlist" href="javascript:void(0)">Add to Wishlist</a> -->
-                                            <a class="item-addCart" href="javascript:void(0)">Add to Cart</a>
-                                        </div>
+                                      
                                     </div>
                                     <div class="item-content">
                                         <div class="what-product-is">
@@ -155,13 +154,7 @@ use App\Models\Currency; ?>
                                             <img class="img-fluid" src="{{ asset('front/images/product_images/small/no-image.png') }}" alt="Product">
                                             @endif
                                         </a>
-                                        <div class="item-action-behaviors">
-                                            <a class="item-quick-look" data-toggle="modal" href="#quick-view">Quick Look
-                                            </a>
-                                            <!-- <a class="item-mail" href="javascript:void(0)">Mail</a>
-                                            <a class="item-addwishlist" href="javascript:void(0)">Add to Wishlist</a> -->
-                                            <a class="item-addCart" href="javascript:void(0)">Add to Cart</a>
-                                        </div>
+                                       
                                     </div>
                                     <div class="item-content">
                                         <div class="what-product-is">
@@ -243,13 +236,7 @@ use App\Models\Currency; ?>
                                             <img class="img-fluid" src="{{ asset('front/images/product_images/small/no-image.png') }}" alt="Product">
                                             @endif
                                         </a>
-                                        <div class="item-action-behaviors">
-                                            <a class="item-quick-look" data-toggle="modal" href="#quick-view">Quick Look
-                                            </a>
-                                            <!-- <a class="item-mail" href="javascript:void(0)">Mail</a>
-                                            <a class="item-addwishlist" href="javascript:void(0)">Add to Wishlist</a> -->
-                                            <a class="item-addCart" href="javascript:void(0)">Add to Cart</a>
-                                        </div>
+                                        <
                                     </div>
                                     <div class="item-content">
                                         <div class="what-product-is">
@@ -331,13 +318,7 @@ use App\Models\Currency; ?>
                                             <img class="img-fluid" src="{{ asset('front/images/product_images/small/no-image.png') }}" alt="Product">
                                             @endif
                                         </a>
-                                        <div class="item-action-behaviors">
-                                            <a class="item-quick-look" data-toggle="modal" href="#quick-view">Quick Look
-                                            </a>
-                                            <!-- <a class="item-mail" href="javascript:void(0)">Mail</a>
-                                            <a class="item-addwishlist" href="javascript:void(0)">Add to Wishlist</a> -->
-                                            <a class="item-addCart" href="javascript:void(0)">Add to Cart</a>
-                                        </div>
+                                        
                                     </div>
                                     <div class="item-content">
                                         <div class="what-product-is">

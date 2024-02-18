@@ -557,7 +557,7 @@ class OrderController extends Controller
                     <div class="title">Order ID: '.$orderDetails['id'].'</div>
                     <div class="date">
                         Order Date: '.date('Y-m-d h:i:s', strtotime($orderDetails['created_at'])).'<br>
-                        Order Amount: INR '.$orderDetails['grand_total'].'<br>
+                        Order Amount: PHP '.$orderDetails['grand_total'].'<br>
                         Order Status: '.$orderDetails['order_status'].'<br>
                         Payment Method: '.$orderDetails['payment_method'].'<br>
                     </div>
@@ -583,8 +583,8 @@ class OrderController extends Controller
                         <td class="qty">'.$product['product_size'].'</td>
                         <td class="qty">'.$product['product_color'].'</td>
                         <td class="qty">'.$product['product_qty'].'</td>
-                        <td class="unit">INR '.$product['product_price'].'</td>
-                        <td class="total">INR '.$product['product_price']*$product['product_qty'].'</td>
+                        <td class="unit">PHP '.$product['product_price'].'</td>
+                        <td class="total">PHP '.$product['product_price']*$product['product_qty'].'</td>
                     </tr>';
                     $subTotal = $subTotal + ($product['product_price']*$product['product_qty']);
                 }
@@ -599,14 +599,14 @@ class OrderController extends Controller
                             <td class="desc"></td>
                             <td class="desc"></td>
                             <td class="total" colspan=2>SUBTOTAL</td>
-                            <td class="total">INR '.$subTotal.'</td>
+                            <td class="total">PHP '.$subTotal.'</td>
                         </tr>
                         <tr>
                             <td class="desc"></td>
                             <td class="desc"></td>
                             <td class="desc"></td>
                             <td class="total" colspan=2>SHIPPING</td>
-                            <td class="total">INR 0</td>
+                            <td class="total">PHP 0</td>
                         </tr>
                         <tr>
                             <td class="desc"></td>
@@ -614,9 +614,9 @@ class OrderController extends Controller
                             <td class="desc"></td>
                             <td class="total" colspan=2>DISCOUNT</td>';
                             if($orderDetails['coupon_amount']>0){
-                                $invoiceHTML .= '<td class="total">INR '.$orderDetails['coupon_amount'].'</td>';
+                                $invoiceHTML .= '<td class="total">PHP '.$orderDetails['coupon_amount'].'</td>';
                             }else{
-                                $invoiceHTML .= '<td class="total">INR 0</td>';    
+                                $invoiceHTML .= '<td class="total">PHP 0</td>';    
                             }
                         $invoiceHTML .= '</tr>
                         <tr>
@@ -624,7 +624,7 @@ class OrderController extends Controller
                             <td class="desc"></td>
                             <td class="desc"></td>
                             <td class="total" colspan="2">TOTAL</td>
-                            <td class="total">INR '.$orderDetails['grand_total'].'</td>
+                            <td class="total">PHP '.$orderDetails['grand_total'].'</td>
                         </tr>
                     </tbody>
                 </table>

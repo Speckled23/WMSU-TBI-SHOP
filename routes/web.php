@@ -239,6 +239,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
 
     // Product Detail Page
     Route::get('/product/{id}','ProductsController@detail');
+    Route::get('/index/{id}','ProductsController@indexdetail');
 
     // Get Product Attribute Price
     Route::post('get-product-price','ProductsController@getProductPrice');
@@ -325,6 +326,12 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
         // iyzipay Routes
         Route::get('iyzipay','IyzipayController@iyzipay');
         Route::get('iyzipay/pay','IyzipayController@pay');
+
+         // GCash Routes
+         Route::match(['GET','POST'], 'gcash/pay', 'GCashController@pay')->name('gcash.pay');
+         Route::get('/payment/success', 'GCashController@success');
+         Route::get('/payment/thanks', 'GCashController@thanks')->name('payment.success');
+         Route::get('gcash/error', 'GCashController@error');
 
 
     });

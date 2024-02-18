@@ -4,7 +4,7 @@ $(document).ready(function(){
 		var product_id = $(this).attr("product-id");
 		var currency = $(this).attr("currency");
 		if(currency=="" || currency==undefined){
-			var currency = "PHP ";	
+			var currency = "PHP";	
 		}
 		$.ajax({
 			headers: {

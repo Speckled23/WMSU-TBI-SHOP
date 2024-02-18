@@ -91,7 +91,7 @@ use App\Models\Currency;
                         @if(isset($currency))
                             @php $_GET['cy']=$currency @endphp
                         @endif
-                        @if(isset($_GET['cy'])&&$_GET['cy']!="PHP ")
+                        @if(isset($_GET['cy'])&&$_GET['cy']!="PHP")
                             {{$_GET['cy']}} {{ round($getDiscountAttributePrice['final_price']* $item['quantity']/$getCurrency['exchange_rate'],2) }}
                         @else
                             PHP {{ $getDiscountAttributePrice['final_price'] * $item['quantity'] }}
@@ -126,7 +126,7 @@ use App\Models\Currency;
                         <h3 class="calc-h3 u-s-m-b-0">Sub Total</h3>
                     </td>
                     <td>
-                        @if(isset($_GET['cy'])&&$_GET['cy']!="PHP ")
+                        @if(isset($_GET['cy'])&&$_GET['cy']!="PHP")
                             <span class="calc-text">{{$_GET['cy']}} {{ round($total_price/$getCurrency['exchange_rate'],2) }}</span>
                         @else
                             <span class="calc-text">PHP {{ $total_price }}</span>
@@ -154,7 +154,7 @@ use App\Models\Currency;
                     <td>
                         <span class="calc-text grand_total">
                             @php $grand_total = $total_price - Session::get('couponAmount') @endphp
-                            @if(isset($_GET['cy'])&&$_GET['cy']!="PHP ")
+                            @if(isset($_GET['cy'])&&$_GET['cy']!="PHP")
                                 {{$_GET['cy']}} {{ round($grand_total/$getCurrency['exchange_rate'],2) }}
                             @else
                                 PHP {{ $grand_total }}
