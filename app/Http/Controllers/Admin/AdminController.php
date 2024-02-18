@@ -974,6 +974,7 @@ class AdminController extends Controller
                     'shop_city.regex' => 'Valid City is required',
                     'shop_mobile.required' => 'Mobile is required',
                     'shop_mobile.numeric' => 'Valid Mobile is required',
+                    
                 ];
 
                 $this->validate($request,$rules,$customMessages);
@@ -995,14 +996,31 @@ class AdminController extends Controller
                 }else{
                     $imageName = "";
                 }
+
+                if($request->hasFile('permit_proof_image')){
+                    $image_tmp = $request->file('permit_proof_image');
+                    if($image_tmp->isValid()){
+                        // Get Image Extension
+                        $extension = $image_tmp->getClientOriginalExtension();
+                        // Generate New Image Name
+                        $permitimageName = rand(111,99999).'.'.$extension;
+                        $imagePath = 'admin/images/proofs/'.$permitimageName;
+                        // Upload the Image
+                        Image::make($image_tmp)->save($imagePath);
+                    }
+                }else if(!empty($data['current_permit_proof'])){
+                    $permitimageName = $data['current_permit_proof'];
+                }else{
+                    $permitimageName = "";
+                }
                 $vendorCount = VendorsBusinessDetail::where('vendor_id',Auth::guard('admin')->user()->vendor_id)->count();
                 if($vendorCount>0){
                   
                     // Update in vendors_business_details table
-                VendorsBusinessDetail::where('vendor_id',Auth::guard('admin')->user()->vendor_id)->update(['shop_name'=>$data['shop_name'],'shop_mobile'=>$data['shop_mobile'],'shop_address'=>$data['shop_address'],'shop_city'=>$data['shop_city'],'shop_barangay'=>$data['shop_barangay'],'shop_country'=>$data['shop_country'],'shop_pincode'=>$data['shop_pincode'],'business_license_number'=>$data['business_license_number'],'gst_number'=>$data['gst_number'],'pan_number'=>$data['pan_number'],'address_proof'=>$data['address_proof'],'address_proof_image'=>$imageName]);
+                VendorsBusinessDetail::where('vendor_id',Auth::guard('admin')->user()->vendor_id)->update(['shop_name'=>$data['shop_name'],'shop_mobile'=>$data['shop_mobile'],'shop_address'=>$data['shop_address'],'shop_city'=>$data['shop_city'],'shop_barangay'=>$data['shop_barangay'],'shop_country'=>$data['shop_country'],'shop_pincode'=>$data['shop_pincode'],'business_license_number'=>$data['business_license_number'],'gst_number'=>$data['gst_number'],'pan_number'=>$data['pan_number'],'address_proof'=>$data['address_proof'],'address_proof_image'=>$imageName,'permit_proof_image'=>$permitimageName]);
                 }else{
                     // Update in vendors_business_details table
-                    VendorsBusinessDetail::insert(['vendor_id'=>Auth::guard('admin')->user()->vendor_id,'shop_name'=>$data['shop_name'],'shop_mobile'=>$data['shop_mobile'],'shop_address'=>$data['shop_address'],'shop_city'=>$data['shop_city'],'shop_barangay'=>$data['shop_barangay'],'shop_country'=>$data['shop_country'],'shop_pincode'=>$data['shop_pincode'],'business_license_number'=>$data['business_license_number'],'gst_number'=>$data['gst_number'],'pan_number'=>$data['pan_number'],'address_proof'=>$data['address_proof'],'address_proof_image'=>$imageName]);    
+                    VendorsBusinessDetail::insert(['vendor_id'=>Auth::guard('admin')->user()->vendor_id,'shop_name'=>$data['shop_name'],'shop_mobile'=>$data['shop_mobile'],'shop_address'=>$data['shop_address'],'shop_city'=>$data['shop_city'],'shop_barangay'=>$data['shop_barangay'],'shop_country'=>$data['shop_country'],'shop_pincode'=>$data['shop_pincode'],'business_license_number'=>$data['business_license_number'],'gst_number'=>$data['gst_number'],'pan_number'=>$data['pan_number'],'address_proof'=>$data['address_proof'],'address_proof_image'=>$imageName,'permit_proof_image'=>$permitimageName]);    
                 }
                 
                 return redirect()->back()->with('success_message','Vendor details updated successfully!');

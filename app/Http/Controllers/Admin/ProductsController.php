@@ -278,7 +278,7 @@ class ProductsController extends Controller
                     // SKU duplicate check
                     $skuCount = ProductsAttribute::where('sku',$value)->count();
                     if($skuCount>0){
-                        return redirect()->back()->with('error_message','SKU already exists! Please add another SKU!');    
+                        return redirect()->back()->with('error_message','Code already exists! Please pick another code!');    
                     }
 
                     // Size duplicate check

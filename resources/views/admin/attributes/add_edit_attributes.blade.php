@@ -90,13 +90,13 @@
                               <input type="text" name="size[]" placeholder="Size" style="width: 120px;" required="" />
                               <input type="text" name="sku[]" placeholder="Code" style="width: 120px;" required="" />
                               <input type="text" name="price[]" placeholder="Price" style="width: 120px;" required="" />
-                              <input type="text" name="stock[]" placeholder="Stock" style="width: 120px;" required="" />
+                              <input type="text" name="stock[]" placeholder="AvailStock" style="width: 120px;" required="" />
                               <a href="javascript:void(0);" class="add_button" title="Add Attributes">Add</a>
                           </div>
                       </div>
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                    <button type="reset" class="btn btn-light">Cancel</button>
+                    <button type="reset" class="btn btn-light">Delete Edit</button>
                   </form>
                   <br><br><h4 class="card-title">Product Attributes</h4>
                   <form method="post" action="{{ url('admin/edit-attributes/'.$product['id']) }}">@csrf

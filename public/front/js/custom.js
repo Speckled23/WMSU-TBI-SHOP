@@ -55,7 +55,7 @@ $(document).ready(function(){
     		},
 			data:{cartid:cartid,qty:new_qty,currency:currency},
 			url:'/cart/update',
-			type:'post',
+			type:'POST',
 			success:function(resp){
 				$(".totalCartItems").html(resp.totalCartItems);
 				if(resp.status==false){
@@ -64,10 +64,12 @@ $(document).ready(function(){
 				$("#appendCartItems").html(resp.view);
 				$("#appendHeaderCartItems").html(resp.headerview);
 			},error:function(){
-				alert("Error");
+				// alert("Error");
+				
 			}
 		});
 	});
+	
 
 	// Delete Cart Item
 	$(document).on('click','.deleteCartitem',function(){

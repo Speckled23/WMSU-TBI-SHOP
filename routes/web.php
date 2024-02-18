@@ -260,7 +260,9 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
     Route::get('cart','ProductsController@cart');
 
     // Update Cart Item Quantity
-    Route::post('cart/update','ProductsController@cartUpdate');
+    
+    Route::match(['get', 'post'], '/cart/update', [ProductsController::class, 'update']);
+
 
     // Delete Cart Item
     Route::post('cart/delete','ProductsController@cartDelete');

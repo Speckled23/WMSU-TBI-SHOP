@@ -38,7 +38,7 @@
                                             <td>{{ $product['id'] ?? 'N/A' }}</td>
                                             <td>{{ $product['product_name'] ?? 'N/A' }}</td>
                                             <td>{{ $product['product_code'] ?? 'N/A' }}</td>
-                                            <td>{{ $product['p'] ?? 'N/A' }}</td>
+                                            <td>{{ $product['product_color'] ?? 'N/A' }}</td>
                                             <td>
                                                 @if(!empty($product['product_image']))
                                                     <img style="width: 120px; height: 120px;" src="{{ asset('front/images/product_images/small/'.$product['product_image']) }}">

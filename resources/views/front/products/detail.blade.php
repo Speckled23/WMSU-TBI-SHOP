@@ -149,7 +149,7 @@ $productFilters = ProductsFilter::productFilters();
                     <div class="section-3-price-original-discount u-s-p-y-14">
                         <?php $getDiscountPrice = Product::getDiscountPrice($productDetails['id']); ?>
                         <span class="getAttributePrice"> 
-                            @if(isset($_GET['cy'])&&$_GET['cy']!="PHP")
+                        @if(isset($_GET['cy'])&&$_GET['cy']!="PHP")
                             @php 
                                 $getCurrency = Currency::where('currency_code',$_GET['cy'])->first()->toArray();
                             @endphp
