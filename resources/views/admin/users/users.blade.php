@@ -38,7 +38,7 @@
                                             City
                                         </th>
                                         <th>
-                                            Country
+                                            Province
                                         </th>
                                         <th>
                                             Zipcode

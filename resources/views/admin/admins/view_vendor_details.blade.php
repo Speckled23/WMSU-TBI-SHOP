@@ -55,7 +55,7 @@
                       <input type="text" class="form-control" value="{{ $vendorDetails['vendor_personal']['barangay'] }}" readonly="">
                     </div>
                     <div class="form-group">
-                      <label for="vendor_country">Country</label>
+                      <label for="vendor_country">Shop Province</label>
                       <input type="text" class="form-control" value="{{ $vendorDetails['vendor_personal']['country'] }}" readonly="">
                     </div>
                     <div class="form-group">
@@ -95,11 +95,11 @@
                       <input type="text" class="form-control" @if(isset($vendorDetails['vendor_business']['shop_city'])) value="{{ $vendorDetails['vendor_business']['shop_city'] }}" @endif readonly="">
                     </div>
                     <div class="form-group">
-                      <label for="vendor_state">Shop State</label>
+                      <label for="vendor_state">Shop Barangay</label>
                       <input type="text" class="form-control" @if(isset($vendorDetails['vendor_business']['shop_barangay'])) value="{{ $vendorDetails['vendor_business']['shop_barangay'] }}" @endif readonly="">
                     </div>
                     <div class="form-group">
-                      <label for="vendor_country">Shop Country</label>
+                      <label for="vendor_country">Shop Shop Province</label>
                       <input type="text" class="form-control" @if(isset($vendorDetails['vendor_business']['shop_country'])) value="{{ $vendorDetails['vendor_business']['shop_country'] }}" @endif readonly="">
                     </div>
                     <div class="form-group">
@@ -132,6 +132,10 @@
                     </div> -->
                     <div class="form-group">
                       <label>Government Issued ID Proof</label>
+                      <input class="form-control" @if(isset($vendorDetails['vendor_business']['address_proof'])) value="{{ $vendorDetails['vendor_business']['address_proof'] }}" @endif readonly="">
+                    </div>
+                    <div class="form-group">
+                      <label>Business Permit</label>
                       <input class="form-control" @if(isset($vendorDetails['vendor_business']['address_proof'])) value="{{ $vendorDetails['vendor_business']['address_proof'] }}" @endif readonly="">
                     </div>
                     @if(!empty($vendorDetails['vendor_business']['address_proof_image']))

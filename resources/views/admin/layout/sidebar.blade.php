@@ -138,18 +138,18 @@
                 </ul>
             </div> -->
         </li>
-        <!-- <li class="nav-item">
+        <li class="nav-item">
             <a @if(Session::get('page')=="shipping") style="background:#4B49AC !important; color: #fff !important;" @endif class="nav-link" href="{{ url('admin/shipping-charges') }}">
             <i class="mdi mdi-truck-delivery menu-icon"></i>
-            <span class="menu-title">Shipping</span>
-            <i class="menu-arrow"></i>
+            <span class="menu-title">Shipping Charges</span>
+            <!-- <i class="menu-arrow"></i> -->
             </a>
-            <div class="collapse" id="ui-shipping">
+            <!-- <div class="collapse" id="ui-shipping">
                 <ul class="nav flex-column sub-menu" style="background: #fff !important; color: #4B49AC !important;">
                     <li class="nav-item"> <a @if(Session::get('page')=="shipping") style="background:#4B49AC !important; color: #fff !important;" @else style="background:#fff !important; color: #4B49AC !important;" @endif class="nav-link" href="{{ url('admin/shipping-charges') }}">Shipping Charges</a></li>
                 </ul>
-            </div>
-        </li> -->
+            </div> -->
+        </li>
         @endif
     </ul>
 </nav>
