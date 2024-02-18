@@ -3595,7 +3595,10 @@
 
 /* Padding with value `80`. */
 .u-s-p-t-80 {
-  padding-top: 80px; }
+  padding-top: 90px;
+  padding-left: 200px;
+  padding-right: 200px;
+  }
 
 .u-s-p-r-80 {
   padding-right: 80px; }
