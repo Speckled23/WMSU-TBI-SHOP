@@ -54,7 +54,7 @@
                         <p id="account-success"></p>
                         <form id="accountForm" action="javascript:;" method="post">@csrf
                             <div class="u-s-m-b-30">
-                                <label for="user-email">Emailx
+                                <label for="user-email">Email
                                     <span class="astk">*</span>
                                 </label>
                                 <input class="text-field" value="{{ Auth::user()->email }}" readonly="" disabled="" style="background-color: #e9e9e9;">
@@ -94,7 +94,7 @@
                                 <p id="account-city"></p>
                             </div>
                             <div class="u-s-m-b-30">
-                                <label for="user-country">Country
+                                <label for="user-country">Province
                                     <span class="astk">*</span>
                                 </label>
                                 <select class="text-field" id="user-country" name="country"  style="color: #495057;">

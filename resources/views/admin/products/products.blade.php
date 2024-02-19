@@ -24,7 +24,7 @@
                                         <th>Product Name</th>
                                         <th>Product Code</th>
                                         <th>Product Color</th>
-                                        <th>Product 1Image</th>
+                                        <th>Product Image</th>
                                         <th>Category</th>
                                         <th>Section</th>
                                         <th>Added by</th>
