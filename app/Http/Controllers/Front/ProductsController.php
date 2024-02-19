@@ -813,6 +813,7 @@ class ProductsController extends Controller
                 /*dd($getProductDetails);*/
                 $cartItem->admin_id = $getProductDetails['admin_id'];
                 $cartItem->vendor_id = $getProductDetails['vendor_id'];
+                $cartItem->item_status = "New";
                 if($getProductDetails['vendor_id']>0){
                     $vendorCommission = Vendor::getVendorCommission($getProductDetails['vendor_id']);
                 }
