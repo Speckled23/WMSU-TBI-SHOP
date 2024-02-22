@@ -115,7 +115,7 @@ $page_url = Request::url();
                     <form class="form-searchbox" action="{{ url('/search-products') }}" method="get">
                         <label class="sr-only" for="search-landscape">Search</label>
                         <input name="search" id="search-landscape" type="text" class="text-field" placeholder="Search everything" @if(isset($_REQUEST['search']) && !empty($_REQUEST['search'])) value="{{$_REQUEST['search']}}" @endif>
-                        <div class="select-box-position">
+                        <!-- <div class="select-box-position">
                             <div class="select-box-wrapper select-hide">
                                 <label class="sr-only" for="select-category">Choose category for search</label>
                                 <select class="select-box" id="select-category" name="section_id">
@@ -127,7 +127,7 @@ $page_url = Request::url();
                                     @endforeach
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
                         <button id="btn-search" type="submit" class="button button-primary fas fa-search"></button>
                     </form>
                 </div>
