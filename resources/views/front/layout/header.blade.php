@@ -249,6 +249,7 @@ $page_url = Request::url();
                         </li>
                         <li>
                             <a href="{{ url('search-products?search=featured') }}">Featured
+                            <span class="superscript-label-feat">FEAT</span>
                             </a>
                         </li>
                         <li>

@@ -1962,7 +1962,7 @@ body {
     margin-left: 32px; }
 
 /* Superscript-labels */
-.superscript-label-new, .superscript-label-hot, .superscript-label-discount {
+.superscript-label-new, .superscript-label-hot, .superscript-label-feat, .superscript-label-discount {
   position: absolute;
   text-transform: uppercase;
   top: -4px;

@@ -1971,7 +1971,7 @@ body {
     margin-left: 32px; }
 
 /* Superscript-labels */
-.superscript-label-new, .superscript-label-hot, .superscript-label-discount {
+.superscript-label-new, .superscript-label-hot, .superscript-label-feat, .superscript-label-discount {
   position: absolute;
   text-transform: uppercase;
   top: -4px;
@@ -2003,6 +2003,11 @@ body {
   background: #FF3860; }
   .superscript-label-hot:after {
     border-color: #FF3860 rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0); }
+
+    .superscript-label-feat {
+      background: #38ff67; }
+      .superscript-label-feat:after {
+        border-color: #38ff67 rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0); }
 
 .superscript-label-discount {
   background: #ffc107; }
