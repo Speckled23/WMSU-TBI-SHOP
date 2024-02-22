@@ -45,9 +45,9 @@
                     </button>
                   </div>
                 @endif
-            <div class="row">
+            <div class="row justify-content-center">
                 <!-- Login -->
-                <div class="col-lg-6">
+                <div class="col-lg-6" id="loginDiv">
                     <div class="login-wrapper">
                         <h2 class="account-h2 u-s-m-b-20">Login</h2>
                         <h6 class="account-h6 u-s-m-b-30">Welcome back! Sign in to your account.</h6>
@@ -67,16 +67,17 @@
                                 <input type="password" name="password" id="users-password" class="text-field" placeholder="Password">
                                 <p id="login-password"></p>
                             </div>
+                            <div class="m-b-45">
+                                <button class="button button-outline-secondary w-100">Login</button>
+                            </div>
                             <div class="group-inline u-s-m-b-30">
                                 <div class="group-2 text-right">
                                     <div class="page-anchor">
-                                        <a href="{{ url('user/forgot-password') }}">
-                                            <i class="fas fa-circle-o-notch u-s-m-r-9"></i>Forgot Password?</a>
+                                        <div class="text-center"> <!-- Center the "Already have an account? Login" message -->
+                                            <p>Don't have an account? <a href="#"id="showRegister">Register</a></p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="m-b-45">
-                                <button class="button button-outline-secondary w-100">Login</button>
                             </div>
                         </form>
                     </div>
@@ -84,19 +85,34 @@
                 <!-- Login /- -->
 
                 <!-- Register -->
-                <div class="col-lg-6">
+                <div class="col-lg-6" id="registerDiv" style="display: none;">
                     <div class="reg-wrapper">
                         <h2 class="account-h2 u-s-m-b-20">Register</h2>
                         <h6 class="account-h6 u-s-m-b-30">By completing the registration process on this site, you will gain access to your order status and history.</h6>
                         <p id="register-success"></p>
                         <form id="registerForm" action="javascript:;" method="post">@csrf 
-                            <div class="u-s-m-b-30">
-                                <label for="username">Username
-                                    <span class="astk">*</span>
-                                </label>
-                                <input type="text" id="user-name" name="name" class="text-field" placeholder="Username">
-                                <p id="register-name"></p>
-                            </div>
+                        <div class="u-s-m-b-30">
+                            <label for="firstname">First Name
+                                <span class="astk">*</span>
+                            </label>
+                            <input type="text" id="firstname" name="firstname" class="text-field" placeholder="First Name">
+                            <p id="register-firstname"></p>
+                        </div>
+
+                        <div class="u-s-m-b-30">
+                            <label for="lastname">Last Name
+                                <span class="astk">*</span>
+                            </label>
+                            <input type="text" id="lastname" name="lastname" class="text-field" placeholder="Last Name">
+                            <p id="register-lastname"></p>
+                        </div>
+
+                        <div class="u-s-m-b-30">
+                            <label for="middleinitial">Middle Initial (optional)</label>
+                            <input type="text" id="middleinitial" name="middleinitial" class="text-field" placeholder="Middle Initial">
+                            <p id="register-middleinitial"></p>
+                        </div>
+
                             <div class="u-s-m-b-30">
                                 <label for="usermobile">Mobile No.
                                     <span class="astk">*</span>
@@ -135,6 +151,13 @@
                             <div class="u-s-m-b-45">
                                 <button class="button button-primary w-100">Register</button>
                             </div>
+                            <div class="group-inline u-s-m-b-30">
+                                <div class="group-2 text-right">
+                                    <div class="page-anchor">
+                                    <div class="text-center"> <!-- Center the "Already have an account? Login" message -->
+                                        <p>Already have an account? <a href="#" id="showLogin">Login</a></p>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -143,4 +166,18 @@
         </div>
     </div>
     <!-- Account-Page /- -->
+
+    <script>
+         document.getElementById('showRegister').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('loginDiv').style.display = 'none';
+            document.getElementById('registerDiv').style.display = 'block';
+        });
+
+        document.getElementById('showLogin').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('loginDiv').style.display = 'block';
+            document.getElementById('registerDiv').style.display = 'none';
+        });
+    </script>
 @endsection
