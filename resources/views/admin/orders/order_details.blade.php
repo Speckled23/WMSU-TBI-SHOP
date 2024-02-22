@@ -237,95 +237,121 @@ use App\Models\Coupon;
               </div>
             </div>
 
-            <div class="col-md-12 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">Ordered Products</h4>
-                  
-                    <table class="table table-striped table-borderless">
-                <tr class="table-danger">
-                    <th>Product Image</th>
-                    <th>Code</th>
-                    <th>Name</th>
-                    <th>Size</th>
-                    <th>Color</th>
-                    <th>Unit Price</th>
-                    <th>Product Qty</th>
-                    <th>Total Price</th>
-                    @if(Auth::guard('admin')->user()->type!="vendor")
-                      <th>Product by</th>
-                    @endif
-                    <th>Commission</th>
-                    <th>Final Amount</th>
-                    <th>Item Status</th>
-                </tr>
-                @foreach($orderDetails['orders_products'] as $product)
-                    <tr>
-                        <td>
-                            @php $getProductImage = Product::getProductImage($product['product_id']) @endphp
-                            <a target="_blank" href="{{ url('product/'.$product['product_id']) }}"><img src="{{ asset('front/images/product_images/small/'.$getProductImage) }}"></a>
-                        </td>
-                        <td>{{ $product['product_code'] }}</td>
-                        <td>{{ $product['product_name'] }}</td>
-                        <td>{{ $product['product_size'] }}</td>
-                        <td>{{ $product['product_color'] }}</td>
-                        <td>{{ $product['product_price'] }}</td>
-                        <td>{{ $product['product_qty'] }}</td>
-                        <td>
-                          @if($product['vendor_id']>0)
-                            @if($orderDetails['coupon_amount']>0)
-                                  @php $couponDetails = Coupon::couponDetails($orderDetails['coupon_code']) @endphp
-                                  @if($couponDetails['vendor_id']>0)
-                                      {{ $total_price = $product['product_price']*$product['product_qty']-$item_discount }}
-                                  @else
-                                      {{ $total_price = $product['product_price']*$product['product_qty'] }}
-                                  @endif
-                            @else
-                                {{ $total_price = $product['product_price']*$product['product_qty'] }}
-                            @endif
-                          @else
-                              {{ $total_price = $product['product_price']*$product['product_qty'] }}  
-                          @endif
-                        </td>
-                        @if(Auth::guard('admin')->user()->type!="vendor")
-                          @if($product['vendor_id']>0)
-                            <td>
-                              <a target="_blank" href="/admin/view-vendor-details/{{ $product['admin_id'] }}">Vendor</a>
-                            </td>
-                          @else
-                            <td>Admin</td>
-                          @endif
-                        @endif
-                        @if($product['vendor_id']>0)
-                            <td>{{ $commission = round($total_price * $product['commission']/100,2) }}</td>
-                            <td>{{ $total_price - $commission }}</td>
-                        @else
-                          <td>0</td>
-                          <td>{{ $total_price }}</td>
-                        @endif
-                        <td>
-
-                          <form action="{{ url('admin/update-order-item-status') }}" method="post" >@csrf
-                            <input type="hidden" name="order_item_id" value="{{ $product['id'] }}">
-                            <select name="order_item_status" id="order_item_status" required="">
-                              <option value="">Select</option>
-                              @foreach($orderItemStatuses as $status)
-                                <option value="{{ $status['name'] }}" @if(!empty($product['item_status']) && $product['item_status']==$status['name']) selected="" @endif>{{ $status['name'] }}</option>
-                              @endforeach
-                            </select>
-                            <input style="width:110px;" type="text" name="item_courier_name" id="item_courier_name" placeholder="Courier Name" @if(!empty($product['courier_name'])) value="{{ $product['courier_name'] }}" @endif>
-                            <input style="width:110px;" type="text" name="item_tracking_number" id="item_tracking_number" placeholder="Tracking Number" @if(!empty($product['tracking_number'])) value="{{ $product['tracking_number'] }}" @endif>
-                            <button type="submit">Update</button>
-                           </form>
-                          
-                        </td>
-                    </tr>
-                @endforeach   
-            </table>
-                   
+            @foreach($orderDetails['orders_products'] as $product)
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Ordered Products</h4>
+                
+                @php 
+                    $getProductImage = Product::getProductImage($product['product_id']);
+                    $imageSrc = asset('front/images/product_images/small/'.$getProductImage);
+                @endphp
+                <div class="form-group">
+                    <label>Product Image:</label>
+                    <a target="_blank" href="{{ url('product/'.$product['product_id']) }}"><img src="{{ $imageSrc }}" style="max-width: 200px;"></a>
                 </div>
-              </div>
+                <div class="form-group">
+                    <label>Code:</label>
+                    <label>{{ $product['product_code'] }}</label>
+                </div>
+                <div class="form-group">
+                    <label>Name:</label>
+                    <label>{{ $product['product_name'] }}</label>
+                </div>
+                <div class="form-group">
+                    <label>Size:</label>
+                    <label>{{ $product['product_size'] }}</label>
+                </div>
+                <div class="form-group">
+                    <label>Color:</label>
+                    <label>{{ $product['product_color'] }}</label>
+                </div>
+                <div class="form-group">
+                    <label>Unit Price:</label>
+                    <label>{{ $product['product_price'] }}</label>
+                </div>
+                <div class="form-group">
+                    <label>Product Qty:</label>
+                    <label>{{ $product['product_qty'] }}</label>
+                </div>
+                <div class="form-group">
+                    <label>Total Price:</label>
+                    <label>
+                        @php
+                            $total_price = $product['product_price'] * $product['product_qty'];
+                            if($product['vendor_id']>0) {
+                                if($orderDetails['coupon_amount']>0) {
+                                    $couponDetails = Coupon::couponDetails($orderDetails['coupon_code']);
+                                    if($couponDetails['vendor_id']>0) {
+                                        $total_price -= $item_discount;
+                                    }
+                                }
+                            }
+                            echo $total_price;
+                        @endphp
+                    </label>
+                </div>
+                @if(Auth::guard('admin')->user()->type!="vendor")
+                    <div class="form-group">
+                        <label>Product by:</label>
+                        <label>
+                            @if($product['vendor_id']>0)
+                                <a target="_blank" href="/admin/view-vendor-details/{{ $product['admin_id'] }}">Vendor</a>
+                            @else
+                                Admin
+                            @endif
+                        </label>
+                    </div>
+                @endif
+                <div class="form-group">
+                    <label>Commission:</label>
+                    <label>
+                        @if($product['vendor_id']>0)
+                            {{ $commission = round($total_price * $product['commission']/100,2) }}
+                        @else
+                            0
+                        @endif
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>Final Amount:</label>
+                    <label>
+                        @if($product['vendor_id']>0)
+                            {{ $total_price - $commission }}
+                        @else
+                            {{ $total_price }}
+                        @endif
+                    </label>
+                </div>
+                <div class="form-group">
+                    <form action="{{ url('admin/update-order-item-status') }}" method="post" >
+                        @csrf
+                        <input type="hidden" name="order_item_id" value="{{ $product['id'] }}">
+                        <div class="form-group">
+                        <label>Order Status:</label>
+                        <select name="order_item_status" id="order_item_status" required="">
+                            <option value="">Select</option>
+                            @foreach($orderItemStatuses as $status)
+                                <option value="{{ $status['name'] }}" @if(!empty($product['item_status']) && $product['item_status']==$status['name']) selected="" @endif>{{ $status['name'] }}</option>
+                            @endforeach
+                        </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Delivery Rider Name:</label>
+                            <input style="width:110px;" type="text" name="item_courier_name" id="item_courier_name" placeholder="Courier Name" @if(!empty($product['courier_name'])) value="{{ $product['courier_name'] }}" @endif>
+                        </div>
+                        <div class="form-group">
+                            <label>Tracking Number:</label>
+                            <input style="width:110px;" type="text" name="item_tracking_number" id="item_tracking_number" placeholder="Tracking Number" @if(!empty($product['tracking_number'])) value="{{ $product['tracking_number'] }}" @endif>
+                        </div>
+                        <button style="width:200px;" type="submit">Update</button>
+                    </form>
+                </div>
             </div>
+        </div>
+    </div>
+@endforeach
 
           </div>
         
