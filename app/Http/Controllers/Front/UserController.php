@@ -21,81 +21,58 @@ class UserController extends Controller
         return view('front.users.login_register');
     }
 
-    public function userRegister(Request $request){
-        if($request->ajax()){
-            $data = $request->all();
-            /*echo "<pre>"; print_r($data); die;*/
-
+    public function userRegister(Request $request)
+    {
+        if ($request->ajax()) {
             $validator = Validator::make($request->all(), [
-                'name' => 'required|regex:/^[a-zA-Z\s]+$/|max:100',
+                'firstname' => 'required|regex:/^[a-zA-Z\s]+$/|max:100',
+                'lastname' => 'required|regex:/^[a-zA-Z\s]+$/|max:100',
+                'middleinitial' => 'nullable|alpha|max:1', // Assuming middle initial is optional and only one character
                 'mobile' => 'required|numeric|digits:11|unique:users',
                 'email' => 'required|email|max:150|regex:/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/|unique:users',
                 'password' => 'required|confirmed|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/',
                 'accept' => 'required'
             ],
             [
-                'accept.required'=>'Please accept our Terms & Conditions',
-                'name.regex'=>'Name should be in valid format.',
-                'email.regex'=>'Email should be in valid format.'
-            ]
-        );
-
-            if($validator->passes()){
+                'accept.required' => 'Please accept our Terms & Conditions',
+                'firstname.regex' => 'First Name should be in valid format.',
+                'lastname.regex' => 'Last Name should be in valid format.',
+                'email.regex' => 'Email should be in valid format.'
+            ]);
+    
+            if ($validator->passes()) {
+                // Concatenate first name, last name, and middle initial
+                $name = $request->input('firstname') . ' ' . $request->input('lastname');
+                $middleInitial = $request->input('middleinitial');
+                if ($middleInitial) {
+                    $name .= ' ' . $middleInitial;
+                }
+    
                 // Register the User
                 $user = new User;
-                $user->name = $data['name'];
-                $user->mobile = $data['mobile'];
-                $user->email = $data['email'];
-                $user->password = bcrypt($data['password']);
+                $user->name = $name;
+                $user->mobile = $request->input('mobile');
+                $user->email = $request->input('email');
+                $user->password = bcrypt($request->input('password'));
                 $user->status = 0;
                 $user->save();
-
-                /* Activate the user only when user confirms his email account */
-
-                $email = $data['email'];
-                $messageData = ['name'=>$data['name'],'email'=>$data['email'],'code'=>base64_encode($data['email'])];
-                Mail::send('emails.confirmation',$messageData,function($message)use($email){
+    
+                // Send confirmation email
+                $email = $request->input('email');
+                $messageData = ['name' => $name, 'email' => $request->input('email'), 'code' => base64_encode($request->input('email'))];
+                Mail::send('emails.confirmation', $messageData, function ($message) use ($email) {
                     $message->to($email)->subject('Confirm your WMSU TBI account');
                 });
-
+    
                 // Redirect back user with success message
                 $redirectTo = url('user/login-register');
-                return response()->json(['type'=>'success','url'=>$redirectTo,'message'=>'Please confirm your email to activate your account!']);
-
-                /* Activate the user straight way without sending any confirmation email */
-
-                /*// Send Register Email
-                $email = $data['email'];
-                $messageData = ['name'=>$data['name'],'mobile'=>$data['mobile'],'email'=>$data['email']];
-                Mail::send('emails.register',$messageData,function($message)use($email){
-                    $message->to($email)->subject('Welcome to Stack Developers');
-                });*/
-
-                /*// Send Register SMS
-                $message = "Dear Customer, you have been successfully registered with Stack Developers. Login to your account to access orders, addresses & available offers.";
-                $mobile = $data['mobile'];
-                Sms:sendSms($message,$mobile);*/
-
-                /*if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password']])){
-                    $redirectTo = url('cart');
-                    // Update User Cart with user id
-                    if(!empty(Session::get('session_id'))){
-                        $user_id = Auth::user()->id;
-                        $session_id = Session::get('session_id');
-                        Cart::where('session_id',$session_id)->update(['user_id'=>$user_id]);
-                    }
-                    return response()->json(['type'=>'success','url'=>$redirectTo]);
-                }*/
-
-
-
-
-            }else{
-                return response()->json(['type'=>'error','errors'=>$validator->messages()]);
+                return response()->json(['type' => 'success', 'url' => $redirectTo, 'message' => 'Please confirm your email to activate your account!']);
+            } else {
+                return response()->json(['type' => 'error', 'errors' => $validator->messages()]);
             }
-            
         }
     }
+    
 
     public function userAccount(Request $request){
         if($request->ajax()){
