@@ -66,7 +66,7 @@
                                 </div>
                                 <ul class="bread-crumb">
                                     <li class="has-separator">
-                                        <a href="index.html">Home</a>
+                                    <a href="{{ url('/') }}">Home</a>
                                     </li>
                                     <li class="has-separator">
                                         <a href="shop-v1-root-category.html">Men Clothing </a>
