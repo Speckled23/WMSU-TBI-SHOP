@@ -3277,7 +3277,9 @@ body {
 
 /* 23.3 Shop-Grid-View */
 .grid-style .product-item {
-  display: flex; }
+  display: flex;
+  justify-content: center;
+  }
 
 .grid-style .item {
   margin: 0 0 30px; }
