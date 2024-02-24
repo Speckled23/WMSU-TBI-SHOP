@@ -68,9 +68,9 @@
                                     <input type="password" id="vendorpassword" name="password" class="text-field" placeholder="Seller Password">
                                 </div>
                                 <div class="toggle-switch">
-                                    <input type="checkbox" id="showPassword" class="toggle-checkbox" onclick="togglePasswordVisibility('vendorpassword')">
-                                    <label for="showPassword" class="toggle-label"></label>
-                                    <label for="showPassword" class="toggle-text">Show</label>
+                                    <input type="checkbox" id="showPassword1" class="toggle-checkbox" onclick="togglePasswordVisibility('vendorpassword')">
+                                    <label for="showPassword1" class="toggle-label"></label>
+                                    <label for="showPassword1" class="toggle-text">Show</label>
                                 </div>
                             </div>
 
@@ -120,23 +120,24 @@
                                 <input type="email" id="vendoremail" name="email" class="text-field" placeholder="Seller Email">
                             </div>
                             <div class="u-s-m-b-30">
-                                <label for="vendorpassword">Password
+                                <label for="vendorregpassword">Password
                                     <span class="astk">*</span>
                                 </label>
                                 <div class="password-toggle">
-                                    <input type="password" id="vendorpassword" name="password" class="text-field" placeholder="Seller Password">
-                                    <input type="checkbox" id="showRegisterPassword" class="toggle-checkbox" onclick="toggleRegiterVisibility('vendorpassword')">
-                                    <label for="showRegisterPassword" class="toggle-label"></label>
-                                    <label for="showRegisterPassword" class="toggle-text">Show</label>
+                                    <input type="password" id="vendorregpassword" name="password" class="text-field" placeholder="Seller Password">
+                                    <input type="checkbox" id="showPassword2" class="toggle-checkbox" onclick="togglePasswordVisibility('vendorregpassword')">
+                                    <label for="showPassword2" class="toggle-label"></label>
+                                    <label for="showPassword2" class="toggle-text">Show</label>
                                 </div>
                             </div>
                             <div class="u-s-m-b-30">
                                 <label for="userpassword">Confirm Password
                                     <span class="astk">*</span>
                                 </label>
-                                <input type="password" id="user-password-confirm" name="password_confirmation" class="text-field" placeholder="Confirm Password" onkeyup="validatePassword()">
+                                <input type="password" id="user-password-confirm" name="password_confirmation" class="text-field" placeholder="Confirm Password" onkeyup="validatePassword()" >
                                 <p id="register-password-confirm"></p>
                             </div class="terms">
+                            <div id="temrsbtn">
                                 <input type="checkbox" class="check-box" id="accept" name="accept">
                                 <label class="label-text no-color" for="accept">I have carefully reviewed and hereby accept the
                                     <a href="terms-and-conditions.html" class="u-c-brand">terms and conditions.</a>
@@ -159,97 +160,70 @@
                     <div class="col-lg-12">
                         <h2 class="account-h2 u-s-m-b-20">Vendor Shop Details</h2>
                         <form id="vendorForm" action="{{ url('/vendor/register') }}" method="post">
-                        <div class="col-md-6">
-                            <div class="u-s-m-b-30">
-                                    <label for="vendorshopname">Shop Name
-                                        <span class="astk">*</span>
-                                    </label>
-                                    <input type="text" id="vendorshopname" name="first_name" class="text-field" placeholder="Shope Name">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="u-s-m-b-30">
+                                        <label for="vendorshopname">Shop Name
+                                            <span class="astk">*</span>
+                                        </label>
+                                        <input type="text" id="vendorshopname" name="shopname" class="text-field" placeholder="Shop Name">
+                                    </div>
+                                    <div class="u-s-m-b-30">
+                                        <label for="vendorshopdetails">Shop Address Details
+                                            <span class="astk">*</span>
+                                        </label>
+                                        <input type="text" id="vendorshopdetails" name="vendorshopdetails" class="text-field" placeholder="Shop Address Details">
+                                    </div>
+                                    <div class="u-s-m-b-30">
+                                        <label for="vendorshopbarangay">Shop Barangay
+                                            <span class="astk">*</span>
+                                        </label>
+                                        <input type="text" id="vendorshopbarangay" name="vendorshopbarangay" class="text-field" placeholder="Shop Barangay">
+                                    </div>
+                                    <div class="u-s-m-b-30">
+                                        <label for="vendorshopcontact">Shop Contact Number
+                                            <span class="astk">*</span>
+                                        </label>
+                                        <input type="text" id="vendorshopcontact" name="vendorshopcontact" class="text-field" placeholder="Shop Contact Number">
+                                    </div>
+                                    <div class="u-s-m-b-30">
+                                        <label for="vendorshoplicense">Business License Number
+                                            <span class="astk">*</span>
+                                        </label>
+                                        <input type="text" id="vendorshoplicense" name="vendorshoplicense" class="text-field" placeholder="Business License Number">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="u-s-m-b-30">
+                                        <label for="shop_gov_id">Government Issued ID Proof</label>
+                                        <input type="file" class="form-control" id="shop_gov_id" name="shop_gov_id">
+                                    </div>
+                                    <div class="u-s-m-b-30">
+                                        <label for="shop_permit_id">Business Permit</label>
+                                        <input type="file" class="form-control" id="shop_permit_id" name="shop_permit_id">
+                                    </div>
+                                    <div class="u-s-m-b-30">
+                                        <label for="shop_bir_id">BIR</label>
+                                        <input type="file" class="form-control" id="shop_bir_id" name="shop_bir_id">
+                                    </div>
+                                    <div class="u-s-m-b-30">
+                                        <label for="shop_dti_id">DTI</label>
+                                        <input type="file" class="form-control" id="shop_dti_id" name="shop_dti_id">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="u-s-m-b-30">
-                                    <label for="addressdetails">Shop Address Details
-                                        <span class="astk">*</span>
-                                    </label>
-                                    <input type="text" id="addressdetails" name="first_name" class="text-field" placeholder="Shope Name">
-                            </div>
-                            <div class="u-s-m-b-30">
-                                <label for="shop_address">Shop Address</label>
-                                <input type="text" class="form-control" id="shop_address" placeholder="Enter Shop Address" name="shop_address" @if(isset($vendorDetails['shop_address'])) value="{{ $vendorDetails['shop_address'] }}" @endif>
-                            </div>
-                            <div class="u-s-m-b-30">
-                                <label for="shop_city">Shop City</label>
-                                <input type="text" class="form-control" id="shop_city" placeholder="Enter Shop City" name="shop_city"  value="Zamboanga City" readonly="">
-                            </div>
-                            <div class="form-group">
-                                <label for="shop_barangay">Shop Barangay</label>
-                                <select class="form-control" id="shop_barangay" name="shop_barangay"  style="color: #495057;">
-                                        <option value="">Select Barangay</option>
-                                    
-                                </select> 
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="u-s-m-b-30">
-                                <label for="shop_country">Shop Province</label>
-                                <input type="text" class="form-control" id="shop_country" name="shop_country" value = "ZAMBOANGA DEL SUR" readonly="">
-                            </div>
-                            <div class="u-s-m-b-30">
-                                <label for="shop_pincode">Shop Zipcode</label>
-                                <input type="text" class="form-control" id="shop_pincode"  name="shop_pincode" value = "7000" readonly="">
-                            </div>
-                            <div class="u-s-m-b-30">
-                                <label for="shop_mobile">Shop Contact No.</label>
-                                <input type="text" class="form-control" id="shop_mobile" placeholder="Enter 11 Digit Mobile Number" name="shop_mobile" @if(isset($vendorDetails['shop_mobile'])) value="{{ $vendorDetails['shop_mobile'] }}" @endif required="" maxlength="11" minlength="11">
-                            </div>
-                            <div class="u-s-m-b-30">
-                                <label for="business_license_number">Business License Number</label>
-                                <input type="text" class="form-control" id="business_license_number" placeholder="Enter Business License Number" name="business_license_number" @if(isset($vendorDetails['business_license_number'])) value="{{ $vendorDetails['business_license_number'] }}" @endif>
-                            </div>
-                        </div>
-
-                        <div class="u-s-m-b-30">
-                            <label for="address_proof_image">Government Issued ID Proof</label>
-                            <input type="file" class="form-control" id="address_proof_image" name="address_proof_image">
-                            <!-- @if(!empty($vendorDetails['address_proof_image']))
-                                <a target="_blank" href="{{ url('admin/images/proofs/'.$vendorDetails['address_proof_image']) }}">View Image</a>
-                                <input type="hidden" name="current_address_proof" value="{{ $vendorDetails['address_proof_image'] }}">
-                            @endif -->
-                        </div>
-
-                        <div class="u-s-m-b-30">
-                            <label for="address_proof_image">Bussiness Permit</label>
-                            <input type="file" class="form-control" id="address_proof_image" name="address_proof_image">
-                            <!-- @if(!empty($vendorDetails['address_proof_image']))
-                                <a target="_blank" href="{{ url('admin/images/proofs/'.$vendorDetails['address_proof_image']) }}">View Image</a>
-                                <input type="hidden" name="current_address_proof" value="{{ $vendorDetails['address_proof_image'] }}">
-                            @endif -->
-                        </div>
-
-                        <div class="u-s-m-b-30">
-                            <label for="address_proof_image">BIR</label>
-                            <input type="file" class="form-control" id="address_proof_image" name="address_proof_image">
-                            <!-- @if(!empty($vendorDetails['address_proof_image']))
-                                <a target="_blank" href="{{ url('admin/images/proofs/'.$vendorDetails['address_proof_image']) }}">View Image</a>
-                                <input type="hidden" name="current_address_proof" value="{{ $vendorDetails['address_proof_image'] }}">
-                            @endif -->
-                        </div>
-
-                        <div class="form-group">
-                            <label for="address_proof_image">DTI</label>
-                            <input type="file" class="form-control" id="address_proof_image" name="address_proof_image">
-                            <!-- @if(!empty($vendorDetails['address_proof_image']))
-                                <a target="_blank" href="{{ url('admin/images/proofs/'.$vendorDetails['address_proof_image']) }}">View Image</a>
-                                <input type="hidden" name="current_address_proof" value="{{ $vendorDetails['address_proof_image'] }}">
-                            @endif -->
-                        </div>
-
-                        <div class="u-s-m-b-45" id="regsiterbtn">
+                            <!-- Remaining form fields -->
+                            <div class="u-s-m-b-45" id="regsiterbtn">
                                 <button class="button button-primary w-100">Register</button>
+                            </div>
+                            <div class="m-b-45" id="back">
+                                <button class="button button-outline-secondary w-100">Back</button>
                             </div>
                         </form>
                     </div>
                 </div>
+
+
                 <!-- Vendor Details Form -->
             </div>
         </div>
@@ -262,6 +236,16 @@
             document.getElementById('loginSection').style.display = 'none';
             document.getElementById('regsiterbtn').style.display = 'none';
             document.getElementById('shopSection').style.display = 'none';
+            document.getElementById('temrsbtn').style.display = 'none';
+            document.getElementById('registerSection').style.display = 'block';
+        });
+
+        document.getElementById('back').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('regsiterbtn').style.display = 'none';
+            document.getElementById('shopSection').style.display = 'none';
+            document.getElementById('temrsbtn').style.display = 'none';
             document.getElementById('registerSection').style.display = 'block';
         });
 
@@ -278,30 +262,22 @@
             document.getElementById('loginSection').style.display = 'none';
             document.getElementById('regsiterbtn').style.display = 'block';
             document.getElementById('shopSection').style.display = 'block';
+            document.getElementById('temrsbtn').style.display = 'block      ';
             document.getElementById('registerSection').style.display = 'none';
         });
 
         function togglePasswordVisibility(passwordFieldId) {
-            var passwordField = document.getElementById(passwordFieldId);
-            var showCheckbox = document.getElementById('showPassword');
-
-            if (showCheckbox.checked) {
-                passwordField.type = "text";
-            } else {
-                passwordField.type = "password";
-            }
+        var passwordField = document.getElementById(passwordFieldId);
+        var showCheckbox = document.getElementById('showPassword1');
+        if (passwordFieldId === 'vendorregpassword') {
+            showCheckbox = document.getElementById('showPassword2');
         }
-
-        function toggleRegiterVisibility(passwordFieldId) {
-            var registerField = document.getElementById(passwordFieldId);
-            var Checkbox = document.getElementById('showRegisterPassword');
-
-            if (Checkbox.checked) {
-                registerField.type = "text";
-            } else {
-                registerField.type = "password";
-            }
+        if (showCheckbox.checked) {
+            passwordField.type = "text";
+        } else {
+            passwordField.type = "password";
         }
+    }
 
     </script>
 @endsection
