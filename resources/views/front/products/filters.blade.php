@@ -6,7 +6,7 @@ $productFilters = ProductsFilter::productFilters();
 <div class="col-lg-3 col-md-3 col-sm-12">
     <!-- Fetch-Categories-from-Root-Category  -->
     <div class="fetch-categories">
-        <h3 class="title-name">Browse Categories</h3>
+        <h3 class="title-name">Filter</h3>
         <!-- Level 1 -->
         <h3 class="fetch-mark-category">
             <a href="listing.html">Food

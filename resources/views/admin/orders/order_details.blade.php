@@ -248,35 +248,35 @@ use App\Models\Coupon;
                     $imageSrc = asset('front/images/product_images/small/'.$getProductImage);
                 @endphp
                 <div class="form-group">
-                    <label>Product Image:</label>
+                    <label style="font-weight: 550;">Product Image:</label>
                     <a target="_blank" href="{{ url('product/'.$product['product_id']) }}"><img src="{{ $imageSrc }}" style="max-width: 200px;"></a>
                 </div>
                 <div class="form-group">
-                    <label>Code:</label>
+                    <label style="font-weight: 550;">Code:</label>
                     <label>{{ $product['product_code'] }}</label>
                 </div>
                 <div class="form-group">
-                    <label>Name:</label>
+                    <label style="font-weight: 550;">Name:</label>
                     <label>{{ $product['product_name'] }}</label>
                 </div>
                 <div class="form-group">
-                    <label>Size:</label>
+                    <label style="font-weight: 550;">Size:</label>
                     <label>{{ $product['product_size'] }}</label>
                 </div>
                 <div class="form-group">
-                    <label>Color:</label>
+                    <label style="font-weight: 550;">Color:</label>
                     <label>{{ $product['product_color'] }}</label>
                 </div>
                 <div class="form-group">
-                    <label>Unit Price:</label>
+                    <label style="font-weight: 550;">Unit Price:</label>
                     <label>{{ $product['product_price'] }}</label>
                 </div>
                 <div class="form-group">
-                    <label>Product Qty:</label>
+                    <label style="font-weight: 550;">Product Qty:</label>
                     <label>{{ $product['product_qty'] }}</label>
                 </div>
                 <div class="form-group">
-                    <label>Total Price:</label>
+                    <label style="font-weight: 550;">Total Price:</label>
                     <label>
                         @php
                             $total_price = $product['product_price'] * $product['product_qty'];
@@ -294,7 +294,7 @@ use App\Models\Coupon;
                 </div>
                 @if(Auth::guard('admin')->user()->type!="vendor")
                     <div class="form-group">
-                        <label>Product by:</label>
+                        <label style="font-weight: 550;">Product by:</label>
                         <label>
                             @if($product['vendor_id']>0)
                                 <a target="_blank" href="/admin/view-vendor-details/{{ $product['admin_id'] }}">Vendor</a>
@@ -305,7 +305,7 @@ use App\Models\Coupon;
                     </div>
                 @endif
                 <div class="form-group">
-                    <label>Commission:</label>
+                    <label style="font-weight: 550;">Commission:</label>
                     <label>
                         @if($product['vendor_id']>0)
                             {{ $commission = round($total_price * $product['commission']/100,2) }}
@@ -315,7 +315,7 @@ use App\Models\Coupon;
                     </label>
                 </div>
                 <div class="form-group">
-                    <label>Final Amount:</label>
+                    <label style="font-weight: 550;">Final Amount:</label>
                     <label>
                         @if($product['vendor_id']>0)
                             {{ $total_price - $commission }}
@@ -329,7 +329,7 @@ use App\Models\Coupon;
                         @csrf
                         <input type="hidden" name="order_item_id" value="{{ $product['id'] }}">
                         <div class="form-group">
-                        <label>Order Status:</label>
+                        <label style="font-weight: 550;">Order Status:</label>
                         <select name="order_item_status" id="order_item_status" required="">
                             <option value="">Select</option>
                             @foreach($orderItemStatuses as $status)
@@ -338,14 +338,14 @@ use App\Models\Coupon;
                         </select>
                         </div>
                         <div class="form-group">
-                            <label>Delivery Rider Name:</label>
+                            <label style="font-weight: 550;">Delivery Rider Name:</label>
                             <input style="width:110px;" type="text" name="item_courier_name" id="item_courier_name" placeholder="Courier Name" @if(!empty($product['courier_name'])) value="{{ $product['courier_name'] }}" @endif>
                         </div>
                         <div class="form-group">
-                            <label>Tracking Number:</label>
+                            <label style="font-weight: 550;">Tracking Number:</label>
                             <input style="width:110px;" type="text" name="item_tracking_number" id="item_tracking_number" placeholder="Tracking Number" @if(!empty($product['tracking_number'])) value="{{ $product['tracking_number'] }}" @endif>
                         </div>
-                        <button style="width:200px;" type="submit">Update</button>
+                        <button style="width:300px;" type="submit">Update</button>
                     </form>
                 </div>
             </div>

@@ -1982,7 +1982,7 @@ body {
   right: 14px;
   line-height: normal;
   letter-spacing: 1px; }
-  .superscript-label-new:after, .superscript-label-hot:after, .superscript-label-discount:after {
+  .superscript-label-new:after, .superscript-label-hot:after, .superscript-label-feat:after, .superscript-label-discount:after {
     content: '';
     width: 0;
     height: 0;
