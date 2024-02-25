@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
+use Image;
 use Illuminate\Http\Request;
 use App\Models\Admin;
 use App\Models\Vendor;
@@ -70,10 +71,9 @@ class VendorController extends Controller
     
             $validator = Validator::make($data, $rules, $customMessages);
     
-            // if($validator->fails()){
-            //     return redirect()->route('vendor/login-register')->fragment('registerSection');
-
-            // }
+            if($validator->fails()){
+                return Redirect::back()->withErrors($validator);
+            }
             
     
             DB::beginTransaction();
@@ -117,77 +117,59 @@ class VendorController extends Controller
             $admin->updated_at = date("Y-m-d H:i:s");
             $admin->save();
 
-            $imageGov = "";
-            $imageBir = "";
-            $imageDti = "";
-            $imageBir = "";
 
-            if($request->hasFile('shop_gov_id')){
+           // After saving vendor details
+            $vendor_id = $vendor->id;
+
+           
+            if ($request->hasFile('shop_gov_id')) {
                 $image_tmp = $request->file('shop_gov_id');
-                if($image_tmp->isValid()){
-                    // Get Image Extension
+                if ($image_tmp->isValid()) {
                     $extension = $image_tmp->getClientOriginalExtension();
-                    // Generate New Image Name
-                    $imageGov = rand(111,99999).'.'.$extension;
-                    $imagePath = 'admin/images/proofs/'.$imageGov;
-                    // Upload the Image
+                    $imageGov = $vendor_id . '01.' . $extension;
+                    $imagePath = 'admin/images/proofs/' . $imageGov;
                     Image::make($image_tmp)->save($imagePath);
                 }
-            }else if(!empty($data['current_shop_gov_id'])){
-                $imageName = $data['current_shop_gov_id'];
-            }else{
-                $imageName = "";
+            } else {
+                $imageGov = !empty($data['current_shop_gov_id']) ? $data['current_shop_gov_id'] : "";
             }
+            // Repeat the same process for other image types
 
-            if($request->hasFile('shop_permit_id')){
+
+            if ($request->hasFile('shop_permit_id')) {
                 $image_tmp = $request->file('shop_permit_id');
-                if($image_tmp->isValid()){
-                    // Get Image Extension
+                if ($image_tmp->isValid()) {
                     $extension = $image_tmp->getClientOriginalExtension();
-                    // Generate New Image Name
-                    $imagePermit = rand(111,99999).'.'.$extension;
-                    $imagePath = 'admin/images/proofs/'.$imagePermit;
-                    // Upload the Image
+                    $imagePermit = $vendor_id . '02.' . $extension;
+                    $imagePath = 'admin/images/proofs/' . $imagePermit;
                     Image::make($image_tmp)->save($imagePath);
                 }
-            }else if(!empty($data['current_shop_permit_id'])){
-                $permitimageName = $data['current_shop_permit_id'];
-            }else{
-                $permitimageName = "";
+            } else {
+                $imagePermit = !empty($data['current_shop_permit_id']) ? $data['current_shop_permit_id'] : "";
             }
 
-            if($request->hasFile('shop_bir_id')){
+            if ($request->hasFile('shop_bir_id')) {
                 $image_tmp = $request->file('shop_bir_id');
-                if($image_tmp->isValid()){
-                    // Get Image Extension
+                if ($image_tmp->isValid()) {
                     $extension = $image_tmp->getClientOriginalExtension();
-                    // Generate New Image Name
-                    $imageBir = rand(111,99999).'.'.$extension;
-                    $imagePath = 'admin/images/proofs/'.$imageBir;
-                    // Upload the Image
+                    $imageBir = $vendor_id . '03.' . $extension;
+                    $imagePath = 'admin/images/proofs/' . $imageBir;
                     Image::make($image_tmp)->save($imagePath);
                 }
-            }else if(!empty($data['current_shop_bir_id'])){
-                $permitimageName = $data['current_shop_bir_id'];
-            }else{
-                $permitimageName = "";
+            } else {
+                $imageBir = !empty($data['current_shop_bir_id']) ? $data['current_shop_bir_id'] : "";
             }
 
-            if($request->hasFile('shop_dti_id')){
+            if ($request->hasFile('shop_dti_id')) {
                 $image_tmp = $request->file('shop_dti_id');
-                if($image_tmp->isValid()){
-                    // Get Image Extension
+                if ($image_tmp->isValid()) {
                     $extension = $image_tmp->getClientOriginalExtension();
-                    // Generate New Image Name
-                    $imageDti = rand(111,99999).'.'.$extension;
-                    $imagePath = 'admin/images/proofs/'.$imageDti;
-                    // Upload the Image
+                    $imageDti = $vendor_id . '04.' . $extension;
+                    $imagePath = 'admin/images/proofs/' . $imageDti;
                     Image::make($image_tmp)->save($imagePath);
                 }
-            }else if(!empty($data['current_shop_dti_id'])){
-                $permitimageName = $data['current_shop_bir_id'];
-            }else{
-                $permitimageName = "";
+            } else {
+                $imageDti = !empty($data['current_shop_dti_id']) ? $data['current_shop_dti_id'] : "";
             }
           
               
@@ -205,7 +187,9 @@ class VendorController extends Controller
             $detail->shop_email = $data['email'];
             $detail->address_proof = 'Gov ID';
             $detail->address_proof_image = $imageGov;
-            $detail->permit_proof_image = $imageBir;
+            $detail->permit_proof_image = $imagePermit;
+            $detail->bir_image = $imageBir;
+            $detail->dti_image = $imageDti;
             $detail->business_license_number = $data['vendorshoplicense'];
             $detail->gst_number = '0';
             $detail->pan_number = '0';

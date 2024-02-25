@@ -90,7 +90,7 @@
                     <div class="reg-wrapper">
                         <h2 class="account-h2 u-s-m-b-20">Register Vendor Account</h2>
                         <h6 class="account-h6 u-s-m-b-30">Upon successful registration on our site and after being authorized by the administrator, you can gain access to your vendor account, allowing you to start selling your products.</h6>
-                        <form id="vendorForm" action="{{ url('/vendor/register') }}" method="post">@csrf 
+                        <form id="vendorForm" action="{{ url('/vendor/register') }}" method="post" enctype="multipart/form-data">@csrf 
                             <div class="u-s-m-b-30">
                                 <label for="first_name">First Name
                                     <span class="astk">*</span>
@@ -137,12 +137,7 @@
                                 <input type="password" id="user-password-confirm" name="password_confirmation" class="text-field" placeholder="Confirm Password" onkeyup="validatePassword()" >
                                 <p id="register-password-confirm"></p>
                             </div class="terms">
-                            <div id="temrsbtn">
-                                <input type="checkbox" class="check-box" id="accept" name="accept">
-                                <label class="label-text no-color" for="accept">I have carefully reviewed and hereby accept the
-                                    <a href="terms-and-conditions.html" class="u-c-brand">terms and conditions.</a>
-                                </label>
-                            </div>
+                            
                            
                             <div class="u-s-m-b-45" id="nextbtn">
                                 <button class="button button-primary w-100">Next</button>
@@ -212,6 +207,13 @@
                                 </div>
                             </div>
                             <!-- Remaining form fields -->
+
+                            <div id="temrsbtn">
+                                <input type="checkbox" class="check-box" id="accept" name="accept">
+                                <label class="label-text no-color" for="accept">I have carefully reviewed and hereby accept the
+                                    <a href="terms-and-conditions.html" class="u-c-brand">terms and conditions.</a>
+                                </label>
+                            </div>
                             <div class="u-s-m-b-45" id="regsiterbtn">
                                 <button class="button button-primary w-100">Register</button>
                             </div>
@@ -244,7 +246,7 @@
             document.getElementById('loginSection').style.display = 'none';
             document.getElementById('regsiterbtn').style.display = 'none';
             document.getElementById('shopSection').style.display = 'none';
-            document.getElementById('temrsbtn').style.display = 'none';
+            document.getElementById('temrsbtn').style.display = 'block';
             document.getElementById('registerSection').style.display = 'block';
         });
 
