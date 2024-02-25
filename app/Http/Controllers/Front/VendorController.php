@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin;
 use App\Models\Vendor;
+use App\Models\VendorsBusinessDetail;
 use Validator;
 use DB;
 
@@ -29,6 +30,16 @@ class VendorController extends Controller
                 "mobile" => "required|min:11|numeric|unique:admins|unique:vendors",
                 "password" => 'required|confirmed|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/',
                 "accept" => "required",
+                'shopname' => 'required',
+                'vendorshopdetails' => 'required',
+                'vendorshopbarangay' => 'required',
+                'vendorshopcontact' => 'required|min:11|numeric',
+                'vendorshoplicense' => 'required',
+                'shop_gov_id' => 'required',
+                'shop_permit_id' => 'required',
+                'shop_bir_id' => 'required',
+                'shop_dti_id' => 'required',
+
             ];
     
             $customMessages = [
@@ -45,13 +56,24 @@ class VendorController extends Controller
                 "password.regex" => "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
                 "password.confirmed" => "Password confirmation does not match",
                 "accept.required" => "Kindly accept the Terms and Conditions.",
+                'shopname.required' => 'Shop Name is Required',
+                'vendorshopdetails.required' => 'Shop Address Details is Required',
+                'vendorshopbarangay.required' => 'Shop Barangay is Required',
+                'vendorshopcontact.required' => 'Shop Contact is Required',
+                'vendorshoplicense.required' => 'Bussiness License Number is Required',
+                'shop_gov_id.required' => 'Government ID is Required',
+                'shop_permit_id.required' => 'Shop Permit is Required',
+                'shop_bir_id.required' => 'BIR is Required',
+                'shop_dti_id.required' => 'DTI Permit is Required',
+
             ];
     
             $validator = Validator::make($data, $rules, $customMessages);
     
-            if($validator->fails()){
-                return Redirect::back()->withErrors($validator)->withInput()->fragment('registerSection');
-            }
+            // if($validator->fails()){
+            //     return redirect()->route('vendor/login-register')->fragment('registerSection');
+
+            // }
             
     
             DB::beginTransaction();
@@ -71,7 +93,7 @@ class VendorController extends Controller
             $vendor->status = 0;
             
     
-            // Set Default Timezone to India
+            // Set Default Timezone to Manila
             date_default_timezone_set("Asia/Manila");
             $vendor->created_at = date("Y-m-d H:i:s");
             $vendor->updated_at = date("Y-m-d H:i:s");
@@ -89,11 +111,113 @@ class VendorController extends Controller
             $admin->password = bcrypt($data['password']);
             $admin->status = 0;
     
-            // Set Default Timezone to India
-            date_default_timezone_set("Asia/Kolkata");
+            // Set Default Timezone to Manila
+            date_default_timezone_set("Asia/Manila");
             $admin->created_at = date("Y-m-d H:i:s");
             $admin->updated_at = date("Y-m-d H:i:s");
             $admin->save();
+
+            $imageGov = "";
+            $imageBir = "";
+            $imageDti = "";
+            $imageBir = "";
+
+            if($request->hasFile('shop_gov_id')){
+                $image_tmp = $request->file('shop_gov_id');
+                if($image_tmp->isValid()){
+                    // Get Image Extension
+                    $extension = $image_tmp->getClientOriginalExtension();
+                    // Generate New Image Name
+                    $imageGov = rand(111,99999).'.'.$extension;
+                    $imagePath = 'admin/images/proofs/'.$imageGov;
+                    // Upload the Image
+                    Image::make($image_tmp)->save($imagePath);
+                }
+            }else if(!empty($data['current_shop_gov_id'])){
+                $imageName = $data['current_shop_gov_id'];
+            }else{
+                $imageName = "";
+            }
+
+            if($request->hasFile('shop_permit_id')){
+                $image_tmp = $request->file('shop_permit_id');
+                if($image_tmp->isValid()){
+                    // Get Image Extension
+                    $extension = $image_tmp->getClientOriginalExtension();
+                    // Generate New Image Name
+                    $imagePermit = rand(111,99999).'.'.$extension;
+                    $imagePath = 'admin/images/proofs/'.$imagePermit;
+                    // Upload the Image
+                    Image::make($image_tmp)->save($imagePath);
+                }
+            }else if(!empty($data['current_shop_permit_id'])){
+                $permitimageName = $data['current_shop_permit_id'];
+            }else{
+                $permitimageName = "";
+            }
+
+            if($request->hasFile('shop_bir_id')){
+                $image_tmp = $request->file('shop_bir_id');
+                if($image_tmp->isValid()){
+                    // Get Image Extension
+                    $extension = $image_tmp->getClientOriginalExtension();
+                    // Generate New Image Name
+                    $imageBir = rand(111,99999).'.'.$extension;
+                    $imagePath = 'admin/images/proofs/'.$imageBir;
+                    // Upload the Image
+                    Image::make($image_tmp)->save($imagePath);
+                }
+            }else if(!empty($data['current_shop_bir_id'])){
+                $permitimageName = $data['current_shop_bir_id'];
+            }else{
+                $permitimageName = "";
+            }
+
+            if($request->hasFile('shop_dti_id')){
+                $image_tmp = $request->file('shop_dti_id');
+                if($image_tmp->isValid()){
+                    // Get Image Extension
+                    $extension = $image_tmp->getClientOriginalExtension();
+                    // Generate New Image Name
+                    $imageDti = rand(111,99999).'.'.$extension;
+                    $imagePath = 'admin/images/proofs/'.$imageDti;
+                    // Upload the Image
+                    Image::make($image_tmp)->save($imagePath);
+                }
+            }else if(!empty($data['current_shop_dti_id'])){
+                $permitimageName = $data['current_shop_bir_id'];
+            }else{
+                $permitimageName = "";
+            }
+          
+              
+            // insert new vendordetails
+            $detail = new VendorsBusinessDetail;
+            $detail -> vendor_id = $vendor_id;
+            $detail->shop_name = $data['shopname'];
+            $detail->shop_address = $data['vendorshopdetails'];
+            $detail->shop_city = 'Zamboanga City';
+            $detail->shop_barangay = $data['vendorshopbarangay'];
+            $detail->shop_country = 'Philippines';
+            $detail->shop_pincode = '7000';
+            $detail->shop_mobile = $data['vendorshopcontact'];
+            $detail->shop_website = 'vendors';
+            $detail->shop_email = $data['email'];
+            $detail->address_proof = 'Gov ID';
+            $detail->address_proof_image = $imageGov;
+            $detail->permit_proof_image = $imageBir;
+            $detail->business_license_number = $data['vendorshoplicense'];
+            $detail->gst_number = '0';
+            $detail->pan_number = '0';
+            // set default time zone to Manila
+            date_default_timezone_set("Asia/Manila");
+            $detail->created_at = date("Y-m-d H:i:s");
+            $detail->updated_at =  date("Y-m-d H:i:s");
+            $detail->save();
+
+        
+
+
     
             // Send Confirmation Email
             $email = $data['email'];

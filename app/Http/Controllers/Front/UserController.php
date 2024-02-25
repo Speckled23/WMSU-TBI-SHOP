@@ -27,7 +27,7 @@ class UserController extends Controller
             $validator = Validator::make($request->all(), [
                 'firstname' => 'required|regex:/^[a-zA-Z\s]+$/|max:100',
                 'lastname' => 'required|regex:/^[a-zA-Z\s]+$/|max:100',
-                'middleinitial' => 'nullable|alpha|max:1', // Assuming middle initial is optional and only one character
+                'middleinitial' => 'nullable|alpha|max:1', 
                 'mobile' => 'required|numeric|digits:11|unique:users',
                 'email' => 'required|email|max:150|regex:/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/|unique:users',
                 'password' => 'required|confirmed|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/',

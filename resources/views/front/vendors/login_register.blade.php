@@ -92,46 +92,46 @@
                         <h6 class="account-h6 u-s-m-b-30">Upon successful registration on our site and after being authorized by the administrator, you can gain access to your vendor account, allowing you to start selling your products.</h6>
                         <form id="vendorForm" action="{{ url('/vendor/register') }}" method="post">@csrf 
                             <div class="u-s-m-b-30">
-                                <label for="vendorfirstname">First Name
+                                <label for="first_name">First Name
                                     <span class="astk">*</span>
                                 </label>
-                                <input type="text" id="vendorfirstname" name="first_name" class="text-field" placeholder="Seller First Name">
+                                <input type="text" id="first_name" name="first_name" class="text-field" placeholder="Seller First Name">
                             </div>
                             <div class="u-s-m-b-30">
-                                <label for="vendorlastname">Last Name
+                                <label for="last_name">Last Name
                                     <span class="astk">*</span>
                                 </label>
-                                <input type="text" id="vendorlastname" name="last_name" class="text-field" placeholder="Seller Last Name">
+                                <input type="text" id="last_name" name="last_name" class="text-field" placeholder="Seller Last Name">
                             </div>
                             <div class="u-s-m-b-30">
-                                <label for="vendormiddleinitial">Middle Initial (Optional)</label>
-                                <input type="text" id="vendormiddleinitial" name="middle_initial" class="text-field" placeholder="Middle Initial">
+                                <label for="middle_initial">Middle Initial (Optional)</label>
+                                <input type="text" id="middle_initial" name="middle_initial" class="text-field" placeholder="Middle Initial">
                             </div>
                             <div class="u-s-m-b-30">
-                                <label for="vendormobile">Mobile No.
+                                <label for="mobile">Mobile No.
                                     <span class="astk">*</span>
                                 </label>
-                                <input type="text" id="vendormobile" name="mobile" class="text-field" placeholder="Seller Mobile No.">
+                                <input type="text" id="mobile" name="mobile" class="text-field" placeholder="Seller Mobile No.">
                             </div>
                             <div class="u-s-m-b-30">
-                                <label for="vendoremail">Email
+                                <label for="email">Email
                                     <span class="astk">*</span>
                                 </label>
-                                <input type="email" id="vendoremail" name="email" class="text-field" placeholder="Seller Email">
+                                <input type="email" id="email" name="email" class="text-field" placeholder="Seller Email">
                             </div>
                             <div class="u-s-m-b-30">
-                                <label for="vendorregpassword">Password
+                                <label for="password">Password
                                     <span class="astk">*</span>
                                 </label>
                                 <div class="password-toggle">
-                                    <input type="password" id="vendorregpassword" name="password" class="text-field" placeholder="Seller Password">
+                                    <input type="password" id="password" name="password" class="text-field" placeholder="Seller Password">
                                     <input type="checkbox" id="showPassword2" class="toggle-checkbox" onclick="togglePasswordVisibility('vendorregpassword')">
                                     <label for="showPassword2" class="toggle-label"></label>
                                     <label for="showPassword2" class="toggle-text">Show</label>
                                 </div>
                             </div>
                             <div class="u-s-m-b-30">
-                                <label for="userpassword">Confirm Password
+                                <label for="password_confirmation">Confirm Password
                                     <span class="astk">*</span>
                                 </label>
                                 <input type="password" id="user-password-confirm" name="password_confirmation" class="text-field" placeholder="Confirm Password" onkeyup="validatePassword()" >
@@ -150,7 +150,7 @@
                             <div class="text-center"> <!-- Center the "Already have an account? Login" message -->
                                 <p>Already have an account? <a href="#" id="showLogin">Login</a></p>
                             </div>
-                        </form>
+                    
                     </div>
                 </div>
                 <!-- Register /- -->
@@ -159,14 +159,13 @@
                 <div class="row" id="shopSection" style="display: none;">
                     <div class="col-lg-12">
                         <h2 class="account-h2 u-s-m-b-20">Vendor Shop Details</h2>
-                        <form id="vendorForm" action="{{ url('/vendor/register') }}" method="post">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="u-s-m-b-30">
-                                        <label for="vendorshopname">Shop Name
+                                        <label for="shopname">Shop Name
                                             <span class="astk">*</span>
                                         </label>
-                                        <input type="text" id="vendorshopname" name="shopname" class="text-field" placeholder="Shop Name">
+                                        <input type="text" id="shopname" name="shopname" class="text-field" placeholder="Shop Name">
                                     </div>
                                     <div class="u-s-m-b-30">
                                         <label for="vendorshopdetails">Shop Address Details
@@ -195,7 +194,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="u-s-m-b-30">
-                                        <label for="shop_gov_id">Government Issued ID Proof</label>
+                                        <label for="shop_gov_id">Government Issued ID</label>
                                         <input type="file" class="form-control" id="shop_gov_id" name="shop_gov_id">
                                     </div>
                                     <div class="u-s-m-b-30">

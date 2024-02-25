@@ -974,7 +974,7 @@ class AdminController extends Controller
                     'shop_city.regex' => 'Valid City is required',
                     'shop_mobile.required' => 'Mobile is required',
                     'shop_mobile.numeric' => 'Valid Mobile is required',
-                    
+                    'address_proof.required' => 'Image is required',
                 ];
 
                 $this->validate($request,$rules,$customMessages);

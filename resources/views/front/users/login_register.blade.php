@@ -61,7 +61,7 @@
                                 <p id="login-email"></p>
                             </div>
                             <div class="u-s-m-b-30">
-                                <label for="user-password">Password
+                                <label for="user-   word">Password
                                     <span class="astk">*</span>
                                 </label>
                                 <input type="password" name="password" id="users-password" class="text-field" placeholder="Password">
@@ -168,6 +168,30 @@
     <!-- Account-Page /- -->
 
     <script>
+
+        // Assuming you have references to the password and confirm password input fields
+        var passwordInput = document.getElementById('userpassword');
+        var confirmPasswordInput = document.getElementById('user-password-confirm');
+
+        // Assuming you have a reference to the paragraph element where validation messages will be displayed
+        var confirmPasswordError = document.getElementById('register-password-confirm');
+
+        // Function to check if passwords match
+        function validatePasswords() {
+            var password = passwordInput.value;
+            var confirmPassword = confirmPasswordInput.value;
+
+            if (password !== confirmPassword) {
+                confirmPasswordError.textContent = "Passwords do not match";
+                confirmPasswordError.style.color = "red";
+            } else {
+                confirmPasswordError.textContent = ""; // Clear any previous error messages
+            }
+        }
+
+        // Event listener to call the validatePasswords function whenever the confirm password input changes
+        confirmPasswordInput.addEventListener('input', validatePasswords);
+
          document.getElementById('showRegister').addEventListener('click', function(e) {
             e.preventDefault();
             document.getElementById('loginDiv').style.display = 'none';
