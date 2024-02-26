@@ -27,7 +27,7 @@ $getCartItems = getCartItems();
         </ul>
         <div class="mini-shop-total clearfix">
             <span class="mini-total-heading float-left">Total:</span>
-            <span class="mini-total-price float-right">PHP {{ $total_price }}</span>
+            <span class="mini-total-price float-right">PHP {{ number_format($total_price, 2, '.', ',') }}</span>
         </div>
         <div class="mini-action-anchors">
             <a href="{{url('cart')}}" class="cart-anchor">View Cart</a>

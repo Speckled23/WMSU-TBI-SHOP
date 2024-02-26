@@ -31,51 +31,50 @@ use App\Models\Currency;
                     </div>
                 </td>
                 <td>
-                    <div class="cart-price">
-                        @if(isset($currency))
-                            @php $_GET['cy']=$currency @endphp
-                        @endif
-                        @if(isset($_GET['cy'])&&$_GET['cy']!="PHP")
-                            @php 
-                                $getCurrency = Currency::where('currency_code',$_GET['cy'])->first()->toArray();
-                            @endphp
-                            @if($getDiscountAttributePrice['discount']>0)
-                                <div class="price-template">
-                                    <div class="item-new-price">
-                                        {{$_GET['cy']}} {{ round($getDiscountAttributePrice['final_price']/$getCurrency['exchange_rate'],2) }}
-                                    </div>
-                                    <div class="item-old-price" style="margin-left:-40px;">
-                                        {{$_GET['cy']}}
-                                        {{ round($getDiscountAttributePrice['product_price']/$getCurrency['exchange_rate'],2) }}
-                                    </div>
-                                </div>
-                                @else
-                                <div class="price-template">
-                                    <div class="item-new-price">
-                                        {{$_GET['cy']}} 
-                                        {{ round($getDiscountAttributePrice['final_price']/$getCurrency['exchange_rate'],2) }}
-                                    </div>
-                                </div>
-                            @endif
-                        @else
-                            @if($getDiscountAttributePrice['discount']>0)
-                                <div class="price-template">
-                                    <div class="item-new-price">
-                                        PHP {{ $getDiscountAttributePrice['final_price'] }}
-                                    </div>
-                                    <div class="item-old-price" style="margin-left:-40px;">
-                                        PHP {{ $getDiscountAttributePrice['product_price'] }}
-                                    </div>
-                                </div>
-                                @else
-                                <div class="price-template">
-                                    <div class="item-new-price">
-                                        PHP {{ $getDiscountAttributePrice['final_price'] }}
-                                    </div>
-                                </div>
-                            @endif
-                        @endif
-                    </div>
+                <div class="cart-price">
+    @if(isset($currency))
+        @php $_GET['cy']=$currency @endphp
+    @endif
+    @if(isset($_GET['cy']) && $_GET['cy'] != "PHP")
+        @php 
+            $getCurrency = Currency::where('currency_code',$_GET['cy'])->first()->toArray();
+        @endphp
+        @if($getDiscountAttributePrice['discount'] > 0)
+            <div class="price-template">
+                <div class="item-new-price">
+                    {{ $_GET['cy'] }} {{ number_format(round($getDiscountAttributePrice['final_price'] / $getCurrency['exchange_rate'], 2), 2, '.', ',') }}
+                </div>
+                <div class="item-old-price" style="margin-left:-40px;">
+                    {{ $_GET['cy'] }} {{ number_format(round($getDiscountAttributePrice['product_price'] / $getCurrency['exchange_rate'], 2), 2, '.', ',') }}
+                </div>
+            </div>
+        @else
+            <div class="price-template">
+                <div class="item-new-price">
+                    {{ $_GET['cy'] }} {{ number_format(round($getDiscountAttributePrice['final_price'] / $getCurrency['exchange_rate'], 2), 2, '.', ',') }}
+                </div>
+            </div>
+        @endif
+    @else
+        @if($getDiscountAttributePrice['discount'] > 0)
+            <div class="price-template">
+                <div class="item-new-price">
+                    PHP {{ number_format($getDiscountAttributePrice['final_price'], 2, '.', ',') }}
+                </div>
+                <div class="item-old-price" style="margin-left:-40px;">
+                    PHP {{ number_format($getDiscountAttributePrice['product_price'], 2, '.', ',') }}
+                </div>
+            </div>
+        @else
+            <div class="price-template">
+                <div class="item-new-price">
+                    PHP {{ number_format($getDiscountAttributePrice['final_price'], 2, '.', ',') }}
+                </div>
+            </div>
+        @endif
+    @endif
+</div>
+
                 </td>
                 <td>
                     <div class="cart-quantity">
@@ -87,16 +86,17 @@ use App\Models\Currency;
                     </div>
                 </td>
                 <td>
-                    <div class="cart-price">
-                        @if(isset($currency))
-                            @php $_GET['cy']=$currency @endphp
-                        @endif
-                        @if(isset($_GET['cy'])&&$_GET['cy']!="PHP")
-                            {{$_GET['cy']}} {{ round($getDiscountAttributePrice['final_price']* $item['quantity']/$getCurrency['exchange_rate'],2) }}
-                        @else
-                            PHP {{ $getDiscountAttributePrice['final_price'] * $item['quantity'] }}
-                        @endif
-                    </div>
+                <div class="cart-price">
+    @if(isset($currency))
+        @php $_GET['cy']=$currency @endphp
+    @endif
+    @if(isset($_GET['cy']) && $_GET['cy'] != "PHP")
+        {{ $_GET['cy'] }} {{ number_format(round($getDiscountAttributePrice['final_price'] * $item['quantity'] / $getCurrency['exchange_rate'], 2), 2, '.', ',') }}
+    @else
+        PHP {{ number_format($getDiscountAttributePrice['final_price'] * $item['quantity'], 2, '.', ',') }}
+    @endif
+</div>
+
                 </td>
                 <td>
                     <div class="action-wrapper">
@@ -126,40 +126,46 @@ use App\Models\Currency;
                         <h3 class="calc-h3 u-s-m-b-0">Sub Total</h3>
                     </td>
                     <td>
-                        @if(isset($_GET['cy'])&&$_GET['cy']!="PHP")
-                            <span class="calc-text">{{$_GET['cy']}} {{ round($total_price/$getCurrency['exchange_rate'],2) }}</span>
-                        @else
-                            <span class="calc-text">PHP {{ $total_price }}</span>
-                        @endif
-                    </td>
+    @if(isset($_GET['cy']) && $_GET['cy'] != "PHP")
+        <span class="calc-text">{{ $_GET['cy'] }} {{ number_format(round($total_price / $getCurrency['exchange_rate'], 2), 2, '.', ',') }}</span>
+    @else
+        <span class="calc-text">PHP {{ number_format($total_price, 2, '.', ',') }}</span>
+    @endif
+</td>
+
                 </tr>
                 <tr>
                     <td>
                         <h3 class="calc-h3 u-s-m-b-0">Coupon Discount</h3>
                     </td>
                     <td>
-                        <span class="calc-text couponAmount">
-                            @if(Session::has('couponAmount'))
-                                PHP {{ Session::get('couponAmount') }}
-                            @else
-                                PHP 
-                            @endif
-                        </span>
-                    </td>
+    <span class="calc-text couponAmount">
+        @if(Session::has('couponAmount'))
+            PHP {{ number_format(Session::get('couponAmount'), 2, '.', ',') }}
+        @else
+            PHP 
+        @endif
+    </span>
+</td>
+
                 </tr>
                 <tr>
                     <td>
                         <h3 class="calc-h3 u-s-m-b-0">Grand Total</h3>
                     </td>
                     <td>
-                        <span class="calc-text grand_total">
-                            @php $grand_total = $total_price - Session::get('couponAmount') @endphp
-                            @if(isset($_GET['cy'])&&$_GET['cy']!="PHP")
-                                {{$_GET['cy']}} {{ round($grand_total/$getCurrency['exchange_rate'],2) }}
-                            @else
-                                PHP {{ $grand_total }}
-                            @endif
-                        </span>
+                    <span class="calc-text grand_total">
+    @php
+        $grand_total = $total_price - Session::get('couponAmount');
+        $formatted_grand_total = isset($_GET['cy']) && $_GET['cy'] != "PHP" ? number_format(round($grand_total / $getCurrency['exchange_rate'], 2), 2, '.', ',') : number_format($grand_total, 2, '.', ',');
+    @endphp
+    @if(isset($_GET['cy']) && $_GET['cy'] != "PHP")
+        {{ $_GET['cy'] }} {{ $formatted_grand_total }}
+    @else
+        PHP {{ $formatted_grand_total }}
+    @endif
+</span>
+
                     </td>
                 </tr>
             </tbody>

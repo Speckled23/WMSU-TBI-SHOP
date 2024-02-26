@@ -1328,8 +1328,9 @@ body {
 .quantity {
   position: relative;
   display: inline-block;
-  margin-left: 4px;
-  margin-right: 4px; }
+  margin-left: 5px;
+  margin-right: 4px;
+  }
   .quantity .quantity-text-field {
     border: 1px solid #aaaaaa;
     display: inline-block;
