@@ -9,6 +9,7 @@ use Image;
 use Illuminate\Http\Request;
 use App\Models\Admin;
 use App\Models\Vendor;
+use App\Models\Barangay;
 use App\Models\VendorsBusinessDetail;
 use Validator;
 use DB;
@@ -224,6 +225,15 @@ class VendorController extends Controller
         }
     }
     
+    public function showBarangayTable()
+    {
+        $barangays = Barangay::all(); // Retrieve all barangay data
+
+        // Pass the barangay data to the view
+        return view('front.vendors.login_register')->with(compact('barangays'));
+
+    }
+
     public function confirmVendor($email){
         // Decode Vendor Email
         $email = base64_decode($email);

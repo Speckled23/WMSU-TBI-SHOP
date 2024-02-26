@@ -249,6 +249,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
 
     // Vendor Register
     Route::post('vendor/register','VendorController@vendorRegister');
+    Route::get('vendor/login-register','VendorController@showBarangayTable');
 
     // Confirm Vendor Account
     Route::get('vendor/confirm/{code}','VendorController@confirmVendor');

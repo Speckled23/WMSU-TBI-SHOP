@@ -174,6 +174,16 @@
                                         </label>
                                         <input type="text" id="vendorshopbarangay" name="vendorshopbarangay" class="text-field" placeholder="Shop Barangay">
                                     </div>
+                                    <!-- barangay -->
+                                    <div class="form-group">
+                                        <label for="vendorshopbarangay">Shop Barangay</label>
+                                        <select class="form-control" id="vendorshopbarangay" name="vendorshopbarangay"  style="color: #495057;">
+                                                <option value="">Select Barangay</option>
+                                                @foreach($barangays as $zcbarangay)
+                                                    <option value="{{ $zcbarangay['barangay_name'] }}" @if($zcbarangay['barangay_name']==$zcbarangay['barangay_name']) selected @endif>{{ $zcbarangay['barangay_name'] }}</option>
+                                                @endforeach
+                                        </select> 
+                                    </div>
                                     <div class="u-s-m-b-30">
                                         <label for="vendorshopcontact">Shop Contact Number
                                             <span class="astk">*</span>
