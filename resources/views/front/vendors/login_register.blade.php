@@ -90,61 +90,77 @@
                     <div class="reg-wrapper">
                         <h2 class="account-h2 u-s-m-b-20">Register Vendor Account</h2>
                         <h6 class="account-h6 u-s-m-b-30">Upon successful registration on our site and after being authorized by the administrator, you can gain access to your vendor account, allowing you to start selling your products.</h6>
-                        <form id="vendorForm" action="{{ url('/vendor/register') }}" method="post" enctype="multipart/form-data">@csrf 
-                            <div class="u-s-m-b-30">
-                                <label for="first_name">First Name
-                                    <span class="astk">*</span>
-                                </label>
-                                <input type="text" id="first_name" name="first_name" class="text-field" placeholder="Seller First Name">
-                            </div>
-                            <div class="u-s-m-b-30">
-                                <label for="last_name">Last Name
-                                    <span class="astk">*</span>
-                                </label>
-                                <input type="text" id="last_name" name="last_name" class="text-field" placeholder="Seller Last Name">
-                            </div>
-                            <div class="u-s-m-b-30">
-                                <label for="middle_initial">Middle Initial (Optional)</label>
-                                <input type="text" id="middle_initial" name="middle_initial" class="text-field" placeholder="Middle Initial">
-                            </div>
-                            <div class="u-s-m-b-30">
-                                <label for="mobile">Mobile No.
-                                    <span class="astk">*</span>
-                                </label>
-                                <input type="text" id="mobile" name="mobile" class="text-field" placeholder="Seller Mobile No.">
-                            </div>
-                            <div class="u-s-m-b-30">
-                                <label for="email">Email
-                                    <span class="astk">*</span>
-                                </label>
-                                <input type="email" id="email" name="email" class="text-field" placeholder="Seller Email">
-                            </div>
-                            <div class="u-s-m-b-30">
-                                <label for="password">Password
-                                    <span class="astk">*</span>
-                                </label>
-                                <div class="password-toggle">
-                                    <input type="password" id="password" name="password" class="text-field" placeholder="Seller Password">
-                                    <input type="checkbox" id="showPassword2" class="toggle-checkbox" onclick="togglePasswordVisibility('vendorregpassword')">
-                                    <label for="showPassword2" class="toggle-label"></label>
-                                    <label for="showPassword2" class="toggle-text">Show</label>
-                                </div>
-                            </div>
-                            <div class="u-s-m-b-30">
-                                <label for="password_confirmation">Confirm Password
-                                    <span class="astk">*</span>
-                                </label>
-                                <input type="password" id="user-password-confirm" name="password_confirmation" class="text-field" placeholder="Confirm Password" onkeyup="validatePassword()" >
-                                <p id="register-password-confirm"></p>
-                            </div class="terms">
+            <form id="vendorForm" action="{{ url('/vendor/register') }}" method="post" enctype="multipart/form-data">@csrf 
+            <div class="u-s-m-b-30">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="first_name">First Name
+                            <span class="astk">*</span>
+                        </label>
+                        <input type="text" id="first_name" name="first_name" class="text-field form-control" placeholder="Seller First Name" autocomplete="off">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="last_name">Last Name
+                            <span class="astk">*</span>
+                        </label>
+                        <input type="text" id="last_name" name="last_name" class="text-field form-control" placeholder="Seller Last Name" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+            <div class="u-s-m-b-30">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="middle_initial">Middle Initial (Optional)</label>
+                        <input type="text" id="middle_initial" name="middle_initial" class="text-field form-control" placeholder="Middle Initial" autocomplete="off">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="suffix">Suffix (Optional)</label>
+                        <input type="text" id="suffix" name="suffix" class="text-field form-control" placeholder="Suffix" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+
+                    <div class="u-s-m-b-30">
+                        <label for="mobile">Mobile No.
+                            <span class="astk">*</span>
+                        </label>
+                        <input type="text" id="mobile" name="mobile" class="text-field" placeholder="Seller Mobile No." autocomplete="off">
+                    </div>
+                    <div class="u-s-m-b-30">
+                        <label for="email">Email
+                            <span class="astk">*</span>
+                        </label>
+                        <input type="email" id="email" name="email" class="text-field" placeholder="Seller Email" autocomplete="off">
+                    </div>
+                    <div class="u-s-m-b-30">
+                        <label for="password">Password
+                            <span class="astk">*</span>
+                        </label>
+                        <div class="password-toggle">
+                            <input type="password" id="password" name="password" class="text-field" placeholder="Seller Password" autocomplete="off">
+                            <input type="checkbox" id="showPassword2" class="toggle-checkbox" onclick="togglePasswordVisibility('vendorregpassword')">
+                            <label for="showPassword2" class="toggle-label"></label>
+                            <label for="showPassword2" class="toggle-text">Show</label>
+                        </div>
+                    </div>
+                    <div class="u-s-m-b-30">
+                        <label for="password_confirmation">Confirm Password
+                            <span class="astk">*</span>
+                        </label>
+                        <input type="password" id="user-password-confirm" name="password_confirmation" class="text-field" placeholder="Confirm Password" onkeyup="validatePassword()" autocomplete="off">
+                        <p id="register-password-confirm"></p>
+                    </div class="terms">
+                    
+                
+                    <div class="u-s-m-b-45" id="nextbtn">
+                        <button class="button button-primary w-100">Next</button>
+                    </div>
+                    <div class="text-center"> <!-- Center the "Already have an account? Login" message -->
+                        <p>Already have an account? <a href="#" id="showLogin">Login</a></p>
+                    </div>
+
+
                             
-                           
-                            <div class="u-s-m-b-45" id="nextbtn">
-                                <button class="button button-primary w-100">Next</button>
-                            </div>
-                            <div class="text-center"> <!-- Center the "Already have an account? Login" message -->
-                                <p>Already have an account? <a href="#" id="showLogin">Login</a></p>
-                            </div>
                     
                     </div>
                 </div>
@@ -167,12 +183,6 @@
                                             <span class="astk">*</span>
                                         </label>
                                         <input type="text" id="vendorshopdetails" name="vendorshopdetails" class="text-field" placeholder="Shop Address Details">
-                                    </div>
-                                    <div class="u-s-m-b-30">
-                                        <label for="vendorshopbarangay">Shop Barangay
-                                            <span class="astk">*</span>
-                                        </label>
-                                        <input type="text" id="vendorshopbarangay" name="vendorshopbarangay" class="text-field" placeholder="Shop Barangay">
                                     </div>
                                     <!-- barangay -->
                                     <div class="form-group">
@@ -230,7 +240,7 @@
                             <div class="m-b-45" id="back">
                                 <button class="button button-outline-secondary w-100">Back</button>
                             </div>
-                        </form>
+            </form>
                     </div>
                 </div>
 
