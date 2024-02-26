@@ -2085,9 +2085,10 @@ body {
     content: '';
     display: block;
     width: 100%;
-    height: 23px;
+    height: 40px;
     margin-bottom: 14px;
-    background: url(../images/payment/pay-3.png) center center no-repeat; }
+    background: url(../images/payment/pay-3.png) center center no-repeat;
+    }
 
 .social-media-wrapper {
   margin-bottom: 6px; }
