@@ -248,35 +248,35 @@ use App\Models\Coupon;
                     $getProductImage = Product::getProductImage($product['product_id']);
                     $imageSrc = asset('front/images/product_images/small/'.$getProductImage);
                 @endphp
-                <div class="form-group">
+                <div class="form-group" style="height: 15px;">
                     <label style="font-weight: 550;">Product Image:</label>
                     <a target="_blank" href="{{ url('product/'.$product['product_id']) }}"><img src="{{ $imageSrc }}" style="max-width: 200px;"></a>
                 </div>
-                <div class="form-group">
+                               <div class="form-group" style="height: 15px;">
                     <label style="font-weight: 550;">Code:</label>
                     <label>{{ $product['product_code'] }}</label>
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="height: 15px;">
                     <label style="font-weight: 550;">Name:</label>
                     <label>{{ $product['product_name'] }}</label>
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="height: 15px;">
                     <label style="font-weight: 550;">Size:</label>
                     <label>{{ $product['product_size'] }}</label>
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="height: 15px;">
                     <label style="font-weight: 550;">Color:</label>
                     <label>{{ $product['product_color'] }}</label>
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="height: 15px;">
                     <label style="font-weight: 550;">Unit Price:</label>
                     <label>{{ $product['product_price'] }}</label>
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="height: 15px;">
                     <label style="font-weight: 550;">Product Qty:</label>
                     <label>{{ $product['product_qty'] }}</label>
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="height: 15px;">
     <label style="font-weight: 550;">Total Price:</label>
     <label>
         @php
@@ -294,7 +294,7 @@ use App\Models\Coupon;
     </label>
 </div>
 @if(Auth::guard('admin')->user()->type != "vendor")
-    <div class="form-group">
+<div class="form-group" style="height: 15px;">
         <label style="font-weight: 550;">Product by:</label>
         <label>
             @if($product['vendor_id'] > 0)
@@ -306,7 +306,7 @@ use App\Models\Coupon;
     </div>
 @endif
 
-                <div class="form-group">
+                   <div class="form-group" style="height: 15px;">
                     <label style="font-weight: 550;">Commission:</label>
                     <label>
                         @if($product['vendor_id']>0)
@@ -316,7 +316,7 @@ use App\Models\Coupon;
                         @endif
                     </label>
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="height: 15px;">
     <label style="font-weight: 550;">Final Amount:</label>
     <label>
         @if($product['vendor_id'] > 0)
@@ -342,13 +342,16 @@ use App\Models\Coupon;
                         </div>
                         <div class="form-group">
                             <label style="font-weight: 550;">Delivery Rider Name:</label>
-                            <input style="width:110px;" type="text" name="item_courier_name" id="item_courier_name" placeholder="Courier Name" @if(!empty($product['courier_name'])) value="{{ $product['courier_name'] }}" @endif>
+                            <input style="width:200px;" type="text" name="item_courier_name" id="item_courier_name" placeholder="Courier Name" @if(!empty($product['courier_name'])) value="{{ $product['courier_name'] }}" @endif>
                         </div>
                         <div class="form-group">
                             <label style="font-weight: 550;">Tracking Number:</label>
-                            <input style="width:110px;" type="text" name="item_tracking_number" id="item_tracking_number" placeholder="Tracking Number" @if(!empty($product['tracking_number'])) value="{{ $product['tracking_number'] }}" @endif>
+                            <input style="width:200px;" type="text" name="item_tracking_number" id="item_tracking_number" placeholder="Tracking Number" @if(!empty($product['tracking_number'])) value="{{ $product['tracking_number'] }}" @endif>
                         </div>
-                        <button style="width:300px;" type="submit">Update</button>
+                        <div style="text-align: center;">
+    <button style="width: 200px; margin: 0 auto;" type="submit">Update</button>
+</div>
+
                     </form>
                 </div>
             </div>

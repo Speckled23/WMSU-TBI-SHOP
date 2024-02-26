@@ -7,6 +7,10 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Products</h4>
+                        <a href="javascript:history.back()" class="back-link">
+    <i class="fas fa-arrow-left"></i> Back
+</a>
+
                         <a style="max-width: 150px; float: right; display: inline-block;" href="{{ url('admin/add-edit-product') }}" class="btn btn-block btn-primary">Add Product</a>
                         @if(Session::has('success_message'))
                           <div class="alert alert-success alert-dismissible fade show" role="alert">
