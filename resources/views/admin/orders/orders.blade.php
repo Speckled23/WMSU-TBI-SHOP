@@ -65,7 +65,8 @@
                                             @endforeach
                                         </td>
                                         <td>
-                                            {{ $order['grand_total'] }}
+                                        {{ number_format($order['grand_total'], 2) }}
+
                                         </td>
                                         <td>
                                             {{ $order['order_status'] }}

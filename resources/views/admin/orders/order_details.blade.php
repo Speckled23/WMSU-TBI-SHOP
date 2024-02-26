@@ -62,7 +62,8 @@ use App\Models\Coupon;
                     </div>
                     <div class="form-group" style="height: 15px;">
                       <label style="font-weight: 550;">Order Total: </label>
-                      <label>PHP {{ $orderDetails['grand_total'] }}</label>
+                      <label>PHP {{ number_format($orderDetails['grand_total'], 2) }}</label>
+
                     </div>
                     <div class="form-group" style="height: 15px;">
                       <label style="font-weight: 550;">Shipping Charges: </label>
@@ -276,34 +277,35 @@ use App\Models\Coupon;
                     <label>{{ $product['product_qty'] }}</label>
                 </div>
                 <div class="form-group">
-                    <label style="font-weight: 550;">Total Price:</label>
-                    <label>
-                        @php
-                            $total_price = $product['product_price'] * $product['product_qty'];
-                            if($product['vendor_id']>0) {
-                                if($orderDetails['coupon_amount']>0) {
-                                    $couponDetails = Coupon::couponDetails($orderDetails['coupon_code']);
-                                    if($couponDetails['vendor_id']>0) {
-                                        $total_price -= $item_discount;
-                                    }
-                                }
-                            }
-                            echo $total_price;
-                        @endphp
-                    </label>
-                </div>
-                @if(Auth::guard('admin')->user()->type!="vendor")
-                    <div class="form-group">
-                        <label style="font-weight: 550;">Product by:</label>
-                        <label>
-                            @if($product['vendor_id']>0)
-                                <a target="_blank" href="/admin/view-vendor-details/{{ $product['admin_id'] }}">Vendor</a>
-                            @else
-                                Admin
-                            @endif
-                        </label>
-                    </div>
-                @endif
+    <label style="font-weight: 550;">Total Price:</label>
+    <label>
+        @php
+            $total_price = $product['product_price'] * $product['product_qty'];
+            if($product['vendor_id'] > 0) {
+                if($orderDetails['coupon_amount'] > 0) {
+                    $couponDetails = Coupon::couponDetails($orderDetails['coupon_code']);
+                    if($couponDetails['vendor_id'] > 0) {
+                        $total_price -= $item_discount;
+                    }
+                }
+            }
+            echo number_format($total_price, 2);
+        @endphp
+    </label>
+</div>
+@if(Auth::guard('admin')->user()->type != "vendor")
+    <div class="form-group">
+        <label style="font-weight: 550;">Product by:</label>
+        <label>
+            @if($product['vendor_id'] > 0)
+                <a target="_blank" href="/admin/view-vendor-details/{{ $product['admin_id'] }}">Vendor</a>
+            @else
+                Admin
+            @endif
+        </label>
+    </div>
+@endif
+
                 <div class="form-group">
                     <label style="font-weight: 550;">Commission:</label>
                     <label>
@@ -315,15 +317,16 @@ use App\Models\Coupon;
                     </label>
                 </div>
                 <div class="form-group">
-                    <label style="font-weight: 550;">Final Amount:</label>
-                    <label>
-                        @if($product['vendor_id']>0)
-                            {{ $total_price - $commission }}
-                        @else
-                            {{ $total_price }}
-                        @endif
-                    </label>
-                </div>
+    <label style="font-weight: 550;">Final Amount:</label>
+    <label>
+        @if($product['vendor_id'] > 0)
+            {{ number_format($total_price - $commission, 2) }}
+        @else
+            {{ number_format($total_price, 2) }}
+        @endif
+    </label>
+</div>
+
                 <div class="form-group">
                     <form action="{{ url('admin/update-order-item-status') }}" method="post" >
                         @csrf

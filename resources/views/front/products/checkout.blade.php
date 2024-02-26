@@ -1,4 +1,4 @@
-a<?php use App\Models\Product; 
+<?php use App\Models\Product; 
 use App\Models\Currency; 
 ?>
 @extends('front.layout.layout')
