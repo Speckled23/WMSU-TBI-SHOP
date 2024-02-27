@@ -21,8 +21,9 @@ use App\Models\Coupon;
                 <div class="row">
                     <div class="col-12 col-xl-8 mb-4 mb-xl-0">
                         <h3 class="font-weight-bold">Order Details</h3>
-                        <h6 class="font-weight-normal mb-0"><a href="{{ url('admin/orders') }}">Back to Orders</a></h6>
-                    </div>
+                        <a href="javascript:history.back()" class="back-link">
+    <i class="fas fa-arrow-left"></i> Back
+</a>                    </div>
                     <div class="col-12 col-xl-4">
                         <div class="justify-content-end d-flex">
                             <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
@@ -248,7 +249,7 @@ use App\Models\Coupon;
                     $getProductImage = Product::getProductImage($product['product_id']);
                     $imageSrc = asset('front/images/product_images/small/'.$getProductImage);
                 @endphp
-                <div class="form-group" style="height: 15px;">
+                <div class="form-group">
                     <label style="font-weight: 550;">Product Image:</label>
                     <a target="_blank" href="{{ url('product/'.$product['product_id']) }}"><img src="{{ $imageSrc }}" style="max-width: 200px;"></a>
                 </div>
@@ -346,10 +347,10 @@ use App\Models\Coupon;
                         </div>
                         <div class="form-group">
                             <label style="font-weight: 550;">Tracking Number:</label>
-                            <input style="width:200px;" type="text" name="item_tracking_number" id="item_tracking_number" placeholder="Tracking Number" @if(!empty($product['tracking_number'])) value="{{ $product['tracking_number'] }}" @endif>
+                            <input style="width:220px;" type="text" name="item_tracking_number" id="item_tracking_number" placeholder="Tracking Number" @if(!empty($product['tracking_number'])) value="{{ $product['tracking_number'] }}" @endif>
                         </div>
                         <div style="text-align: center;">
-    <button style="width: 200px; margin: 0 auto;" type="submit">Update</button>
+    <button style="width: 200px; margin: 0 auto; background-color: #007bff; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer; border-radius: 5px;" type="submit">Update</button>
 </div>
 
                     </form>
