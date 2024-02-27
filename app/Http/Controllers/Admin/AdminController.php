@@ -30,6 +30,29 @@ use Session;
 class AdminController extends Controller
 {
     //K
+
+    public function confirmVendor($email)
+    {
+        // Decode Vendor Email
+        $email = base64_decode($email);
+        
+        // Confirm the vendor and activate their account
+        $vendor = Vendor::where('email', $email)->first();
+        
+        if ($vendor) {
+            // Update confirm column to 'Yes' to activate the account
+            $vendor->confirm = 'Yes';
+            $vendor->save();
+
+            // Send confirmation email to the vendor
+            Mail::to($email)->send(new VendorConfirmationEmail($vendor));
+            
+            // Redirect to a success page or anywhere else as needed
+            return redirect()->back()->with('success_message', 'Seller confirmed and account activated successfully.');
+        } else {
+            abort(404);
+        }
+    }
     public function vendordashboard(Request $request){
         $data = $request->session()->all();
         Session::put('page','vendordashboard');
