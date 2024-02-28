@@ -43,8 +43,6 @@ class OrderController extends Controller
 
     public function cancelOrder($id){
         // Find the order
-       
-        
         // Update order status
     
         Order::where('id',$id)->update(['order_status'=>'Cancelled']);
@@ -55,5 +53,20 @@ class OrderController extends Controller
         // Redirect back with notification
         return redirect()->back()->with($notification);
     }
+
+    public function replaceProduct($id) {
+        $product = OrdersProduct::find($id); // Fetch the product details based on $id
+        $orderDetails = Order::with('orders_products')->where('id',$id)->first()->toArray();
+        $images = []; // This should be an array containing the filenames of the uploaded images
+        
+        if (!$product) {
+            // Handle case where product is not found, such as showing an error message or redirecting
+            return redirect()->back()->with('error', 'Product not found.');
+        }
+    
+        return view('front.orders.replace_order', compact('product', 'orderDetails', 'images'));  
+    }
+    
+    
     
 }

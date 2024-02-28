@@ -65,7 +65,7 @@
                 <a href="{{ url('cancel-product/'.$product['id']) }}" id="cancel_product" class="btn btn-danger btn-sm">Cancel</a>
                 @endif
                 @if($product['item_status']=="Delivered")
-                <a href="{{ url('cancel-product/'.$product['id']) }}" id="return_refund" class="btn btn-warning btn-sm">Return/Refund</a>
+                <a href="{{ url('replace-order/'.$product['id']) }}" id="replace_refund" class="btn btn-warning btn-sm">Return/Refund</a>
                 @endif
             </td>
         </tr>

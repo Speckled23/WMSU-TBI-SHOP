@@ -319,6 +319,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
         Route::get('user/orders/{product_id?}','OrderController@orders');
         Route::match(['get','post'],'cancel-product/{product_id?}','OrderController@cancelProduct');
         Route::match(['get','post'],'cancel-order/{product_id?}','OrderController@cancelOrder');
+        Route::get('replace-order/{product_id?}', 'OrderController@replaceProduct');
 
 
         // Paypal Routes
