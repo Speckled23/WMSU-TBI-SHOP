@@ -90,35 +90,35 @@
                     <div class="reg-wrapper">
                         <h2 class="account-h2 u-s-m-b-20">Register Vendor Account</h2>
                         <h6 class="account-h6 u-s-m-b-30">Upon successful registration on our site and after being authorized by the administrator, you can gain access to your vendor account, allowing you to start selling your products.</h6>
-            <form id="vendorForm" action="{{ url('/vendor/register') }}" method="post" enctype="multipart/form-data">@csrf 
-            <div class="u-s-m-b-30">
-                <div class="row">
-                    <div class="col-md-6">
-                        <label for="first_name">First Name
-                            <span class="astk">*</span>
-                        </label>
-                        <input type="text" id="first_name" name="first_name" class="text-field form-control" placeholder="Seller First Name" autocomplete="off">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="last_name">Last Name
-                            <span class="astk">*</span>
-                        </label>
-                        <input type="text" id="last_name" name="last_name" class="text-field form-control" placeholder="Seller Last Name" autocomplete="off">
-                    </div>
-                </div>
-            </div>
-            <div class="u-s-m-b-30">
-                <div class="row">
-                    <div class="col-md-6">
-                        <label for="middle_initial">Middle Initial (Optional)</label>
-                        <input type="text" id="middle_initial" name="middle_initial" class="text-field form-control" placeholder="Middle Initial" autocomplete="off">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="suffix">Suffix (Optional)</label>
-                        <input type="text" id="suffix" name="suffix" class="text-field form-control" placeholder="Suffix" autocomplete="off">
-                    </div>
-                </div>
-            </div>
+                        <form id="vendorForm" action="{{ url('/vendor/register') }}" method="post" enctype="multipart/form-data">@csrf 
+                        <div class="u-s-m-b-30">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="first_name">First Name
+                                        <span class="astk">*</span>
+                                    </label>
+                                    <input type="text" id="first_name" name="first_name" class="text-field form-control" placeholder="Seller First Name" autocomplete="off">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="last_name">Last Name
+                                        <span class="astk">*</span>
+                                    </label>
+                                    <input type="text" id="last_name" name="last_name" class="text-field form-control" placeholder="Seller Last Name" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="u-s-m-b-30">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="middle_initial">Middle Initial (Optional)</label>
+                                    <input type="text" id="middle_initial" name="middle_initial" class="text-field form-control" placeholder="Middle Initial" autocomplete="off">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="suffix">Suffix (Optional)</label>
+                                    <input type="text" id="suffix" name="suffix" class="text-field form-control" placeholder="Suffix" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
 
                     <div class="u-s-m-b-30">
                         <label for="mobile">Mobile No.

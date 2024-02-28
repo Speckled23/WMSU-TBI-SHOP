@@ -21,7 +21,7 @@
     <!-- Account-Page -->
     <div class="page-account u-s-p-t-80">
         <div class="container">
-            @if(Session::has('success_message'))
+             @if(Session::has('success_message'))
                   <div class="alert alert-success alert-dismissible fade show" role="alert">
                     <strong>Success: </strong> {{ Session::get('success_message')}}
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -92,70 +92,110 @@
                         <p id="register-success"></p>
                         <form id="registerForm" action="javascript:;" method="post">@csrf 
                         <div class="u-s-m-b-30">
-                            <label for="firstname">First Name
-                                <span class="astk">*</span>
-                            </label>
-                            <input type="text" id="firstname" name="firstname" class="text-field" placeholder="First Name">
-                            <p id="register-firstname"></p>
+                           <div class="row">
+                                <div class="col-md-6">
+                                    <label for="firstname">First Name
+                                        <span class="astk">*</span>
+                                    </label>
+                                    <input type="text" id="firstname" name="firstname" class="text-field" placeholder="First Name">
+                                    <p id="register-firstname"></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="lastname">Last Name
+                                        <span class="astk">*</span>
+                                    </label>
+                                    <input type="text" id="lastname" name="lastname" class="text-field" placeholder="Last Name">
+                                    <p id="register-lastname"></p>
+                                </div>
+                           </div>
+                        </div>
+                        <div class="u-s-m-b-30">
+                           <div class="row">
+                                <div class="col-md-6">
+                                <label for="middleinitial">Middle Initial</label>
+                                    <input type="text" id="middleinitial" name="middleinitial" class="text-field" placeholder="Middle Initial">
+                                    <p id="register-middleinitial"></p>
+                                </div>
+                                <div class="col-md-6">
+                                <label for="suffix">Suffix (optional)</label>
+                                    <input type="text" id="suffix" name="suffix" class="text-field" placeholder="Suffix (e.g, Jr.)">
+                                    <p id="register-middleinitial"></p>
+                                </div>
+                           </div>
                         </div>
 
                         <div class="u-s-m-b-30">
-                            <label for="lastname">Last Name
-                                <span class="astk">*</span>
-                            </label>
-                            <input type="text" id="lastname" name="lastname" class="text-field" placeholder="Last Name">
-                            <p id="register-lastname"></p>
+                            <!-- Address Details -->
+                            <div class="u-s-m-b-30">
+                                <label for="delivery_address">Address Details
+                                    <span class="astk">*</span>
+                                </label>
+                                <input type="text" name="delivery_address" id="delivery_address" class="text-field">
+                                <p id="delivery-delivery_address"></p>
+                            </div>
+                            
+                            <label for="delivery_barangay">Barangay
+                                    <span class="astk">*</span>
+                                </label>
+                            <!-- Barangay -->
+                            <div class="u-s-m-b-30">
+                                <div class="select-box-wrapper">
+                                    <select class="select-box" id="delivery_barangay" name="delivery_barangay" style="width: 100%;">
+                                        <option value="">Select Barangay</option>
+                                        @foreach($barangays as $zcbarangay)
+                                            <option value="{{ $zcbarangay['barangay_name'] }}" @if($zcbarangay['barangay_name'] == $zcbarangay['barangay_name'] ) selected @endif>{{ $zcbarangay['barangay_name'] }}</option>
+                                        @endforeach
+                                    </select>
+                                    <p id="delivery-delivery_barangay"></p>
+                                </div>
+                            </div>  
+
                         </div>
 
-                        <div class="u-s-m-b-30">
-                            <label for="middleinitial">Middle Initial (optional)</label>
-                            <input type="text" id="middleinitial" name="middleinitial" class="text-field" placeholder="Middle Initial">
-                            <p id="register-middleinitial"></p>
-                        </div>
 
-                            <div class="u-s-m-b-30">
-                                <label for="usermobile">Mobile No.
-                                    <span class="astk">*</span>
-                                </label>
-                                <input type="text" id="user-mobile" name="mobile" class="text-field" placeholder="Customer Mobile No.">
-                                <p id="register-mobile"></p>
-                            </div>
-                            <div class="u-s-m-b-30">
-                                <label for="useremail">Email
-                                    <span class="astk">*</span>
-                                </label>
-                                <input type="email" id="user-email" name="email" class="text-field" placeholder="Customer Email">
-                                <p id="register-email"></p>
-                            </div>
-                            <div class="u-s-m-b-30">
-                                <label for="userpassword">Password
-                                    <span class="astk">*</span>
-                                </label>
-                                <input type="password" id="user-password" name="password" class="text-field" placeholder="Customer Password">
-                                <p id="register-password"></p>
-                            </div>
-                            <div class="u-s-m-b-30">
-                                <label for="userpassword">Confirm Password
-                                    <span class="astk">*</span>
-                                </label>
-                                <input type="password" id="user-password-confirm" name="password_confirmation" class="text-field" placeholder="Confirm Password">
-                                <p id="register-password-confirm"></p>
-                            </div>
-                            <div class="u-s-m-b-30">
-                                <input type="checkbox" class="check-box" id="accept" name="accept">
-                                <label class="label-text no-color" for="accept">I have carefully reviewed and hereby accept the
-                                    <a href="terms-and-conditions.html" class="u-c-brand">terms and conditions.</a>
-                                </label>
-                                <p id="register-accept"></p>
-                            </div>
-                            <div class="u-s-m-b-45">
-                                <button class="button button-primary w-100">Register</button>
-                            </div>
-                            <div class="group-inline u-s-m-b-30">
-                                <div class="group-2 text-right">
-                                    <div class="page-anchor">
-                                    <div class="text-center"> <!-- Center the "Already have an account? Login" message -->
-                                        <p>Already have an account? <a href="#" id="showLogin">Login</a></p>
+                                <div class="u-s-m-b-30">
+                                    <label for="mobile">Mobile No.
+                                        <span class="astk">*</span>
+                                    </label>
+                                    <input type="text" id="mobile" name="mobile" class="text-field" placeholder="Customer Mobile No.">
+                                    <p id="register-mobile"></p>
+                                </div>
+                                <div class="u-s-m-b-30">
+                                    <label for="useremail">Email
+                                        <span class="astk">*</span>
+                                    </label>
+                                    <input type="email" id="user-email" name="email" class="text-field" placeholder="Customer Email">
+                                    <p id="register-email"></p>
+                                </div>
+                                <div class="u-s-m-b-30">
+                                    <label for="userpassword">Password
+                                        <span class="astk">*</span>
+                                    </label>
+                                    <input type="password" id="user-password" name="password" class="text-field" placeholder="Customer Password">
+                                    <p id="register-password"></p>
+                                </div>
+                                <div class="u-s-m-b-30">
+                                    <label for="userpassword">Confirm Password
+                                        <span class="astk">*</span>
+                                    </label>
+                                    <input type="password" id="user-password-confirm" name="password_confirmation" class="text-field" placeholder="Confirm Password">
+                                    <p id="register-password-confirm"></p>
+                                </div>
+                                <div class="u-s-m-b-30">
+                                    <input type="checkbox" class="check-box" id="accept" name="accept">
+                                    <label class="label-text no-color" for="accept">I have carefully reviewed and hereby accept the
+                                        <a href="terms-and-conditions.html" class="u-c-brand">terms and conditions.</a>
+                                    </label>
+                                    <p id="register-accept"></p>
+                                </div>
+                                <div class="u-s-m-b-45">
+                                    <button class="button button-primary w-100">Register</button>
+                                </div>
+                                <div class="group-inline u-s-m-b-30">
+                                    <div class="group-2 text-right">
+                                        <div class="page-anchor">
+                                        <div class="text-center"> <!-- Center the "Already have an account? Login" message -->
+                                            <p>Already have an account? <a href="#" id="showLogin">Login</a></p>
                                 </div>
                             </div>
                         </form>

@@ -40,35 +40,41 @@
                 <tr><td>Payment Method</td><td>{{ $orderDetails['payment_method']}}</td></tr>
             </table>
             <table class="table table-striped table-borderless">
-                <tr class="table-danger">
-                    <th>Product Image</th>
-                    <th>Product Code</th>
-                    <th>Product Name</th>
-                    <th>Product Size</th>
-                    <th>Product Color</th>
-                    <th>Product Qty</th>
-                    <th>Action</th>
-                </tr>
-                @foreach($orderDetails['orders_products'] as $product)
-                    <tr>
-                        <td>
-                            @php $getProductImage = Product::getProductImage($product['product_id']) @endphp
-                            <a target="_blank" href="{{ url('product/'.$product['product_id']) }}"><img style="width:80px" src="{{ asset('front/images/product_images/small/'.$getProductImage) }}"></a>
-                        </td>
-                        <td>{{ $product['product_code'] }}</td>
-                        <td>{{ $product['product_name'] }}</td>
-                        <td>{{ $product['product_size'] }}</td>
-                        <td>{{ $product['product_color'] }}</td>
-                        <td>{{ $product['product_qty'] }}</td>
-                        <td>
-                            <a @if($product['item_status']=="Pending" || $product['item_status']=="In Progress") href="{{ url('cancel-product/'.$product['id']) }}" id="cancel_product" @endif><u>Cancel</u></a>
-                        </td>
-                    </tr>
-                    @if($product['courier_name']!="")
-                    <tr><td colspan="6">Courier Name: {{ $product['courier_name']}}, Tracking Number: {{ $product['tracking_number']}} </td></tr>
-                    @endif
-                @endforeach   
-            </table>
+    <tr class="table-danger">
+        <th>Product Image</th>
+        <th>Product Code</th>
+        <th>Product Name</th>
+        <th>Product Size</th>
+        <th>Product Color</th>
+        <th>Product Qty</th>
+        <th>Action</th>
+    </tr>
+    @foreach($orderDetails['orders_products'] as $product)
+        <tr>
+            <td>
+                @php $getProductImage = Product::getProductImage($product['product_id']) @endphp
+                <a target="_blank" href="{{ url('product/'.$product['product_id']) }}"><img style="width:80px" src="{{ asset('front/images/product_images/small/'.$getProductImage) }}"></a>
+            </td>
+            <td>{{ $product['product_code'] }}</td>
+            <td>{{ $product['product_name'] }}</td>
+            <td>{{ $product['product_size'] }}</td>
+            <td>{{ $product['product_color'] }}</td>
+            <td>{{ $product['product_qty'] }}</td>
+            <td>
+                @if($product['item_status']=="Pending" || $product['item_status']=="In Progress")
+                <a href="{{ url('cancel-product/'.$product['id']) }}" id="cancel_product" class="btn btn-danger btn-sm">Cancel</a>
+                @endif
+                @if($product['item_status']=="Delivered")
+                <a href="{{ url('cancel-product/'.$product['id']) }}" id="return_refund" class="btn btn-warning btn-sm">Return/Refund</a>
+                @endif
+            </td>
+        </tr>
+        @if($product['courier_name']!="")
+        <tr><td colspan="6">Courier Name: {{ $product['courier_name']}}, Tracking Number: {{ $product['tracking_number']}} </td></tr>
+        @endif
+    @endforeach   
+</table>
+
             <table class="table table-striped table-borderless">
                 <tr class="table-danger"><td colspan="2"><strong>Delivery Address</strong></td></tr>
                 <tr><td>Name</td><td>{{ $orderDetails['name']}}</td></tr>

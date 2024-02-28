@@ -253,8 +253,6 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
 
     // Confirm Vendor Account
     Route::get('vendor/confirm/{code}','VendorController@confirmVendor');
-    Route::get('admin/confirm/vendor/{email}', 'Admin\AdminController@confirmVendor')->name('admin.confirm.vendor');
-
 
     // Add to Cart Route
     Route::post('cart/add','ProductsController@cartAdd');
@@ -275,6 +273,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
 
     // User Register
     Route::post('user/register','UserController@userRegister');
+    Route::get('user/login-register','UserController@showBarangayTable');
 
     // Search Products
     Route::get('search-products','ProductsController@listing');

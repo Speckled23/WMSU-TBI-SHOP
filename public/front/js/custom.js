@@ -110,7 +110,7 @@ $(document).ready(function(){
 			type:"POST",
 			data:formdata,
 			success:function(resp){
-				if(resp.type=="error"){
+				if(resp.type=="errorss"){
 					$(".loader").hide();
 					$.each(resp.errors,function(i,error){
 						$("#register-"+i).attr('style','color:red');
@@ -129,7 +129,7 @@ $(document).ready(function(){
 				}
 				
 			},error:function(){
-				alert("Error");
+				alert("Errorss");
 			}
 		})
 	});

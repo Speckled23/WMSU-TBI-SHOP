@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Cart;
 use App\Models\Country;
 use App\Models\Barangay;
+use App\Models\DeliveryAddress;
 use Auth;
 use Validator;
 use Session;
@@ -23,43 +24,86 @@ class UserController extends Controller
 
     public function userRegister(Request $request)
     {
-        if ($request->ajax()) {
+        $data = $request->all();
+    
+            // dd($request->all());
             $validator = Validator::make($request->all(), [
                 'firstname' => 'required|regex:/^[a-zA-Z\s]+$/|max:100',
                 'lastname' => 'required|regex:/^[a-zA-Z\s]+$/|max:100',
                 'middleinitial' => 'nullable|alpha|max:1', 
+                'suffix' => 'nullable',
+                'delivery_address'  => 'required',
+                'delivery_barangay' => 'required',
                 'mobile' => 'required|numeric|digits:11|unique:users',
                 'email' => 'required|email|max:150|regex:/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/|unique:users',
                 'password' => 'required|confirmed|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/',
                 'accept' => 'required'
             ],
             [
+                'delivery_address.required' => 'Delivery Address Details is Required',
+                'delivery_barangay.required' => 'Barangay is Required',
                 'accept.required' => 'Please accept our Terms & Conditions',
                 'firstname.regex' => 'First Name should be in valid format.',
                 'lastname.regex' => 'Last Name should be in valid format.',
                 'email.regex' => 'Email should be in valid format.'
             ]);
+
+            
     
             if ($validator->passes()) {
-                // Concatenate first name, last name, and middle initial
-                $name = $request->input('firstname') . ' ' . $request->input('lastname');
-                $middleInitial = $request->input('middleinitial');
-                if ($middleInitial) {
-                    $name .= ' ' . $middleInitial;
-                }
+               // Concatenate first name, middle initial (if provided), last name, and suffix (if provided)
+            $fullName = $data['firstname'];
+
+            if(isset($data['middleinitial']) && !empty($data['middleinitial'])) {
+                $fullName .= ' ' . $data['middleinitial'];
+            }
+
+            $fullName .= ' ' . $data['lastname'];
+
+            if(isset($data['suffix']) && !empty($data['suffix'])) {
+                $fullName .= ' ' . $data['suffix'];
+            }
+
     
                 // Register the User
                 $user = new User;
-                $user->name = $name;
+                $user->name = $fullName;
+                $user->address = $request->input('delivery_address');
+                $user->city = 'Zamboanga City';
+                $user->barangay = $request->input('delivery_barangay');
+                $user->country = 'Philippines';
+                $user->pincode = '7000';
                 $user->mobile = $request->input('mobile');
                 $user->email = $request->input('email');
                 $user->password = bcrypt($request->input('password'));
                 $user->status = 0;
                 $user->save();
+
+                // get user Id
+                $users_id = $user->id;
+
+                //Register Delivery Address
+                $deliver = new DeliveryAddress;
+                $deliver->user_id = $users_id;
+                $deliver->name = $fullName;
+                $deliver->address = $request->input('delivery_address');
+                $deliver->city = 'Zamboanga City';
+                $deliver->barangay = $request->input('delivery_barangay');
+                $deliver->country = 'Philippines';
+                $deliver->pincode = '7000';
+                $deliver->mobile = $request->input('mobile');
+                $deliver->status = 1;
+                //Set default timezone to Manila
+                date_default_timezone_set("Asia/Manila");
+                $deliver->created_at = date("Y-m-d H:i:s");
+                $deliver->updated_at = date("Y-m-d H:i:s");
+                $deliver->save();
+
+
     
                 // Send confirmation email
                 $email = $request->input('email');
-                $messageData = ['name' => $name, 'email' => $request->input('email'), 'code' => base64_encode($request->input('email'))];
+                $messageData = ['name' => $fullName, 'email' => $request->input('email'), 'code' => base64_encode($request->input('email'))];
                 Mail::send('emails.confirmation', $messageData, function ($message) use ($email) {
                     $message->to($email)->subject('Confirm your WMSU TBI account');
                 });
@@ -70,7 +114,15 @@ class UserController extends Controller
             } else {
                 return response()->json(['type' => 'error', 'errors' => $validator->messages()]);
             }
-        }
+    }
+
+    public function showBarangayTable()
+    {
+        $barangays = Barangay::all(); // Retrieve all barangay data
+
+        // Pass the barangay data to the view
+        return view('front.users.login_register')->with(compact('barangays'));
+
     }
     
 
