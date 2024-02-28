@@ -61,7 +61,7 @@
             <td>{{ $product['product_color'] }}</td>
             <td>{{ $product['product_qty'] }}</td>
             <td>
-                @if($product['item_status']=="Pending" || $product['item_status']=="In Progress")
+                @if($product['item_status']=="New" || $product['item_status']=="Pending" || $product['item_status']=="In Progress")
                 <a href="{{ url('cancel-product/'.$product['id']) }}" id="cancel_product" class="btn btn-danger btn-sm">Cancel</a>
                 @endif
                 @if($product['item_status']=="Delivered")

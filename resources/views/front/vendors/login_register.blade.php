@@ -184,12 +184,6 @@
                                         </label>
                                         <input type="text" id="vendorshopdetails" name="vendorshopdetails" class="text-field" placeholder="Shop Address Details">
                                     </div>
-                                    <div class="u-s-m-b-30">
-                                        <label for="vendorshopbarangay">Shop Barangay
-                                            <span class="astk">*</span>
-                                        </label>
-                                        <input type="text" id="vendorshopbarangay" name="vendorshopbarangay" class="text-field" placeholder="Shop Barangay">
-                                    </div>
                                     <!-- barangay -->
                                     <div class="form-group">
                                         <label for="vendorshopbarangay">Shop Barangay</label>

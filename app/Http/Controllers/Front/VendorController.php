@@ -205,7 +205,7 @@ class VendorController extends Controller
 
     
             // Send Confirmation Email
-            $email = $data['email'];
+            $email = 'admin@admin.cpm';
             $messageData = [
                 'email' => $data['email'],
                 'name' => $fullName,
@@ -219,7 +219,7 @@ class VendorController extends Controller
             DB::commit();
     
             // Redirect back Vendor with Success Message
-            $message = "Thanks for registering as seller. Please confirm your email to activate your account.";
+            $message = "Thanks for registering as seller. Please wait for admin email to confirm your account.";
             return redirect()->back()->with('success_message',$message);
     
         }
