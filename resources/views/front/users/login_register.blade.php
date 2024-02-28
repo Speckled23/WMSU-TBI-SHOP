@@ -19,8 +19,8 @@
     </div>
     <!-- Page Introduction Wrapper /- -->
     <!-- Account-Page -->
-    <div class="page-account u-s-p-t-80">
-        <div class="container">
+    <div class="page-account u-s-p-t-80 p-2">
+        <div class="container ">
              @if(Session::has('success_message'))
                   <div class="alert alert-success alert-dismissible fade show" role="alert">
                     <strong>Success: </strong> {{ Session::get('success_message')}}
@@ -86,7 +86,7 @@
 
                 <!-- Register -->
                 <div class="col-lg-6" id="registerDiv" style="display: none;">
-                    <div class="reg-wrapper">
+                    <div class="reg-wrapper border rounded p-lg-4 p-2">
                         <h2 class="account-h2 u-s-m-b-20">Register</h2>
                         <h6 class="account-h6 u-s-m-b-30">By completing the registration process on this site, you will gain access to your order status and history.</h6>
                         <p id="register-success"></p>
@@ -139,8 +139,8 @@
                                 </label>
                             <!-- Barangay -->
                             <div class="u-s-m-b-30">
-                                <div class="select-box-wrapper">
-                                    <select class="select-box" id="delivery_barangay" name="delivery_barangay" style="width: 100%;">
+                                <div class="select-box-wrapper w-100 align-items-center d-flex">
+                                    <select class="select-box  w-100" id="delivery_barangay" name="delivery_barangay">
                                         <option value="">Select Barangay</option>
                                         @foreach($barangays as $zcbarangay)
                                             <option value="{{ $zcbarangay['barangay_name'] }}" @if($zcbarangay['barangay_name'] == $zcbarangay['barangay_name'] ) selected @endif>{{ $zcbarangay['barangay_name'] }}</option>
