@@ -7,14 +7,7 @@ $totalCartItems = totalCartItems();
 $getCurrencies = getCurrencies();
 $page_url = Request::url();
 ?>
-<style>
-    .top-left-corner {
-        position: fixed;
-        top: 0;
-        left: 0;
-        margin: 10px; /* Adjust margin as needed */
-    }
-</style>
+
 <!-- Header -->
 <header>
     <!-- Top-Header -->
@@ -24,11 +17,7 @@ $page_url = Request::url();
                 <ul class="primary-nav g-nav">
                     <li>
                     <div class="top-left-corner">
-    <div class="col-lg-1">
-        <a href="javascript:history.back()" class="back-button">
-            <i class="fas fa-arrow-left"></i>
-        </a>
-    </div>
+    
 </div>
                     </li>
                     <li>

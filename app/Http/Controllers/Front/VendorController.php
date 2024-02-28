@@ -79,19 +79,11 @@ class VendorController extends Controller
     
             DB::beginTransaction();
     
-            // Concatenate first name, middle initial (if provided), last name, and suffix (if provided)
-            $fullName = $data['first_name'];
-
+            // Concatenate first name, last name, and middle initial
+            $fullName = $data['first_name'] . ' ' . $data['last_name'];
             if(isset($data['middle_initial']) && !empty($data['middle_initial'])) {
                 $fullName .= ' ' . $data['middle_initial'];
             }
-
-            $fullName .= ' ' . $data['last_name'];
-
-            if(isset($data['suffix']) && !empty($data['suffix'])) {
-                $fullName .= ' ' . $data['suffix'];
-            }
-
     
             // Insert the Vendor details in vendors table
             $vendor = new Vendor;
@@ -213,25 +205,21 @@ class VendorController extends Controller
 
     
             // Send Confirmation Email
-            $email = 'admin@admin.com';
+            $email = $data['email'];
             $messageData = [
                 'email' => $data['email'],
                 'name' => $fullName,
-                'govID' => $imageGov,
-                'permitID' => $imagePermit,
-                'birID' => $imageBir,
-                'dtiID' => $imageDti,
                 'code' => base64_encode($data['email'])
             ];
     
             Mail::send('emails.vendor_confirmation',$messageData,function($message)use($email){
-                $message->to($email)->subject('Confirm Seller Account')->from($email, 'wmsu tbi');
+                $message->to($email)->subject('Confirm your Seller Account')->from('wmsu.tbiu@wmsutbiu.shop', 'wmsu tbi');
             });
     
             DB::commit();
     
             // Redirect back Vendor with Success Message
-            $message = " Please wait for admin confirmations";
+            $message = "Thanks for registering as seller. Please confirm your email to activate your account.";
             return redirect()->back()->with('success_message',$message);
     
         }
@@ -262,7 +250,7 @@ class VendorController extends Controller
                 Admin::where('email',$email)->update(['confirm'=>'Yes']);
                 Vendor::where('email',$email)->update(['confirm'=>'Yes']);
 
-                // Send Register Email
+                // S    end Register Email
                 $messageData = [
                     'email' => $email,
                     'name' => $vendorDetails->name,
@@ -274,7 +262,7 @@ class VendorController extends Controller
                 });
 
                 // Redirect to Vendor Login/Register page with Success message
-                $message = "Your seller email account has been confirmed. You can now log in.";
+                $message = "Your seller email account has been confirmed. You can now log in and provide your personal and business details to activate your seller account and start adding products.";
                 return redirect('vendor/login-register')->with('success_message',$message);
             }
         }else{
