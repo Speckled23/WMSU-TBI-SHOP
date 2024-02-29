@@ -1,3 +1,59 @@
+<style>
+  /* Modal */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1000;  /* Adjusted z-index */
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.4); 
+}
+
+.modal-content {
+    background-color: #fefefe;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 80%;
+    max-height: 80%;
+    overflow-y: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 10px;
+    z-index: 1100; /* Adjusted z-index */
+}
+
+/* Close button */
+.close {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1200; /* Adjusted z-index */
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+}
+
+/* Terms and Conditions Text */
+.terms-text {
+    margin-top: 20px;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+</style>
+
 @extends('front.layout.layout')
 @section('content')
     <!-- Page Introduction Wrapper -->
@@ -184,7 +240,7 @@
                                 <div class="u-s-m-b-30">
                                     <input type="checkbox" class="check-box" id="accept" name="accept">
                                     <label class="label-text no-color" for="accept">I have carefully reviewed and hereby accept the
-                                        <a href="terms-and-conditions.html" class="u-c-brand">terms and conditions.</a>
+                                    <a href="#" id="termsLink" class="u-c-brand">terms and conditions</a>
                                     </label>
                                     <p id="register-accept"></p>
                                 </div>
@@ -207,7 +263,129 @@
     </div>
     <!-- Account-Page /- -->
 
-    <script>
+    <div id="termsModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h1>Terms and Conditions for the Western Mindanao State University Technology Business Incubator (WMSU-TBI) E-commerce Platform</h1>
+
+<h2>1. Acceptance of Terms</h2>
+<p>1.1. By accessing or using the WMSU-TBI e-commerce platform, you agree to be bound by these terms and conditions. If you do not agree with any part of these terms, you may not access the platform.</p>
+
+<h2>2. Purpose of the Platform</h2>
+<p>2.1. The WMSU-TBI e-commerce platform aims to provide an affordable, secure, and user-friendly online marketplace for MSMEs in the agriculture industry.</p>
+<p>2.2. The platform utilizes technologies such as AJAX, HTML/CSS, JavaScript, PHP, Bootstrap, and MySQL to enhance the shopping experience and facilitate the transition from traditional selling to modern e-commerce.</p>
+
+<h2>3. Features and Functionality</h2>
+<p>3.1. The platform includes features such as detailed product sales monitoring, efficient inventory management, and integrated data analytics for MSMEs.</p>
+<p>3.2. Users can browse, purchase, and receive updates on ordered products through the platform.</p>
+
+<h2>4. User Responsibilities</h2>
+<p>4.1. Users are responsible for maintaining the confidentiality of their login credentials and ensuring the security of their account.</p>
+<p>4.2. Users agree not to engage in any activity that may disrupt or interfere with the proper functioning of the platform.</p>
+
+<h2>5. Data Privacy and Security</h2>
+<p>5.1. The WMSU-TBI e-commerce platform implements security measures to protect user data and transactions.</p>
+<p>5.2. Users consent to the collection and use of their personal information in accordance with the platform's privacy policy.</p>
+
+<h2>6. Feedback and Improvement</h2>
+<p>6.1. Users are encouraged to provide feedback on their experience with the platform to help improve its features and functionality.</p>
+<p>6.2. The platform may undergo updates and enhancements based on user feedback and technological advancements.</p>
+
+<h2>7. Limitation of Liability</h2>
+<p>7.1. The WMSU-TBI and its affiliates shall not be liable for any damages arising out of or in connection with the use of the e-commerce platform.</p>
+<p>7.2. In no event shall the WMSU-TBI be liable for any indirect, consequential, or incidental damages, including but not limited to loss of profits, data, or goodwill.</p>
+
+<h2>8. Governing Law</h2>
+<p>8.1. These terms and conditions shall be governed by and construed in accordance with the laws of Philippines, without regard to its conflict of law provisions.</p>
+
+<h2>9. Changes to Terms and Conditions</h2>
+<p>9.1. The WMSU-TBI reserves the right to modify or replace these terms and conditions at any time. Users will be notified of any changes, and continued use of the platform constitutes acceptance of the revised terms.</p>
+
+<h2>10. Contact Information</h2>
+<p>10.1. For inquiries or concerns about these terms and conditions, please contact the WMSU-TBI at (062) 993 1314.</p>
+
+<h3>By accessing or using the WMSU-TBI e-commerce platform, you acknowledge that you have read, understood, and agree to be bound by these terms and conditions.</h3>
+<button id="acceptTermsBtn" class="button button-primary w-100">Accept Terms and Conditions</button>
+</div>    
+</div>
+</div>
+
+<script>
+    // Assuming you have references to the password and confirm password input fields
+    var passwordInput = document.getElementById('userpassword');
+    var confirmPasswordInput = document.getElementById('user-password-confirm');
+
+    // Assuming you have a reference to the paragraph element where validation messages will be displayed
+    var confirmPasswordError = document.getElementById('register-password-confirm');
+
+    // Function to check if passwords match
+    function validatePasswords() {
+        var password = passwordInput.value;
+        var confirmPassword = confirmPasswordInput.value;
+
+        if (password !== confirmPassword) {
+            confirmPasswordError.textContent = "Passwords do not match";
+            confirmPasswordError.style.color = "red";
+        } else {
+            confirmPasswordError.textContent = ""; // Clear any previous error messages
+        }
+    }
+
+    // Event listener to call the validatePasswords function whenever the confirm password input changes
+    confirmPasswordInput.addEventListener('input', validatePasswords);
+
+    document.getElementById('showRegister').addEventListener('click', function (e) {
+        e.preventDefault();
+        document.getElementById('loginDiv').style.display = 'none';
+        document.getElementById('registerDiv').style.display = 'block';
+    });
+
+    document.getElementById('showLogin').addEventListener('click', function (e) {
+        e.preventDefault();
+        document.getElementById('loginDiv').style.display = 'block';
+        document.getElementById('registerDiv').style.display = 'none';
+    });
+
+   // Get the modal
+var modal = document.getElementById("termsModal");
+
+// Get the button that opens the modal
+var termsLink = document.getElementById("termsLink");
+
+// Get the accept button
+var acceptBtn = document.getElementById("acceptTermsBtn");
+
+// Get the checkbox for accepting terms and conditions
+var termsCheckbox = document.getElementById("accept");
+
+// Get the <span> element that closes the modal
+var closeBtn = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+termsLink.onclick = function() {
+    modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+closeBtn.onclick = function() {
+    modal.style.display = "none";
+}
+
+// When the user clicks on the accept button
+acceptBtn.onclick = function() {
+    // Close the modal
+    modal.style.display = "none";
+    // Check the terms and conditions checkbox
+    termsCheckbox.checked = true;
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
 
         // Assuming you have references to the password and confirm password input fields
         var passwordInput = document.getElementById('userpassword');
@@ -243,5 +421,7 @@
             document.getElementById('loginDiv').style.display = 'block';
             document.getElementById('registerDiv').style.display = 'none';
         });
+
+    
     </script>
 @endsection
