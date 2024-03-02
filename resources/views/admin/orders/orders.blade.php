@@ -40,7 +40,7 @@
                                             Order Status
                                         </th>
                                         <th>
-                                            Payment Method
+                                            Payment Methods
                                         </th>
                                         <th>
                                             Actions

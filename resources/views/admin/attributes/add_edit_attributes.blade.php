@@ -87,11 +87,16 @@
                     <div class="form-group">
                       <div class="field_wrapper">
                           <div>
-                              <input type="text" name="size[]" placeholder="Size" style="width: 120px;" required="" />
-                              <input type="text" name="sku[]" placeholder="Code" style="width: 120px;" required="" />
-                              <input type="text" name="price[]" placeholder="Price" style="width: 120px;" required="" />
+                        
+                              <input type="text" name="size[]" value="{{ $product['product_weight'] }}" style="width: 120px;" placeholder="Size" required="" />
+                              <!-- <input type="text" name="size[]" placeholder="Size" style="width: 120px;" required="" /> -->
+                              <!-- <input type="text" name="sku[]" placeholder="Code" style="width: 120px;" required="" /> -->
+                              <input type="text" name="sku[]" value="{{ $product['product_code'] }}" style="width: 120px;" placeholder="Code" required="" />
+                              <input type="text" name="price[]" value="{{ $product['product_price'] }}" style="width: 120px;" placeholder="Price" required="" />
+                              <!-- <input type="text" name="price[]" placeholder="Price" style="width: 120px;" required="" /> -->
                               <input type="text" name="stock[]" placeholder="AvailStock" style="width: 120px;" required="" />
                               <a href="javascript:void(0);" class="add_button" title="Add Attributes">Add</a>
+                        
                           </div>
                       </div>
                     </div>

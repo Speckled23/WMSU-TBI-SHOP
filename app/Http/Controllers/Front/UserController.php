@@ -18,8 +18,9 @@ use Hash;
 
 class UserController extends Controller
 {
-    public function loginRegister(){
-        return view('front.users.login_register');
+    public function loginRegister(){    
+        $barangays = Barangay::all(); // Retrieve all barangay data
+        return view('front.users.login_register', compact('barangays'));
     }
 
     public function userRegister(Request $request)
@@ -107,6 +108,7 @@ class UserController extends Controller
                 Mail::send('emails.confirmation', $messageData, function ($message) use ($email) {
                     $message->to($email)->subject('Confirm your WMSU TBI account');
                 });
+                
     
                 // Redirect back user with success message
                 $redirectTo = url('user/login-register');

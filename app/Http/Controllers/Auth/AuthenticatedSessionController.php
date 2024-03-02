@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\UserController ;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Barangay;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -17,7 +19,8 @@ class AuthenticatedSessionController extends Controller
      */
     public function create()
     {
-        return view('auth.login');
+        $barangays = Barangay::all(); // Retrieve all barangay data
+        return view('front.users.login_register', compact('barangays'));
     }
 
     /**

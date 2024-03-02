@@ -184,6 +184,7 @@
                                         </label>
                                         <input type="text" id="vendorshopdetails" name="vendorshopdetails" class="text-field" placeholder="Shop Address Details">
                                     </div>
+                                   
                                     <!-- barangay -->
                                     <div class="form-group">
                                         <label for="vendorshopbarangay">Shop Barangay</label>
