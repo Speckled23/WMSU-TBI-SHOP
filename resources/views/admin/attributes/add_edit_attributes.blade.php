@@ -94,6 +94,7 @@
         <option value="g">g</option>
         <option value="lbs">lbs</option>
         <option value="sack">sack</option>
+        <option value="box">box</option>
     </select>
     <input type="hidden" name="size[]" id="combined_size" />
 </div>
