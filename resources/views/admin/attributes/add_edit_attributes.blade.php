@@ -7,6 +7,7 @@
                 <div class="row">
                     <div class="col-12 col-xl-8 mb-4 mb-xl-0">
                         <h4 class="card-title">Attributes</h4>
+                        <p id="stockWarning" style="color: red;"></p>
                     </div>
                     <div class="col-12 col-xl-4">
                         <div class="justify-content-end d-flex">
@@ -105,16 +106,11 @@
                     <!-- <div class="form-group">
                       <div class="field_wrapper">
                           <div>
-                        
-                              <input type="text" name="size[]" value="{{ $product['product_weight'] }}" style="width: 120px;" placeholder="Size" required="" />
-                              <!-- <input type="text" name="size[]" placeholder="Size" style="width: 120px;" required="" /> -->
-                              <!-- <input type="text" name="sku[]" placeholder="Code" style="width: 120px;" required="" /> -->
-                              <input type="text" name="sku[]" value="{{ $product['product_code'] }}" style="width: 120px;" placeholder="Code" required="" />
-                              <input type="text" name="price[]" value="{{ $product['product_price'] }}" style="width: 120px;" placeholder="Price" required="" />
-                              <!-- <input type="text" name="price[]" placeholder="Price" style="width: 120px;" required="" /> -->
+                              <input type="text" name="size[]" placeholder="Size" style="width: 120px;" required="" />
+                              <input type="text" name="sku[]" placeholder="Code" style="width: 120px;" required="" />
+                              <input type="text" name="price[]" placeholder="Price" style="width: 120px;" required="" />
                               <input type="text" name="stock[]" placeholder="AvailStock" style="width: 120px;" required="" />
                               <a href="javascript:void(0);" class="add_button" title="Add Attributes">Add</a>
-                        
                           </div>
                       </div>
                     </div> -->
@@ -209,4 +205,43 @@
   // Format with comma as thousand separator and 2 decimal places
   input.value = 'Php ' + value.toLocaleString('en-US');
 }
+document.addEventListener('DOMContentLoaded', function() {
+        const stockInputs = document.querySelectorAll('input[name="stock[]"]');
+        const stockWarning = document.getElementById('stockWarning');
+
+        if (stockInputs && stockWarning) {
+            stockInputs.forEach(function(stockInput) {
+                stockInput.addEventListener('input', function() {
+                    let showWarning = false;
+                    stockInputs.forEach(function(input) {
+                        const stockValue = parseFloat(input.value);
+                        if (stockValue < 5) {
+                            showWarning = true;
+                        }
+                    });
+
+                    if (showWarning) {
+                        stockWarning.textContent = 'Stock is low!';
+                    } else {
+                        stockWarning.textContent = '';
+                    }
+                });
+            });
+
+            // Check on page load
+            let showWarning = false;
+            stockInputs.forEach(function(input) {
+                const stockValue = parseFloat(input.value);
+                if (stockValue < 5) {
+                    showWarning = true;
+                }
+            });
+
+            if (showWarning) {
+                stockWarning.textContent = 'Stock is low!';
+            }
+        } else {
+            console.error('Stock inputs or warning element not found.');
+        }
+    });
 </script>
