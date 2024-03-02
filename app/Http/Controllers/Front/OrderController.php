@@ -55,16 +55,8 @@ class OrderController extends Controller
     }
 
     public function replaceProduct($id) {
-        $product = OrdersProduct::find($id); // Fetch the product details based on $id
-        $orderDetails = Order::with('orders_products')->where('id',$id)->first()->toArray();
-        $images = []; // This should be an array containing the filenames of the uploaded images
-        
-        if (!$product) {
-            // Handle case where product is not found, such as showing an error message or redirecting
-            return redirect()->back()->with('error', 'Product not found.');
-        }
-    
-        return view('front.orders.replace_order', compact('product', 'orderDetails', 'images'));  
+       
+        return view('front.orders.replace_order');  
     }
     
     

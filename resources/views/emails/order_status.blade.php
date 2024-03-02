@@ -54,7 +54,7 @@
                         <td>Product Name</td>
                         <td>Product Code</td>
                         <td>Product Size</td>
-                        <td>Product Color</td>
+                        <td>Product Colodr</td>
                         <td>Product Quantity</td>
                         <td>Product Price</td>
                     </tr>

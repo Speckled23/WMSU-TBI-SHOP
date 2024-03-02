@@ -333,10 +333,10 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
         Route::get('iyzipay/pay','IyzipayController@pay');
 
          // GCash Routes
-         Route::match(['GET','POST'], 'gcash/pay', 'GCashController@pay')->name('gcash.pay');
-         Route::get('/payment/success', 'GCashController@success');
-         Route::get('/payment/thanks', 'GCashController@thanks')->name('payment.success');
-         Route::get('gcash/error', 'GCashController@error');
+         Route::match(['GET','POST'], 'gcash/pay', 'GcashController@pay')->name('gcash.pay');
+         Route::get('/payment/success', 'GcashController@success');
+         Route::get('/payment/thanks', 'GcashController@thanks')->name('payment.success');
+         Route::get('gcash/error', 'GcashController@error');
 
 
     });
