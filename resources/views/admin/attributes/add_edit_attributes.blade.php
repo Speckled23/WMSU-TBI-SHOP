@@ -83,22 +83,20 @@
 </div>
 
 <div class="form-group">
-    <label for="product_price" style="width: 100px;">Product Price: </label>
-    <input type="text" name="price[]" id="price_input" placeholder="Price" oninput="formatPrice(this)" style="width: 120px;" required="" />
+  <label for="product_price" style="width: 100px;">Product Price: </label>
+  <input type="text" name="price[]" placeholder="Price in Pesos" style="width: 120px;" required="" />
 </div>
 <div class="form-group">
     <label for="product_size" style="width: 100px;">Product Size: </label>
-    <input type="number" id="size_number" name="size_number[]" placeholder="Size" style="width: 80px;" onchange="combineSize()" required="" min="0" />
+    <input type="number" id="size_number" name="size_number[]" placeholder="Size" style="width: 80px;" onchange="combineSize()" required="" />
     <select name="size_measurement[]" id="size_measurement" style="width: 120px;" onchange="combineSize()" required="">
         <option value="kg">kg</option>
         <option value="g">g</option>
         <option value="lbs">lbs</option>
         <option value="sack">sack</option>
-        <option value="box">box</option>
     </select>
     <input type="hidden" name="size[]" id="combined_size" />
 </div>
-
 
 
 <div class="form-group">
@@ -157,9 +155,8 @@
                                             {{ $attribute['sku'] }}
                                         </td>
                                         <td>
-    <input type="text" name="price[]" value="Php {{ number_format($attribute['price']) }}" required="" oninput="formatPrice(this)" style="width: 100px;">
+  <input type="text" name="price[]" value="Php {{ number_format($attribute['price'], 2) }}" required="" style="width: 120px;" readonly>
 </td>
-
 
                                         <td>
                                             <input type="number" name="stock[]" value="{{ $attribute['stock'] }}" required="" style="width: 70px;">
@@ -200,32 +197,11 @@
         var combinedSize = numberInput + measurement;
         document.getElementById("combined_size").value = combinedSize;
     }
-    document.getElementById("price_input").addEventListener("input", function(event) {
-        var input = event.target.value;
-        // Remove non-digit characters
-        input = input.replace(/\D/g, "");
-        // Insert commas for thousands
-        input = input.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        // Add PHP prefix
-        input = "PHP" + input;
-        event.target.value = input;
-    });
-    function formatPrice(input) {
-        // Remove non-digit characters
-        var value = input.value.replace(/\D/g, "");
-        // Add commas for thousands
-        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        // Update input value with Php prefix
-        input.value = 'Php ' + value;
-    }
-    function formatPrice(input) {
-        // Remove non-digit characters
-        var value = input.value.replace(/\D/g, "");
-        // Add commas for thousands
-        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        // Add Php prefix
-        value = 'Php ' + value;
-        // Update input value
-        input.value = value;
-    }
+    function formatCurrency(input) {
+  // Remove non-numeric characters and convert to float
+  let value = parseFloat(input.value.replace(/[^\d.-]/g, ''));
+  
+  // Format with comma as thousand separator and 2 decimal places
+  input.value = 'Php ' + value.toLocaleString('en-US');
+}
 </script>
