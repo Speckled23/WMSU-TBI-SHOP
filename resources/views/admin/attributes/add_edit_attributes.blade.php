@@ -61,30 +61,50 @@
                   @endif
                   
                   <form class="forms-sample" action="{{ url('admin/add-edit-attributes/'.$product['id']) }}" method="post">@csrf
-                    <div class="form-group">
-                      <label for="product_name">Product Name</label>
-                      &nbsp; {{ $product['product_name'] }}
-                    </div>
-                    <div class="form-group">
-                      <label for="product_code">Product Code</label>
-                      &nbsp; {{ $product['product_code'] }}
-                    </div>
-                    <div class="form-group">
-                      <label for="product_color">Product Color</label>
-                      &nbsp; {{ $product['product_color'] }}
-                    </div>
-                    <div class="form-group">
-                      <label for="product_price">Product Price</label>
-                      &nbsp; {{ $product['product_price'] }}
-                    </div>
-                    <div class="form-group">
-                      @if(!empty($product['product_image']))
-                        <img style="width: 120px;" src="{{ url('front/images/product_images/small/'.$product['product_image']) }}">
-                      @else
-                        <img style="width: 120px;" src="{{ url('front/images/product_images/small/no-image.png') }}">
-                      @endif
-                    </div>
-                    <div class="form-group">
+                  <div class="form-group" style="text-align: center;">
+    @if(!empty($product['product_image']))
+        <img style="width: 150px;" src="{{ url('front/images/product_images/small/'.$product['product_image']) }}">
+    @else
+        <img style="width: 150px;" src="{{ url('front/images/product_images/small/no-image.png') }}">
+    @endif
+</div>
+
+                  <div class="form-group">
+  <label for="product_name" style="width: 100px;">Product Name</label>
+  {{ $product['product_name'] }}
+</div>
+<div class="form-group">
+  <label for="product_color" style="width: 100px;">Product Color</label>
+  {{ $product['product_color'] }}
+</div>
+<div class="form-group">
+  <label for="product_code" style="width: 100px;">Product Code: </label>
+  <input type="text" name="sku[]" placeholder="Code" style="width: 120px;" required="" />
+</div>
+
+<div class="form-group">
+    <label for="product_price" style="width: 100px;">Product Price: </label>
+    <input type="text" name="price[]" id="price_input" placeholder="Price" oninput="formatPrice(this)" style="width: 120px;" required="" />
+</div>
+<div class="form-group">
+    <label for="product_size" style="width: 100px;">Product Size: </label>
+    <input type="number" id="size_number" name="size_number[]" placeholder="Size" style="width: 80px;" onchange="combineSize()" required="" min="0" />
+    <select name="size_measurement[]" id="size_measurement" style="width: 120px;" onchange="combineSize()" required="">
+        <option value="kg">kg</option>
+        <option value="g">g</option>
+        <option value="lbs">lbs</option>
+        <option value="sack">sack</option>
+        <option value="box">box</option>
+    </select>
+    <input type="hidden" name="size[]" id="combined_size" />
+</div>
+
+
+
+<div class="form-group">
+  <label for="product_size" style="width: 100px;">Available Stock: </label>
+  <input type="text" name="stock[]" placeholder="AvailStock" style="width: 120px;" required="" /></div>
+                    <!-- <div class="form-group">
                       <div class="field_wrapper">
                           <div>
                         
@@ -99,7 +119,7 @@
                         
                           </div>
                       </div>
-                    </div>
+                    </div> -->
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     <button type="reset" class="btn btn-light">Delete Edit</button>
                   </form>
@@ -142,8 +162,10 @@
                                             {{ $attribute['sku'] }}
                                         </td>
                                         <td>
-                                            <input type="number" name="price[]" value="{{ $attribute['price'] }}" required="" style="width: 70px;">
-                                        </td>
+    <input type="text" name="price[]" value="Php {{ number_format($attribute['price']) }}" required="" oninput="formatPrice(this)" style="width: 100px;">
+</td>
+
+
                                         <td>
                                             <input type="number" name="stock[]" value="{{ $attribute['stock'] }}" required="" style="width: 70px;">
                                         </td>
@@ -171,3 +193,44 @@
     <!-- partial -->
 </div>
 @endsection
+<script>
+    function combineSize() {
+        var numberInput = document.getElementById("size_number").value;
+        var measurementSelect = document.getElementById("size_measurement");
+        var measurement = measurementSelect.options[measurementSelect.selectedIndex].value;
+        // Adjust the measurement value for "sack"
+        if (measurement === "sack") {
+            measurement = measurement;
+        }
+        var combinedSize = numberInput + measurement;
+        document.getElementById("combined_size").value = combinedSize;
+    }
+    document.getElementById("price_input").addEventListener("input", function(event) {
+        var input = event.target.value;
+        // Remove non-digit characters
+        input = input.replace(/\D/g, "");
+        // Insert commas for thousands
+        input = input.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        // Add PHP prefix
+        input = "PHP" + input;
+        event.target.value = input;
+    });
+    function formatPrice(input) {
+        // Remove non-digit characters
+        var value = input.value.replace(/\D/g, "");
+        // Add commas for thousands
+        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        // Update input value with Php prefix
+        input.value = 'Php ' + value;
+    }
+    function formatPrice(input) {
+        // Remove non-digit characters
+        var value = input.value.replace(/\D/g, "");
+        // Add commas for thousands
+        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        // Add Php prefix
+        value = 'Php ' + value;
+        // Update input value
+        input.value = value;
+    }
+</script>
