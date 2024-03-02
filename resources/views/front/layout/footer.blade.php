@@ -26,6 +26,7 @@
                     <div class="footer-list">
                         <h6>COMPANY</h6>
                         <ul>
+                        
                             <li>
                                 <a href="{{ url('about-us')}}">About Us</a>
                             </li>
