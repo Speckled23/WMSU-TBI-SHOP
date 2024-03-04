@@ -14,6 +14,7 @@ use App\Models\ProductsFilter;
 use Session;
 use Auth;
 use Image;
+use Illuminate\Support\Facades\DB;
 
 class ProductsController extends Controller
 {
@@ -36,7 +37,7 @@ class ProductsController extends Controller
             $products = $products->where('vendor_id',$vendor_id);
         }
         $products = $products->get()->toArray();
-        /*dd($products);*/
+        // dd($products);
         return view('admin.products.products')->with(compact('products'));
     }
 

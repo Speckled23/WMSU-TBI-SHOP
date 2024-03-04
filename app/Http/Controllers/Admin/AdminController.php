@@ -1146,7 +1146,7 @@ class AdminController extends Controller
             Session::put('page','view_all');
         }
         $admins = $admins->get()->toArray();
-        /*dd($admins);*/
+        // dd($admins);
         return view('admin.admins.admins')->with(compact('admins','title'));
     }
 

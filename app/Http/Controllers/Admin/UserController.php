@@ -15,7 +15,7 @@ class UserController extends Controller
         Session::put('page','users');
         $users = User::get()->toArray();
         
-        /*dd($users);*/
+        // dd($users);
         return view('admin.users.users')->with(compact('users'));
     }
 

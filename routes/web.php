@@ -7,7 +7,7 @@ use App\Models\CmsPage;
 // K
 
 use App\Http\Controllers\Admin\AdminController;
-
+use App\Http\Controllers\Admin\ExportController;
 Route::get('/getOrdersData', [AdminController::class, 'getOrdersData']);
 // K
 
@@ -40,6 +40,12 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         // Admin Dashboard Route
         Route::get('dashboard','AdminController@dashboard');
 
+        // pdf and excel
+        Route::get('ExportSeller/{type}/{columns}/{column_names}','ExportController@adminSeller');
+        Route::get('ExportProducts/{type}/{columns}/{column_names}','ExportController@adminProducts');
+        Route::get('ExportCustomers/{type}/{columns}/{column_names}','ExportController@adminCustomers');
+        Route::get('ExportOrders/{type}/{columns}/{column_names}','ExportController@adminOrders');
+        
 
         // dashboard stuff
         Route::get('dashboard-adminoverallRevenue/{year}/{paid}','AdminController@adminoverallRevenueYear');
