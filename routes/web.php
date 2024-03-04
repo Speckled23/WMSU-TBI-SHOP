@@ -57,8 +57,8 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::get('dashboard-adminorderStatus/{year}','AdminController@adminorderStatusYear');
 
         Route::get('dashboard-drillAnalyticsRevenue/{year}/{vendor}/{paid}','AdminController@drillAnalyticsRevenueYear');
-        Route::get('dashboard-getVendorDetails/{year}','AdminController@getVendorDetails');
 
+        Route::get('dashboard-getVendorDetails/{year}','AdminController@getVendorDetails');
         Route::get('dashboard-adminoverallRevenue','AdminController@adminoverallRevenue');
         Route::get('dashboard-admintopProducts','AdminController@admintopProducts');
         Route::get('dashboard-admintopSellers','AdminController@admintopSellers');
@@ -85,7 +85,17 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::get('dashboard-vendorsalesGrowthOverTime/{year}','AdminController@vendorsalesGrowthOverTimeYear');
         Route::get('dashboard-vendorsalesGrowthOverTimePrev/{year}','AdminController@vendorsalesGrowthOverTimeYearPrev');
         
-        // dashboard stuff
+        // download dashboard
+        Route::get('dashboard-adminoverallRevenueDownload/{type}/{year}/{paid}','AdminController@adminoverallRevenueYearDownload');
+        Route::get('dashboard-admintopProductsDownload/{type}/{year}/{paid}/{limit}','AdminController@admintopProductsYearDownload');
+        Route::get('dashboard-admintopSellersDownload/{type}/{year}/{paid}','AdminController@admintopSellersYearDownload');
+        Route::get('dashboard-adminretensionDownload/{type}/{year}','AdminController@adminretensionYearDownload');
+        Route::get('dashboard-admintopCategoryDownload/{type}/{year}/{paid}','AdminController@admintopCategoryYearDownload');
+        Route::get('dashboard-adminfulfilledOrdersDownload/{type}/{year}/{paid}','AdminController@adminfulfilledOrdersYearDownload');
+        Route::get('dashboard-adminorderStatusDownload/{type}/{year}','AdminController@adminorderStatusYearDownload');
+        Route::get('dashboard-drillAnalyticsRevenueDownload/{type}/{year}/{vendor}/{paid}/{chartX}','AdminController@drillAnalyticsRevenueYearDownload');
+        
+
 
         Route::get('vendordashboard','AdminController@vendordashboard');
 

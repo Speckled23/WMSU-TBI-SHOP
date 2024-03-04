@@ -17,21 +17,17 @@
     <table class="table table-striped">
         <thead style="font-size:13px;margin:0px 0px 0px 0px;padding:0px 0px 0px 0px;">
             <tr>
-                <th scope="col">#</th>
                 @foreach($header as $key =>$value)
                     <th >{{$value}}</th>
                 @endforeach
             </tr>
         </thead>
         <tbody style="font-size:12px;margin:0px 0px 0px 0px;padding:0px 0px 0px 0px;">
+            <tr>
             @foreach($content as $key => $value)
-                <tr>
-                <td>{{$key+1}}</td>
-                @foreach($value as $column_key => $column_value)
-                    <td>{{$column_value}}</td>
+                <td>{{$value}}</td>
                 @endforeach
-                </tr>
-            @endforeach
+            </tr>
         </tbody>
     </table>
 </body>

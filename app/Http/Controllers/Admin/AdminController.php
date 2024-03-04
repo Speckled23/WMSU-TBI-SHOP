@@ -26,6 +26,11 @@ use Carbon\Carbon;//K
 use Image;
 use Session;
 
+use Maatwebsite\Excel\Exporter;
+use App\Http\Controllers\Admin\Export\ExporterController;
+use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class AdminController extends Controller
 {
@@ -135,6 +140,75 @@ class AdminController extends Controller
         
         return 'adminoverallRevenue';
     }
+    public function adminoverallRevenueYearDownload($type,$year,$paid){
+        if($paid == 'true'){
+            $data = DB::table('orders_products as op')
+            ->select(   
+                DB::raw('YEAR(op.created_at) as year'),
+                DB::raw('MONTH(op.created_at) as month'),
+                DB::raw('sum(op.product_qty*op.product_price) as total_per_month'),
+            )
+            ->join('orders as o','o.id','op.order_id')
+            ->where( 'o.order_status','=','Paid')
+            ->where( DB::raw('YEAR(op.created_at)'),'=',$year)
+            ->groupby(DB::raw('YEAR(op.created_at), MONTH(op.created_at)'))
+            ->get()
+            ->toArray();
+          
+        }else{
+            $data = DB::table('orders_products as op')
+            ->select(   
+                DB::raw('YEAR(op.created_at) as year'),
+                DB::raw('MONTH(op.created_at) as month'),
+                DB::raw('sum(op.product_qty*op.product_price) as total_per_month'),
+                DB::raw('sum((op.product_qty*op.product_price) - (op.product_price*(p.product_discount/100))) as total_per_month_with_dc '),
+            )
+            ->join('products as p','p.id','op.product_id')
+            ->where( DB::raw('YEAR(op.created_at)'),'=',$year)
+            ->groupby(DB::raw('YEAR(op.created_at), MONTH(op.created_at)'))
+            ->get()
+            ->toArray();
+        }
+        $header = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+        $content = [0,0,0,0,0,0,0,0,0,0,0,0];
+        foreach ($data as $key => $value) {
+            $content[ $value->month-1] = $value->total_per_month;
+        }
+        $file_name = 'Overall Revenue ['.$year.']';
+
+        if($type == 'EXCEL'){
+            $export = new ExporterController([
+                $header,
+                $content
+            ]);
+            return Excel::download($export, $file_name.'.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+        }elseif($type == 'CSV'){
+            $export = new ExporterController([
+                $header,
+                $content
+            ]);
+            return Excel::download($export, $file_name.'.csv', \Maatwebsite\Excel\Excel::CSV);
+        }elseif($type == 'PDF'){
+            $data = [
+                'title'=>$file_name,
+                'header'=>$header,
+                'content'=> $content
+            ];
+            $pdf = Pdf::loadView('admin.exportpdf.exportchartpdf',  array( 
+                'title'=> $file_name,
+                'header'=>$header,
+                'columns'=>$header,
+                'content'=> $content)
+            );
+            return $pdf->setPaper('a4', 'landscape')->download( $file_name.'.pdf');
+        }else{
+            $export = new ExporterController([
+                $header,
+                $content
+            ]);
+            return Excel::download($export, $file_name.'.csv', \Maatwebsite\Excel\Excel::CSV);
+        }
+    }
     public function admintopProducts(){
         return (DB::table('orders_products as op')
             ->select(
@@ -152,6 +226,80 @@ class AdminController extends Controller
         return 'admintopProducts';
     }
 
+    public function admintopProductsYearDownload($type,$year,$paid,$limit){
+        if($paid == 'true'){
+            $data = DB::table('orders_products as op')
+            ->select(
+                'p.id',
+                'p.product_name',
+                DB::raw('(count(*) * op.product_qty) as total_product_sales')
+            )
+            ->join('products as p','p.id','op.product_id')
+            ->join('orders as o','o.id','op.order_id')
+            ->where('o.order_status','=','Paid')
+            ->where( DB::raw('YEAR(op.created_at)'),'=',$year)
+            ->groupby('p.id')
+            ->orderBy(DB::raw('(count(*) * op.product_qty)'),'desc')
+            ->limit($limit)
+            ->get()
+            ->toArray();
+        }else{
+            $data = DB::table('orders_products as op')
+                ->select(
+                    'p.id',
+                    'p.product_name',
+                    DB::raw('sum(op.product_qty) as total_product_sales')
+                )
+                ->join('products as p','p.id','op.product_id')
+                ->join('orders as o','o.id','op.order_id')
+                ->where( DB::raw('YEAR(op.created_at)'),'=',$year)
+                ->groupby('p.id')
+                ->orderBy(DB::raw('sum(op.product_qty)'),'desc')
+                ->limit($limit)
+                ->get()
+                ->toArray();
+        }
+        $header = [];
+        $content = [];
+        foreach ($data as $key => $value) {
+            array_push($header,$value->product_name);
+            array_push($content,$value->total_product_sales);
+        }
+        $file_name = 'Top Products ['.$year.']';
+
+        if($type == 'EXCEL'){
+            $export = new ExporterController([
+                $header,
+                $content
+            ]);
+            return Excel::download($export, $file_name.'.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+        }elseif($type == 'CSV'){
+            $export = new ExporterController([
+                $header,
+                $content
+            ]);
+            return Excel::download($export, $file_name.'.csv', \Maatwebsite\Excel\Excel::CSV);
+        }elseif($type == 'PDF'){
+            $data = [
+                'title'=>$file_name,
+                'header'=>$header,
+                'content'=> $content
+            ];
+            $pdf = Pdf::loadView('admin.exportpdf.exportchartpdf',  array( 
+                'title'=> $file_name,
+                'header'=>$header,
+                'columns'=>$header,
+                'content'=> $content)
+            );
+            return $pdf->setPaper('a4', 'landscape')->download( $file_name.'.pdf');
+        }else{
+            $export = new ExporterController([
+                $header,
+                $content
+            ]);
+            return Excel::download($export, $file_name.'.csv', \Maatwebsite\Excel\Excel::CSV);
+        }
+    }
     public function admintopProductsYear($year,$paid,$limit){
         if($paid == 'true'){
             return (DB::table('orders_products as op')
@@ -185,9 +333,8 @@ class AdminController extends Controller
                 ->limit($limit)
                 ->get()
                 ->toArray()
-                );
+            );
         }
-        return 'admintopProducts';
     }
 
     public function drillAnalyticsRevenueYear($year,$vendor,$paid){
@@ -258,6 +405,127 @@ class AdminController extends Controller
             }
         }
         return 'sadfsda';
+    }
+    public function drillAnalyticsRevenueYearDownload($type,$year,$vendor,$paid,$chartX){
+        if($vendor == 'All'){
+            if($paid == 'true'){
+                $data =  DB::table('orders_products as op')
+                ->select(
+                    DB::raw('DATE_FORMAT(op.created_at, "%M %d, %Y") as date_ordered ') ,
+                    DB::raw('count(*) total_ordered_per_day '),
+                    DB::raw('sum(product_qty*product_price) as revenue')
+                )
+                ->join('orders as o','o.id','op.order_id')
+                ->where( DB::raw('YEAR(op.created_at)'),'=',$year)
+                ->where('o.order_status','=','Paid')
+                ->groupby(DB::raw('DATE_FORMAT(op.created_at, "%Y%m%d")'))
+                ->orderBy(DB::raw('DATE_FORMAT(op.created_at, "%Y%m%d")'),'ASC')
+                ->get()
+                ->toArray()
+                ;
+            }else{
+                $data =  (DB::table('orders_products as op')
+                ->select(
+                    DB::raw('DATE_FORMAT(op.created_at, "%M %d, %Y") as date_ordered ') ,
+                    DB::raw('count(*) total_ordered_per_day '),
+                    DB::raw('sum(product_qty*product_price) as revenue')
+                )    
+                ->join('orders as o','o.id','op.order_id')
+                ->where( DB::raw('YEAR(op.created_at)'),'=',$year)
+                ->groupby(DB::raw('DATE_FORMAT(op.created_at, "%Y%m%d")'))
+                ->orderBy(DB::raw('DATE_FORMAT(op.created_at, "%Y%m%d")'),'ASC')
+                ->get()
+                ->toArray()
+                );
+            }
+           
+        }else{
+            if($paid == 'true'){
+                $data = DB::table('orders_products as op')
+                ->select(
+                    DB::raw('DATE_FORMAT(op.created_at, "%M %d, %Y") as date_ordered ') ,
+                    DB::raw('count(*) total_ordered_per_day '),
+                    DB::raw('sum(product_qty*product_price) as revenue')
+                )
+                ->join('orders as o','o.id','op.order_id')
+                ->where( DB::raw('YEAR(op.created_at)'),'=',$year)
+                ->where('o.order_status','=','Paid')
+                ->where('op.vendor_id','=',$vendor)
+                ->groupby(DB::raw('DATE_FORMAT(op.created_at, "%Y%m%d")'))
+                ->orderBy(DB::raw('DATE_FORMAT(op.created_at, "%Y%m%d")'),'ASC')
+                ->get()
+                ->toArray()
+                ;
+            }else{
+                $data = (DB::table('orders_products as op')
+                ->select(
+                    DB::raw('DATE_FORMAT(op.created_at, "%M %d, %Y") as date_ordered ') ,
+                    DB::raw('count(*) total_ordered_per_day '),
+                    DB::raw('sum(product_qty*product_price) as revenue')
+                )
+                ->join('orders as o','o.id','op.order_id')
+                ->where( DB::raw('YEAR(op.created_at)'),'=',$year)
+                ->where('op.vendor_id','=',$vendor)
+                ->groupby(DB::raw('DATE_FORMAT(op.created_at, "%Y%m%d")'))
+                ->orderBy(DB::raw('DATE_FORMAT(op.created_at, "%Y%m%d")'),'ASC')
+                ->get()
+                ->toArray()
+                );
+            }
+        }
+
+        if($chartX =='REVENUE'){
+            $header = ['Date','Revenue'];
+        }elseif($chartX =='FULFULLEDORDERS'){
+            $header = ['Date','Fulfilled Orders'];
+        }
+       
+        $content = [];
+        foreach ($data as $key => $value) {
+            $item = [];
+            array_push($item,$value->date_ordered);
+            if($chartX =='REVENUE'){
+                array_push($item,$value->revenue);
+            }elseif($chartX =='FULFULLEDORDERS'){
+                array_push($item,$value->total_ordered_per_day);
+            }
+            array_push($content,$item);
+        }
+        $file_name = 'Drill Analytics ['.$year.']';
+
+        if($type == 'EXCEL'){
+            $export = new ExporterController([
+                $header,
+                $content
+            ]);
+            return Excel::download($export, $file_name.'.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+        }elseif($type == 'CSV'){
+            $export = new ExporterController([
+                $header,
+                $content
+            ]);
+            return Excel::download($export, $file_name.'.csv', \Maatwebsite\Excel\Excel::CSV);
+        }elseif($type == 'PDF'){
+            $data = [
+                'title'=>$file_name,
+                'header'=>$header,
+                'content'=> $content
+            ];
+            $pdf = Pdf::loadView('admin.exportpdf.exportpdf',  array( 
+                'title'=> $file_name,
+                'header'=>$header,
+                'columns'=>$header,
+                'content'=> $content)
+            );
+            return $pdf->setPaper('a4', 'landscape')->download( $file_name.'.pdf');
+        }else{
+            $export = new ExporterController([
+                $header,
+                $content
+            ]);
+            return Excel::download($export, $file_name.'.csv', \Maatwebsite\Excel\Excel::CSV);
+        }
+   
     }
 
     public function getVendorDetails($year){
@@ -332,6 +600,87 @@ class AdminController extends Controller
         }
         return 'admintopSellers';
     }
+
+    public function admintopSellersYearDownload($type,$year,$paid){
+        if($paid == 'true'){
+            $data = (DB::table('orders_products as op')
+                ->select(
+                    'vendor_id',
+                    'v.name',
+                    'v.email',
+                    DB::raw('count(*) as total_orders'),
+                    DB::raw('sum(product_qty*product_price) as total_revenue')
+                )
+                ->join('vendors as v','v.id','op.vendor_id')
+                ->join('orders as o','o.id','op.order_id')
+                ->where('o.order_status','=','Paid')
+                ->where( DB::raw('YEAR(op.created_at)'),'=',$year)
+                ->groupby('vendor_id')
+                ->orderBy(DB::raw('sum(product_qty*product_price)'),'desc')
+                ->limit(10)
+                ->get()
+                ->toArray()
+                );
+        }else{
+            $data = (DB::table('orders_products as op')
+                ->select(
+                    'vendor_id',
+                    'v.name',
+                    'v.email',
+                    DB::raw('count(*) as total_orders'),
+                    DB::raw('sum(product_qty*product_price) as total_revenue')
+                )
+                ->join('vendors as v','v.id','op.vendor_id')
+                ->join('orders as o','o.id','op.order_id')
+                ->where( DB::raw('YEAR(op.created_at)'),'=',$year)
+                ->groupby('vendor_id')
+                ->orderBy(DB::raw('sum(product_qty*product_price)'),'desc')
+                ->limit(10)
+                ->get()
+                ->toArray()
+                );
+        }
+        $header = [];
+        $content = [];
+        foreach ($data as $key => $value) {
+            array_push($header,$value->name.' ('.$value->email.')');
+            array_push($content,$value->total_revenue);
+        }
+        $file_name = 'Top Sellers ['.$year.']';
+
+        if($type == 'EXCEL'){
+            $export = new ExporterController([
+                $header,
+                $content
+            ]);
+            return Excel::download($export, $file_name.'.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+        }elseif($type == 'CSV'){
+            $export = new ExporterController([
+                $header,
+                $content
+            ]);
+            return Excel::download($export, $file_name.'.csv', \Maatwebsite\Excel\Excel::CSV);
+        }elseif($type == 'PDF'){
+            $data = [
+                'title'=>$file_name,
+                'header'=>$header,
+                'content'=> $content
+            ];
+            $pdf = Pdf::loadView('admin.exportpdf.exportchartpdf',  array( 
+                'title'=> $file_name,
+                'header'=>$header,
+                'columns'=>$header,
+                'content'=> $content)
+            );
+            return $pdf->setPaper('a4', 'landscape')->download( $file_name.'.pdf');
+        }else{
+            $export = new ExporterController([
+                $header,
+                $content
+            ]);
+            return Excel::download($export, $file_name.'.csv', \Maatwebsite\Excel\Excel::CSV);
+        }
+    }
     public function adminretension(){
         return 'adminretension';
     }
@@ -392,6 +741,84 @@ class AdminController extends Controller
         }
         return 'admintopCategory';
     }
+    public function admintopCategoryYearDownload($type,$year,$paid){
+        if($paid == 'true'){
+            $data = (DB::table('orders_products as op')
+            ->select(
+                'c.id',
+                'c.category_name',
+                DB::raw('count(*) as total_category_count') ,
+                DB::raw('sum(product_qty) as total_product_qty')
+            )
+            ->join('products as p','p.id','op.product_id')
+            ->join('categories as c','c.id','p.category_id')
+            ->join('orders as o','o.id','op.order_id')
+            ->where('o.order_status','=','Paid')
+            ->where( DB::raw('YEAR(op.created_at)'),'=',$year)
+            ->orderBy(DB::raw('sum(product_qty)'),'desc')
+            ->groupby('c.id')
+            ->get()
+            ->toArray()
+            );
+        }else{
+            $data = (DB::table('orders_products as op')
+                ->select(
+                    'c.id',
+                    'c.category_name',
+                    DB::raw('count(*) as total_category_count') ,
+                    DB::raw('sum(product_qty) as total_product_qty')
+                )
+                ->join('products as p','p.id','op.product_id')
+                ->join('categories as c','c.id','p.category_id')
+                ->join('orders as o','o.id','op.order_id')
+                ->where( DB::raw('YEAR(op.created_at)'),'=',$year)
+                ->groupby('c.id')
+                ->orderBy(DB::raw('sum(product_qty)'),'desc')
+                ->get()
+                ->toArray()
+                );
+        }
+        $header = [];
+        $content = [];
+        foreach ($data as $key => $value) {
+            array_push($header,$value->category_name);
+            array_push($content,$value->total_product_qty);
+        }
+        $file_name = 'Top Category ['.$year.']';
+
+        if($type == 'EXCEL'){
+            $export = new ExporterController([
+                $header,
+                $content
+            ]);
+            return Excel::download($export, $file_name.'.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+        }elseif($type == 'CSV'){
+            $export = new ExporterController([
+                $header,
+                $content
+            ]);
+            return Excel::download($export, $file_name.'.csv', \Maatwebsite\Excel\Excel::CSV);
+        }elseif($type == 'PDF'){
+            $data = [
+                'title'=>$file_name,
+                'header'=>$header,
+                'content'=> $content
+            ];
+            $pdf = Pdf::loadView('admin.exportpdf.exportchartpdf',  array( 
+                'title'=> $file_name,
+                'header'=>$header,
+                'columns'=>$header,
+                'content'=> $content)
+            );
+            return $pdf->setPaper('a4', 'landscape')->download( $file_name.'.pdf');
+        }else{
+            $export = new ExporterController([
+                $header,
+                $content
+            ]);
+            return Excel::download($export, $file_name.'.csv', \Maatwebsite\Excel\Excel::CSV);
+        }
+    }
     public function adminfulfilledOrders(){
         return 'adminfulfilledOrders';
     }
@@ -426,6 +853,78 @@ class AdminController extends Controller
         }
         return 'adminfulfilledOrdesdffrs';
     }
+    public function adminfulfilledOrdersYearDownload($type,$year,$paid){
+        if($paid == 'true'){
+            $data = (DB::table('orders_products as op')
+            ->select(
+                DB::raw('DATE_FORMAT(op.created_at, "%M %d, %Y") as date_ordered ') ,
+                DB::raw('count(*) total_ordered_per_day ')
+            )
+            ->where( DB::raw('YEAR(op.created_at)'),'=',$year)
+            ->join('orders as o','o.id','op.order_id')
+            ->where('o.order_status','=','Paid')
+            ->groupby(DB::raw('DATE_FORMAT(op.created_at, "%Y%m%d")'))
+            ->orderBy(DB::raw('DATE_FORMAT(op.created_at, "%Y%m%d")'),'ASC')
+            ->get()
+            ->toArray()
+            );
+        }else{
+            $data = (DB::table('orders_products as op')
+            ->select(
+                DB::raw('DATE_FORMAT(op.created_at, "%M %d, %Y") as date_ordered ') ,
+                DB::raw('count(*) total_ordered_per_day ')
+            )
+            ->join('orders as o','o.id','op.order_id')
+            ->where( DB::raw('YEAR(op.created_at)'),'=',$year)
+            ->groupby(DB::raw('DATE_FORMAT(op.created_at, "%Y%m%d")'))
+            ->orderBy(DB::raw('DATE_FORMAT(op.created_at, "%Y%m%d")'),'ASC')
+            ->get()
+            ->toArray()
+            );
+        }
+        $header = ['Date','Fulfilled Orders'];
+        $content = [];
+        foreach ($data as $key => $value) {
+            $item = [];
+            array_push($item ,$value->date_ordered);
+            array_push($item ,$value->total_ordered_per_day);
+            array_push($content , $item);
+        }
+        $file_name = 'Fulfilled Orders ['.$year.']';
+
+        if($type == 'EXCEL'){
+            $export = new ExporterController([
+                $header,
+                $content
+            ]);
+            return Excel::download($export, $file_name.'.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+        }elseif($type == 'CSV'){
+            $export = new ExporterController([
+                $header,
+                $content
+            ]);
+            return Excel::download($export, $file_name.'.csv', \Maatwebsite\Excel\Excel::CSV);
+        }elseif($type == 'PDF'){
+            $data = [
+                'title'=>$file_name,
+                'header'=>$header,
+                'content'=> $content
+            ];
+            $pdf = Pdf::loadView('admin.exportpdf.exportpdf',  array( 
+                'title'=> $file_name,
+                'header'=>$header,
+                'columns'=>$header,
+                'content'=> $content)
+            );
+            return $pdf->setPaper('a4', 'landscape')->download( $file_name.'.pdf');
+        }else{
+            $export = new ExporterController([
+                $header,
+                $content
+            ]);
+            return Excel::download($export, $file_name.'.csv', \Maatwebsite\Excel\Excel::CSV);
+        }
+    }
     public function adminorderStatus(){
         return (DB::table('orders_products as op')
         ->select(
@@ -450,12 +949,71 @@ class AdminController extends Controller
         ->join('vendors as v','v.id','op.vendor_id')
         ->where( DB::raw('YEAR(op.created_at)'),'=',$year)
         ->groupby('item_status')
+        ->orderBy('item_status_count','desc')
         ->get()
         ->toArray()
         );
       
 
         return 'adminorderStatus';
+    }
+    public function adminorderStatusYearDownload($type,$year){
+        $data = (DB::table('orders_products as op')
+        ->select(
+            'item_status',
+            DB::raw('count(*) as item_status_count')
+        )
+        ->join('vendors as v','v.id','op.vendor_id')
+        ->where( DB::raw('YEAR(op.created_at)'),'=',$year)
+        ->groupby('item_status')
+        ->orderBy('item_status_count','desc')
+        ->get()
+        ->toArray()
+        );
+        $header = [];
+        $content = [];
+        foreach ($data as $key => $value) {
+            if($value->item_status){
+                array_push($header,$value->item_status);
+            }else{
+                array_push($header,'NULL');
+            }
+            array_push($content,$value->item_status_count);
+        }
+        $file_name = 'Order Status ['.$year.']';
+
+        if($type == 'EXCEL'){
+            $export = new ExporterController([
+                $header,
+                $content
+            ]);
+            return Excel::download($export, $file_name.'.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+        }elseif($type == 'CSV'){
+            $export = new ExporterController([
+                $header,
+                $content
+            ]);
+            return Excel::download($export, $file_name.'.csv', \Maatwebsite\Excel\Excel::CSV);
+        }elseif($type == 'PDF'){
+            $data = [
+                'title'=>$file_name,
+                'header'=>$header,
+                'content'=> $content
+            ];
+            $pdf = Pdf::loadView('admin.exportpdf.exportchartpdf',  array( 
+                'title'=> $file_name,
+                'header'=>$header,
+                'columns'=>$header,
+                'content'=> $content)
+            );
+            return $pdf->setPaper('a4', 'landscape')->download( $file_name.'.pdf');
+        }else{
+            $export = new ExporterController([
+                $header,
+                $content
+            ]);
+            return Excel::download($export, $file_name.'.csv', \Maatwebsite\Excel\Excel::CSV);
+        }
     }
 
 
@@ -475,26 +1033,26 @@ class AdminController extends Controller
         ->toArray()
         );
           return 'vendorsales';
-      }
-      public function vendoraverageOrderValue(Request $request){
-        $data = $request->session()->all();
-        return (DB::table('orders_products as op')
-        ->select(
-            DB::raw('YEAR(created_at) as YEAR'),
-            DB::raw('MONTH(created_at) as MONTH'),
-            DB::raw('MONTH(created_at) as month_num'),
-            DB::raw('sum(product_qty*product_price) as total_per_month_value'),
-            DB::raw('count(*) as total_order_per_month'),
-            DB::raw('sum(product_qty*product_price)/count(*) as average_order_value_per_month')
-        )
-        ->where('vendor_id','=',$data['id'])
-        ->groupby(DB::raw('YEAR(created_at), MONTH(created_at)'))
-        ->get()
-        ->toArray()
-        );
-          return 'vendoraverageOrderValue';
-      }
-      public function vendortopSellingProducts(Request $request){
+    }
+    public function vendoraverageOrderValue(Request $request){
+    $data = $request->session()->all();
+    return (DB::table('orders_products as op')
+    ->select(
+        DB::raw('YEAR(created_at) as YEAR'),
+        DB::raw('MONTH(created_at) as MONTH'),
+        DB::raw('MONTH(created_at) as month_num'),
+        DB::raw('sum(product_qty*product_price) as total_per_month_value'),
+        DB::raw('count(*) as total_order_per_month'),
+        DB::raw('sum(product_qty*product_price)/count(*) as average_order_value_per_month')
+    )
+    ->where('vendor_id','=',$data['id'])
+    ->groupby(DB::raw('YEAR(created_at), MONTH(created_at)'))
+    ->get()
+    ->toArray()
+    );
+        return 'vendoraverageOrderValue';
+    }
+    public function vendortopSellingProducts(Request $request){
         $data = $request->session()->all();
         return (DB::table('orders_products as op')
         ->select(
@@ -508,45 +1066,45 @@ class AdminController extends Controller
         ->orderBy('total_quantity_orders','desc')
         ->get()
         ->toArray()
-    );
+        );
           return 'vendortopSellingProducts';
-      }
-      public function vendorinventoryTurnOver(Request $request){
-        $data = $request->session()->all();
-      
-          return 'vendorinventoryTurnOver';
-      }
-      public function vendororderStatus(Request $request){
-        $data = $request->session()->all();
-        return (DB::table('orders_products as op')
-        ->select(
-            'item_status',
-            DB::raw('count(*) as item_status_count')
-        )
-        ->join('vendors as v','v.id','op.vendor_id')
-        ->where('vendor_id','=',$data['id'])
-        ->groupby('item_status')
-        ->get()
-        ->toArray()
-        );
-          return 'vendororderStatus';
-      }
-      public function vendorsalesGrowthOverTime(Request $request){
-        $data = $request->session()->all();
+    }
+    public function vendorinventoryTurnOver(Request $request){
+    $data = $request->session()->all();
+    
+        return 'vendorinventoryTurnOver';
+    }
+    public function vendororderStatus(Request $request){
+    $data = $request->session()->all();
+    return (DB::table('orders_products as op')
+    ->select(
+        'item_status',
+        DB::raw('count(*) as item_status_count')
+    )
+    ->join('vendors as v','v.id','op.vendor_id')
+    ->where('vendor_id','=',$data['id'])
+    ->groupby('item_status')
+    ->get()
+    ->toArray()
+    );
+        return 'vendororderStatus';
+    }
+    public function vendorsalesGrowthOverTime(Request $request){
+    $data = $request->session()->all();
 
-        return (DB::table('orders_products as op')
-        ->select(
-            DB::raw('YEAR(created_at)'),
-            DB::raw('MONTH(created_at)'),
-            DB::raw('sum(product_qty*product_price) as total_per_month')
-        )
-        ->where('vendor_id','=',$data['id'])
-        ->groupby(DB::raw('YEAR(created_at), MONTH(created_at)'))
-        ->get()
-        ->toArray()
-        );
-          return 'vendorsalesGrowthOverTime';
-      }
+    return (DB::table('orders_products as op')
+    ->select(
+        DB::raw('YEAR(created_at)'),
+        DB::raw('MONTH(created_at)'),
+        DB::raw('sum(product_qty*product_price) as total_per_month')
+    )
+    ->where('vendor_id','=',$data['id'])
+    ->groupby(DB::raw('YEAR(created_at), MONTH(created_at)'))
+    ->get()
+    ->toArray()
+    );
+        return 'vendorsalesGrowthOverTime';
+    }
 
 
     public function vendorsalesYear(Request $request,$year,$paid){
