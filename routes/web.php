@@ -80,11 +80,11 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::get('dashboard-vendorsales/{year}/{paid}','AdminController@vendorsalesYear');
         Route::get('dashboard-vendoraverageOrderValue/{year}/{paid}','AdminController@vendoraverageOrderValueYear');
         Route::get('dashboard-vendortopSellingProducts/{year}/{paid}','AdminController@vendortopSellingProductsYear');
-        Route::get('dashboard-vendorinventoryTurnOver/{year}','AdminController@vendorinventoryTurnOverYear');
         Route::get('dashboard-vendororderStatus/{year}','AdminController@vendororderStatusYear');
         Route::get('dashboard-vendorsalesGrowthOverTime/{year}','AdminController@vendorsalesGrowthOverTimeYear');
         Route::get('dashboard-vendorsalesGrowthOverTimePrev/{year}','AdminController@vendorsalesGrowthOverTimeYearPrev');
         
+        Route::get('dashboard-vendorinventoryTurnOver/{year}','AdminController@vendorinventoryTurnOverYear');
         // download dashboard
         Route::get('dashboard-adminoverallRevenueDownload/{type}/{year}/{paid}','AdminController@adminoverallRevenueYearDownload');
         Route::get('dashboard-admintopProductsDownload/{type}/{year}/{paid}/{limit}','AdminController@admintopProductsYearDownload');
@@ -95,7 +95,10 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::get('dashboard-adminorderStatusDownload/{type}/{year}','AdminController@adminorderStatusYearDownload');
         Route::get('dashboard-drillAnalyticsRevenueDownload/{type}/{year}/{vendor}/{paid}/{chartX}','AdminController@drillAnalyticsRevenueYearDownload');
         
-
+        Route::get('dashboard-vendorsalesDownload/{type}/{year}/{paid}','AdminController@vendorsalesYearDownload');
+        Route::get('dashboard-vendoraverageOrderValueDownload/{type}/{year}/{paid}','AdminController@vendoraverageOrderValueYearDownload');
+        Route::get('dashboard-vendortopSellingProductsDownload/{type}/{year}/{paid}','AdminController@vendortopSellingProductsYearDownload');
+        Route::get('dashboard-vendororderStatusDownload/{type}/{year}','AdminController@vendororderStatusYearDownload');
 
         Route::get('vendordashboard','AdminController@vendordashboard');
 
