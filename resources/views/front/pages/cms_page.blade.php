@@ -5,9 +5,7 @@
     <div class="container">
         <div class="page-intro">
             <h2>{{ $cmsPageDetails['title'] }}</h2>
-            <a href="javascript:history.back()" class="back-link">
-    <i class="fas fa-arrow-left"></i> Back
-</a>
+            
 
             <ul class="bread-crumb">
                 <li class="has-separator">
