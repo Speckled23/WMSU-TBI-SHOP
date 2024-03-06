@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
-use App\Models\OrdersProduct;
+use App\Models\OrdersPruse;
+use App\Models\Message;
+use Validator;
+use Illuminate\Support\Facades\DB;
 use Auth;
 
 class OrderController extends Controller
@@ -55,10 +58,49 @@ class OrderController extends Controller
     }
 
     public function replaceProduct($id) {
+        $item_details = DB::table('orders_products')
+            ->select('product_name')
+            ->where('user_id', Auth::user()->id)
+            ->where('id', $id)
+            ->first();
        
-        return view('front.orders.replace_order');  
+        return view('front.orders.replace_order')->with(compact('item_details'));  
     }
+
+    public function returnQry(Request $request) {
+        $data = $request->all();
     
+        // Validate input data
+        $validator = Validator::make($data, [
+            'message' => 'required|regex:/^[\pL\s\-]+$/u',
+            'image1' => 'required',
+            'image2' => 'required',
+            'image3' => 'required',
+        ], [
+            'message.required' => 'Message is required',
+            'image1.required' => 'Image is required',
+            'image2.required' => 'Image is required',
+            'image3.required' => 'Image is required',
+        ]);
     
+        // Check if validation fails
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+    
+        // Update operation with condition based on the record ID
+        $affectedRows = Message::where('id', $data['id'])->update([
+            'message' => $data['message'],
+            'image1' => $data['image1'],
+            'image2' => $data['image2'],
+            'image3' => $data['image3']
+        ]);
+    
+        if ($affectedRows > 0) {
+            return view('front.orders.replace_order_list')->with('success_message', 'You have successfully updated the  ticket!');
+        } else {
+            return view('front.orders.replace_order')->with('error_message', 'Failed to create ticket, there might be wrong in the system. Please contact Admin for further details.');
+        }
+    }    
     
 }

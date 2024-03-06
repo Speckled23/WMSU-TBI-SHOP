@@ -79,7 +79,7 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::get('dashboard-vendorsalesGrowthOverTime/{year}','AdminController@vendorsalesGrowthOverTimeYear');
         Route::get('dashboard-vendorsalesGrowthOverTimePrev/{year}','AdminController@vendorsalesGrowthOverTimeYearPrev');
         
-        // dashboard stuff
+        // dashboard stufflog
 
         Route::get('vendordashboard','AdminController@vendordashboard');
 
@@ -318,8 +318,10 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
         // Users Orders
         Route::get('user/orders/{product_id?}','OrderController@orders');
         Route::match(['get','post'],'cancel-product/{product_id?}','OrderController@cancelProduct');
-        Route::match(['get','post'],'cancel-order/{product_id?}','OrderController@cancelOrder');
-        Route::get('replace-order/{product_id?}', 'OrderController@replaceProduct');
+        Route::match(['get','post'],'cancel-order/{product_id?}','OrderController@cancelOrder');//cancel order
+        Route::get('replace-order/{product_id?}', 'OrderController@replaceProduct');//replace form
+        Route::get('replace-order/RRmessage', 'OrderController@returnQry');
+
 
 
         // Paypal Routes

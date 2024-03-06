@@ -320,4 +320,6 @@ class UserController extends Controller
             abort(404);
         }
     }
+
+
 }
