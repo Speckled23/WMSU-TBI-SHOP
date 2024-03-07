@@ -320,8 +320,10 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
         Route::match(['get','post'],'cancel-product/{product_id?}','OrderController@cancelProduct');
         Route::match(['get','post'],'cancel-order/{product_id?}','OrderController@cancelOrder');//cancel order
         Route::get('replace-order/{product_id?}', 'OrderController@replaceProduct');//replace form
-        Route::get('replace-order/RRmessage', 'OrderController@returnQry');
+        Route::post('replace-order/RRlist', 'OrderController@returnQry');
 
+        //Message
+        Route::get('message/message', 'OrderController@message');
 
 
         // Paypal Routes

@@ -47,6 +47,7 @@
         <th>Product Size</th>
         <th>Product Color</th>
         <th>Product Qty</th>
+        <th>Status</th>
         <th>Action</th>
     </tr>
     @foreach($orderDetails['orders_products'] as $product)
@@ -60,6 +61,7 @@
             <td>{{ $product['product_size'] }}</td>
             <td>{{ $product['product_color'] }}</td>
             <td>{{ $product['product_qty'] }}</td>
+            <td>{{ $product['item_status'] }}</td>
             <td>
                 @if($product['item_status']=="New" || $product['item_status']=="Pending" || $product['item_status']=="In Progress")
                 <a href="{{ url('cancel-product/'.$product['id']) }}" id="cancel_product" class="btn btn-danger btn-sm">Cancel</a>

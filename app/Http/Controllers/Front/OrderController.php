@@ -59,48 +59,61 @@ class OrderController extends Controller
 
     public function replaceProduct($id) {
         $item_details = DB::table('orders_products')
-            ->select('product_name')
-            ->where('user_id', Auth::user()->id)
             ->where('id', $id)
             ->first();
+            // dd($item_details);
        
         return view('front.orders.replace_order')->with(compact('item_details'));  
     }
 
-    public function returnQry(Request $request) {
-        $data = $request->all();
+        public function returnQry(Request $request) {
+            $data = $request->all();
+            // Validate input data
+            $validator = Validator::make($data, [
+                'message' => 'required|regex:/^[\pL\s\-]+$/u',
+                'proofvideo' => 'required'
+            ]);
+        
+            // Check if validation fails
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+        
+            // Create a new message
+            $message = Message::create([
+                'vendor_id' => $data['seller_id'],
+                'user_id' => $data['customer_id'],
+                'message' => $data['message'],
+                'video_proof' => $data['proofvideo'],
+            ]);
+        
+       
+
+            if ($message) {
+
+                     // Retrieve message details
+                     $message_details = DB::table('message')
+                     ->where('vendor_id', $data['seller_id'])
+                     ->where('user_id', $data['customer_id'])
+                     ->orderBy('created_at', 'desc') // Order the results by created_at column in descending order
+                     ->groupBy('created_at') // Group the results by the created_at column
+                     ->get();
+                 
+
+           /*  dd($message_details); */
     
-        // Validate input data
-        $validator = Validator::make($data, [
-            'message' => 'required|regex:/^[\pL\s\-]+$/u',
-            'image1' => 'required',
-            'image2' => 'required',
-            'image3' => 'required',
-        ], [
-            'message.required' => 'Message is required',
-            'image1.required' => 'Image is required',
-            'image2.required' => 'Image is required',
-            'image3.required' => 'Image is required',
-        ]);
-    
-        // Check if validation fails
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            $messageId = $message->id;
+                return view('front.orders.replace_order_list')->with('success_message', 'You have successfully updated the ticket!')->with(compact('message_details','messageId'));
+            } else {
+                return view('front.orders.replace_order')->with('error_message', 'Failed to create ticket, there might be wrong in the system. Please contact Admin for further details.');
+            }
         }
-    
-        // Update operation with condition based on the record ID
-        $affectedRows = Message::where('id', $data['id'])->update([
-            'message' => $data['message'],
-            'image1' => $data['image1'],
-            'image2' => $data['image2'],
-            'image3' => $data['image3']
-        ]);
-    
-        if ($affectedRows > 0) {
-            return view('front.orders.replace_order_list')->with('success_message', 'You have successfully updated the  ticket!');
-        } else {
-            return view('front.orders.replace_order')->with('error_message', 'Failed to create ticket, there might be wrong in the system. Please contact Admin for further details.');
+
+
+        public function message(){
+
+            return view('front.orders.message');
         }
-    }    
+     
     
 }

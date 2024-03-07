@@ -26,8 +26,11 @@
         asdadfs
     </div>
     <div class="border border-dark-light m-3 p-3 rounded">
-    <form action="/RRmessage" method="post" enctype="multipart/form-data">
-
+    <form action="{{ url('replace-order/RRlist')}}" method="post" enctype="multipart/form-data">
+        
+        
+        <input type="hidden" name="seller_id" value="{{$item_details->vendor_id}}">
+        <input type="hidden" name="customer_id" value="{{$item_details->user_id}}">
         @csrf
             <div class="row">
                 <div class="col-md-6">
@@ -38,33 +41,22 @@
 
                 <div class="col-md-6">
                     <div class="">
-                        <h5 class="text-center">Image Proof</h5>
+                        <h5 class="text-center">Video Proof</h5>
                     </div>
-                        <!-- Image Inputs -->
+                    <!-- Video Input -->
                     <div style="margin-bottom: 15px;">
-                        <label for="proofimage1" style="color: #555;">Image:</label><br>
-                        <input type="file" id="proofimage1" name="proofimage1" onchange="previewImage(this, 'preview1');" accept="image/*" style="width: calc(100% - 22px); padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 16px;">
-                        <br>
-                        <img id="preview1" src="" alt="Image Preview" style="max-width: 100px; margin-top: 10px; display: none;">
+                        <label for="proofvideo" style="color: #555;">Video (Max 100 MB):</label><br>
+                        <input type="file" id="proofvideo" name="proofvideo" accept="video/*" style="width: calc(100% - 22px); padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 16px;" onchange="previewVideo(this)">
                     </div>
-                    
-                    <div style="margin-bottom: 15px;">
-                        <label for="proofimage2" style="color: #555;">Image:</label><br>
-                        <input type="file" id="proofimage2" name="proofimage2" onchange="previewImage(this, 'preview2');" accept="image/*" style="width: calc(100% - 22px); padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 16px;">
-                        <br>
-                        <img id="preview2" src="" alt="Image Preview" style="max-width: 100px; margin-top: 10px; display: none;">
+
+                    <!-- Video Preview (if needed) -->
+                    <div id="videoPreview" style="margin-bottom: 15px; display: none;">
+                        <video id="previewVideo" controls style="max-width: 100%; margin-top: 10px;"></video>
                     </div>
-                    
-                    <div style="margin-bottom: 15px;">
-                        <label for="proofimage3" style="color: #555;">Image:</label><br>
-                        <input type="file" id="proofimage3" name="proofimage3" onchange="previewImage(this, 'preview3');" accept="image/*" style="width: calc(100% - 22px); padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 16px;">
-                        <br>
-                        <img id="preview3" src="" alt="Image Preview" style="max-width: 100px; margin-top: 10px; display: none;">
-                    </div>
-                    
+
                     <div style="margin-bottom: 15px;">
                         <input type="submit" value="Submit" style="width: 100%; background-color: #d90429; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">
-                    </div>                              
+                    </div>
                 </div>
             </div>
         </form>
@@ -74,18 +66,23 @@
 
 
 <script>
-    function previewImage(input, previewId) {
-        var preview = document.getElementById(previewId);
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                preview.src = e.target.result;
-                preview.style.display = 'block';
-            }
-            reader.readAsDataURL(input.files[0]);
-        } else {
-            preview.src = "";
-            preview.style.display = null;
+   function previewVideo(input, previewId) {
+    var preview = document.getElementById(previewId);
+    var videoFile = input.files[0];
+    var validVideoTypes = ['video/mp4', 'video/webm', 'video/ogg']; // Add more video types if needed
+
+    if (videoFile && validVideoTypes.includes(videoFile.type)) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
         }
+        reader.readAsDataURL(videoFile);
+    } else {
+        preview.src = "";
+        preview.style.display = 'none';
+        alert("Please select a valid video file (MP4, WebM, OGG).");
     }
+}
+
 </script>
