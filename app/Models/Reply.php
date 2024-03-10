@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Message extends Model
+class Reply extends Model
 {
     use HasFactory;
 
-    protected $table = 'message'; 
+    protected $table = 'reply'; 
 
     protected $fillable = [
-        'user_id', 'vendor_id', 'message', 'status',  'service','video_proof'
+        'message_id', 'vendor_id', 'user_id', 'message',  'image'
     ];
 }
 

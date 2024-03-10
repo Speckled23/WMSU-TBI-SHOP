@@ -11,12 +11,44 @@ use App\Models\OrderStatus;
 use App\Models\OrderItemStatus;
 use App\Models\OrdersLog;
 use App\Models\User;
+use App\Models\Message;
+use App\Models\Reply;
 use Session;
 use Auth;
 use Dompdf\Dompdf;
 
 class OrderController extends Controller
 {
+
+   /*  public function inbox(){
+        Session::put('page','RRinbox');
+
+        return view('admin.inbox.inbox');
+    } */
+    
+    public function inbox(Request $request){
+        Session::put('page', 'inbox'); // Set the page session variable to 'inbox'
+        
+        try {
+            $vendor_id = Auth::guard('admin')->user()->vendor_id; 
+            $tickets = Message::where('vendor_id', $vendor_id)->get()->toArray();
+         /*    dd($tickets); */
+            return view('admin.inbox.inbox')->with(compact('tickets')); // Return the inbox view
+        } catch (\Exception $e) {
+            // Log the error or handle it accordingly
+            return $e->getMessage();
+        }
+    }
+    
+        public function reply(Request $request, $ticket_id){
+
+            $ticket = Reply::findOrFail($ticket_id);
+            dd($ticket);
+
+            return view('admin.inbox.reply')->with(compact('ticket'));   
+        }
+    
+    
 
     public function orders(){
         Session::put('page','orders');

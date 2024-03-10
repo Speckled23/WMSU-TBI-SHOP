@@ -8,8 +8,8 @@
                     <div class="card-body">
                         <h4 class="card-title">Orders</h4>
                         <a href="javascript:history.back()" class="back-link">
-    <i class="fas fa-arrow-left"></i> Back
-</a>
+                            <i class="fas fa-arrow-left"></i> Back
+                        </a>
 
                         <!-- <p class="card-description">
                             Add class <code>.table-bordered</code>

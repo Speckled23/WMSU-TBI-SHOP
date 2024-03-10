@@ -153,10 +153,17 @@ $page_url = Request::url();
                             <li>
                                 <a id="mini-cart-trigger">
                                     <i class="ion ion-md-basket"></i>
-                                    <span class="item-counter totalCartItems">{{ $totalCartItems }}</span>
+                                    <span class="item-counter">{{ $totalCartItems }}</span>
                                     <!-- <span class="item-price">$220.00</span> -->
                                 </a>
                             </li>
+                            @if(Auth::check())
+                            <li class="u-d-none-lg">
+                                <a href="{{ url('orders/inbox')}}">
+                                    <i class="far fa-envelope"></i>
+                                </a>
+                            </li>
+                            @endif
                         </ul>
                     </nav>
                 </div>

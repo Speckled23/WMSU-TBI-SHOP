@@ -185,6 +185,11 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::get('orders/{id}','OrderController@orderDetails');
         Route::post('update-order-status','OrderController@updateOrderStatus');
         Route::post('update-order-item-status','OrderController@updateOrderItemStatus');
+        Route::get('inbox', 'OrderController@inbox');
+
+        //reply
+        Route::get('reply/{ticket_id}', 'OrderController@reply')->name('reply_ticket');
+
 
         // Order Invoices
         Route::get('orders/invoice/{id}','OrderController@viewOrderInvoice');
@@ -321,8 +326,10 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
         Route::match(['get','post'],'cancel-order/{product_id?}','OrderController@cancelOrder');//cancel order
         Route::get('replace-order/{product_id?}', 'OrderController@replaceProduct');//replace form
         Route::post('replace-order/RRlist', 'OrderController@returnQry');
+        Route::get('/Inbox', 'OrderController@Inbox')->name('inbox_page');
 
         //Message
+        Route::any('orders/inbox', 'OrderController@view_inbox');
         Route::get('message/message', 'OrderController@message');
 
 

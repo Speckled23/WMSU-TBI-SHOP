@@ -10,12 +10,27 @@
                 </li>
                 <li class="is-marked">
                     <a href="#">Messages</a>
-                </li>
+                </li> 
             </ul>
         </div>
     </div>
 </div>
 
-
+<!-- Message form -->
+    <div class="container">
+        <div class="border border-dark-light m-3 p-3 rounded">
+            <div class="chat">
+                <div class="message">Hi there!</div>
+                <div class="message me">Hello!</div>
+                <div class="message">How are you?</div>
+                <div class="message me">I'm doing great, thanks!</div>
+            </div>
+            <div class="input-group mt-3">
+                <input type="text" class="form-control" placeholder="Type your message...">
+                <button class="btn btn-primary">Send</button>
+            </div>
+        </div>
+    </div>
+<!-- Message form -->
 
 @endsection

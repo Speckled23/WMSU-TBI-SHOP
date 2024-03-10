@@ -22,15 +22,14 @@
 </div>
 
 <div class="container">
-    <div class="m-8 p-8">
-        asdadfs
-    </div>
+   
     <div class="border border-dark-light m-3 p-3 rounded">
     <form action="{{ url('replace-order/RRlist')}}" method="post" enctype="multipart/form-data">
-        
-        
+    
+        <input type="hidden" name="product_id" value="{{$item_details->product_id}}">
         <input type="hidden" name="seller_id" value="{{$item_details->vendor_id}}">
         <input type="hidden" name="customer_id" value="{{$item_details->user_id}}">
+        
         @csrf
             <div class="row">
                 <div class="col-md-6">
@@ -40,8 +39,15 @@
                 </div>
 
                 <div class="col-md-6">
-                    <div class="">
+                    <div>
                         <h5 class="text-center">Video Proof</h5>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label style="color: #555;">Select Option:</label><br>
+                        <input type="radio" id="replace" name="option" value="replace">
+                        <label for="replace">Replace</label><br>
+                        <input type="radio" id="refund" name="option" value="refund">
+                        <label for="refund">Refund</label><br>
                     </div>
                     <!-- Video Input -->
                     <div style="margin-bottom: 15px;">

@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
         @if(Auth::guard('admin')->user()->type=="vendor")
@@ -44,6 +45,12 @@
                     <li class="nav-item"> <a @if(Session::get('page')=="orders") style="background:#4B49AC !important; color: #fff !important;" @else style="background:#fff !important; color: #4B49AC !important;" @endif class="nav-link" href="{{ url('admin/orders') }}">Orders</a></li>   
                 </ul>
             </div> -->
+        </li>
+        <li class="nav-item">
+            <a @if(Session::get('page')=="inbox") style="background:#4B49AC !important; color: #fff !important;" @endif class="nav-link" href="{{ url('admin/inbox') }}">
+            <i class="fas fa-envelope menu-icon"></i>
+            <span class="menu-title">Inbox</span>
+            </a>
         </li>
         @else
         <li class="nav-item">
