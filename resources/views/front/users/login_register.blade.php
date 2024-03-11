@@ -117,7 +117,7 @@
                                 <p id="login-email"></p>
                             </div>
                             <div class="u-s-m-b-30">
-                                <label for="user-   word">Password
+                                <label for="user-password">Password
                                     <span class="astk">*</span>
                                 </label>
                                 <input type="password" name="password" id="users-password" class="text-field" placeholder="Password">
@@ -217,21 +217,21 @@
                                     <p id="register-mobile"></p>
                                 </div>
                                 <div class="u-s-m-b-30">
-                                    <label for="useremail">Email
+                                    <label for="user-email">Email
                                         <span class="astk">*</span>
                                     </label>
                                     <input type="email" id="user-email" name="email" class="text-field" placeholder="Customer Email">
                                     <p id="register-email"></p>
                                 </div>
                                 <div class="u-s-m-b-30">
-                                    <label for="userpassword">Password
+                                    <label for="user-password">Password
                                         <span class="astk">*</span>
                                     </label>
                                     <input type="password" id="user-password" name="password" class="text-field" placeholder="Customer Password">
                                     <p id="register-password"></p>
                                 </div>
                                 <div class="u-s-m-b-30">
-                                    <label for="userpassword">Confirm Password
+                                    <label for="user-password-confirm">Confirm Password
                                         <span class="astk">*</span>
                                     </label>
                                     <input type="password" id="user-password-confirm" name="password_confirmation" class="text-field" placeholder="Confirm Password">
