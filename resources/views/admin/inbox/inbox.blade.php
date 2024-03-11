@@ -44,8 +44,18 @@
                                 <tbody>
                                     @foreach($tickets as $ticket)
                                     <tr>
-                                        <td>{{$ticket['user_id']}}</td>
-                                        <td>{{$ticket['orders_products_id']}}</td>
+                                        <td>
+                                                    @php 
+                                                        $client_name = \App\Models\User::where('id', $ticket['user_id'])->first();
+                                                    @endphp
+                                                    {{ $client_name->name }}
+                                        </td>
+                                        <td>
+                                                    @php 
+                                                        $product_name = \App\Models\Product::where('id', $ticket['orders_products_id'])->first();
+                                                    @endphp
+                                                    {{ $product_name->product_name }}
+                                        </td>
                                         <td>{{$ticket['message']}}</td>
                                         <td>{{$ticket['service']}}</td>
                                         <td><a href="{{ $ticket['video_proof'] }}" target="_blank">Watch Video</a></td>
