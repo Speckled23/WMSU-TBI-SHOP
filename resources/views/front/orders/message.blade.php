@@ -25,7 +25,9 @@
                 <thead>
                     <tr>
                             <td style="width: 5px;">
-                                <span style="color: #333; font-weight: bold;">{{$message->vendor_id}}:</span>
+                                <span style="color: #333; font-weight: bold;">   @if ($message->user_id == Auth::id())
+                                        You:
+                                        @endif</span>
                             </td>
                             <td>
                                 {{$message->message}}
@@ -40,7 +42,11 @@
                                     @if ($row->sender_id == Auth::id())
                                         You:
                                     @else
-                                        {{ $row->receiver_id}}:
+                                        @php 
+                                            $user_name = \App\Models\Vendor::where('id', $row->sender_id)->first();
+                                            
+                                        @endphp
+                                        {{ $user_name->name }}:
                                     @endif
                                     </span>
                             </td>
