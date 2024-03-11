@@ -7,10 +7,106 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Users</h4>
-                        <a href="javascript:history.back()" class="back-link">
-    <i class="fas fa-arrow-left"></i> Back
-</a>
-
+                        <div class='row d-flex justify-content-between'>
+                            <a href="javascript:history.back()" class="back-link mx-3 me-auto align-items-center">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </a>
+                            <div class="col-4 d-flex justify-content-end">
+                                <button class="btn btn-success mx-3" data-toggle="modal" data-target="#downloadProductModal">Download</button>
+                            </div>
+                            <div class="modal fade" id="downloadProductModal" tabindex="-1" role="dialog" aria-labelledby="downloadProductModalLabel" aria-hidden="true" wire:ignore.self>
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="downloadProductModalLabel">Download</h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h6 class=" mt-3" >
+                                                EXPORT TYPE
+                                            </h6>
+                                            <select class="form-control" id="export-type" required aria-label="Default select example">
+                                                <option selected value="EXCEL">EXCEL</option>
+                                                <option value="CSV">CSV</option>
+                                                <option value="PDF">PDF</option>
+                                            </select>
+                                            <?php $rows = [
+                                                ['table_name'=>'ID','column_name'=>'id'],
+                                                ['table_name'=>'Name','column_name'=>'name'],
+                                                // ['table_name'=>'Address','column_name'=>'address'],
+                                                ['table_name'=>'City','column_name'=>'city'],
+                                                ['table_name'=>'Barangay','column_name'=>'barangay'],
+                                                ['table_name'=>'Country','column_name'=>'country'],
+                                                ['table_name'=>'Pincode','column_name'=>'pincode'],
+                                                ['table_name'=>'Mobile','column_name'=>'mobile'],
+                                                ['table_name'=>'Email','column_name'=>'email'],
+                                                ['table_name'=>'Verified-At','column_name'=>'email_verified_at'],
+                                                ['table_name'=>'Status','column_name'=>'status']
+                                           
+                                                ];
+                                            ?>
+                                            <h6 class=" mt-3" >
+                                                Columns
+                                            </h6>
+                                            <fieldset id="checkArray" class="mt-2">
+                                            @foreach($rows as $key => $value)
+                                                <div class="form-group">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" checked type="checkbox" id="row-{{$value['table_name']}}" value="{{$value['table_name']}}">
+                                                        <label class="form-check-label"  for="gridCheck">
+                                                            {{$value['table_name']}}
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                @endforeach
+                                            </fieldset>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button"  class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-success " id="downloadSeller">Download</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+                            <script>
+                                var rows = [
+                                @foreach($rows as $key => $value)
+                                    @if($loop->last)
+                                        '{{$value['column_name']}}'
+                                    @else
+                                        '{{$value['column_name']}}',
+                                    @endif
+                                @endforeach
+                                ];
+                                var column_names = [
+                                @foreach($rows as $key => $value)
+                                    @if($loop->last)
+                                        '{{$value['table_name']}}'
+                                    @else
+                                        '{{$value['table_name']}}',
+                                    @endif
+                                @endforeach
+                                ];
+                                var export_type;
+                                var columns = [];
+                                $('#downloadSeller').click(function(e){
+                                    export_type = $('#export-type').val();
+                                    columns = [];
+                                    temp_column_names = [];
+                                    for (let index = 0; index < column_names.length; index++) {
+                                        const element = column_names[index];
+                                        if($('#row-'+element).is(':checked')){
+                                            columns.push(rows[index]);
+                                            temp_column_names.push(column_names[index]);
+                                        }
+                                    }
+                                    var encoded_columns = encodeURIComponent(JSON.stringify(columns));
+                                    var encoded_column_names = encodeURIComponent(JSON.stringify(temp_column_names));
+                                    e.preventDefault(); 
+                                    window.location.href = '/admin/ExportCustomers/'+export_type+'/'+encoded_columns+'/'+encoded_column_names;
+                                 });
+                            </script>
+                        </div>
                         <!-- <p class="card-description">
                             Add class <code>.table-bordered</code>
                         </p> -->

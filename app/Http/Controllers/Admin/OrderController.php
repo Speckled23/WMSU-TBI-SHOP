@@ -80,7 +80,7 @@ class OrderController extends Controller
             $orders = Order::with('orders_products')->orderBy('id','Desc')->get()->toArray();    
         }
         
-        /*dd($orders);*/
+        // dd($orders);
         return view('admin.orders.orders')->with(compact('orders'));
     }
 

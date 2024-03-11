@@ -80,10 +80,10 @@ var TopSellingProducts = document.getElementById('topselling');
 var TopSellingProductsVar;
 function rendervendorTop() {
   var year = $('#TopSellingProducts').val()
+  var paid = $('#vendorTopPaid').is(":checked")
   var data = [];
   var labels = [];
   var color = []
-  var paid = $('#vendorTopPaid').is(":checked")
   const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
   $.ajax({url: 'dashboard-vendortopSellingProducts/'+year+'/'+paid, 
     success: function(result){

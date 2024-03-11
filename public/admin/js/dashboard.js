@@ -47,7 +47,7 @@ renderSales()
 var TopProducts = document.getElementById('topProdChart');  
 var TopProductsVar ;
 function renderTopProducts(){
-  console.log($('#TopProductspaid').is(":checked"));
+  // console.log($('#TopProductspaid').is(":checked"));
   var year = $('#topProducts').val()
   var paid = $('#TopProductspaid').is(":checked")
   var limit = $('#topProductLimit').val()
@@ -57,7 +57,7 @@ function renderTopProducts(){
   const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
   $.ajax({url: 'dashboard-admintopProducts/'+year+'/'+paid+'/'+limit, 
     success: function(result){
-      console.log(result);
+      // console.log(result);
       result.forEach(element  => {
         labels.push(element.product_name+' ('+element.total_product_sales+')')
         data.push(element.total_product_sales)
@@ -275,7 +275,7 @@ function DrillAnalyticsRevenueChangeYear(){
   var vendor = $('#DrillAnalyticsRevenueVendor').val('All');
   $.ajax({url: 'dashboard-getVendorDetails/'+year,
     success: function(result){
-    console.log(result)
+    // console.log(result)
     $('#DrillAnalyticsRevenueVendor').html('<option value="All">All Vendor</option>')
     result.forEach(element  => {
       $('#DrillAnalyticsRevenueVendor').append('<option value="'+element.id+'">'+element.name+'</option>')
@@ -292,7 +292,7 @@ function renderDrillAnalyticsRevenue(){
   var year = $('#DrillAnalyticsRevenueYear').val()
   var vendor = $('#DrillAnalyticsRevenueVendor').val()
   var paid = $('#DrillAnalyticsRevenueVendorpaid').is(":checked")
-  console.log(vendor);
+  // console.log(vendor);
   const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
   $.ajax({url: 'dashboard-drillAnalyticsRevenue/'+year+'/'+vendor+'/'+paid, 
     success: function(result){
