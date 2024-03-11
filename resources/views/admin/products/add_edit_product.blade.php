@@ -126,7 +126,7 @@
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="product_image">Product 1Image (Recommend Size: 1000x1000)</label>
+                          <label for="product_image">Product Image (Recommend Size: 1000x1000)</label>
                           <input type="file" class="form-control" id="product_image" name="product_image">
                           @if(!empty($product['product_image']))
                             <a target="_blank" href="{{ url('front/images/product_images/large/'.$product['product_image']) }}">View Image</a>&nbsp;|&nbsp;

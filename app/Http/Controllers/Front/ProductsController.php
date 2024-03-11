@@ -355,7 +355,7 @@ class ProductsController extends Controller
             /*echo "<pre>"; print_r($data); die;*/
             $getDiscountAttributePrice = Product::getDiscountAttributePrice($data['product_id'],$data['size']);
             /*echo "<pre>"; print_r($getDiscountAttributePrice); die;*/
-            echo "<pre>"; print_r($getDiscountAttributePrice); die;
+            // echo "<pre>"; print_r($getDiscountAttributePrice); die;
             if($data['currency']!="PHP"){
                 $getCurrency = Currency::where('currency_code',$data['currency'])->first()->toArray();
                 $getDiscountAttributePrice['product_price'] =  round($getDiscountAttributePrice['product_price']/$getCurrency['exchange_rate'],2);

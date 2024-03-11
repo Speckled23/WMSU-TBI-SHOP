@@ -211,18 +211,22 @@
                                         <div class="col-md-6">
                                             <div class="u-s-m-b-30">
                                                 <label for="shop_gov_id">Government Issued ID</label>
+                                                    <span class="astk">*</span>
                                                 <input type="file" class="form-control" id="shop_gov_id" name="shop_gov_id">
                                             </div>
                                             <div class="u-s-m-b-30">
                                                 <label for="shop_permit_id">Business Permit</label>
+                                                    <span class="astk">*</span>
                                                 <input type="file" class="form-control" id="shop_permit_id" name="shop_permit_id">
                                             </div>
                                             <div class="u-s-m-b-30">
-                                                <label for="shop_bir_id">BIR</label>
+                                                <label for="shop_bir_id">BIR Permit</label>
+                                                    <span class="astk">*</span>
                                                 <input type="file" class="form-control" id="shop_bir_id" name="shop_bir_id">
                                             </div>
                                             <div class="u-s-m-b-30">
-                                                <label for="shop_dti_id">DTI</label>
+                                                <label for="shop_dti_id">DTI Permit</label>
+                                                    <span class="astk">*</span>
                                                 <input type="file" class="form-control" id="shop_dti_id" name="shop_dti_id">
                                             </div>
                                         </div>

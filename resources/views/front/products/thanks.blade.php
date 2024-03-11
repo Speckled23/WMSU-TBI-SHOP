@@ -29,7 +29,7 @@ use App\Models\Currency;
                 <h3>YOUR ORDER HAS BEEN PLACED SUCCESSFULLY</h3>
                 <p>
                     Your order number is {{ Session::get('order_id') }} and Grand total is
-                    @if(isset($_GET['cy'])&&$_GET['cy']!="PHP ")
+                    @if(isset($_GET['cy'])&&$_GET['cy']!="PHP")
                         @php 
                             $getCurrency = Currency::where('currency_code',$_GET['cy'])->first()->toArray();
                         @endphp
