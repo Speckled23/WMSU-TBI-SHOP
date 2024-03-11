@@ -12,7 +12,7 @@ class Reply extends Model
     protected $table = 'reply'; 
 
     protected $fillable = [
-        'message_id', 'vendor_id', 'user_id', 'message',  'image'
+        'message_id', 'sender_id', 'receiver_id', 'message',  'image'
     ];
 }
 

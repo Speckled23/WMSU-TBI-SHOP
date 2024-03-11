@@ -40,15 +40,27 @@ class OrderController extends Controller
         }
     }
     
-        public function reply(Request $request, $ticket_id){
+        public function reply($messageid){
 
-            $ticket = Reply::findOrFail($ticket_id);
-            dd($ticket);
+            $message = Message::where('id', $messageid)->first();
+            $replies = Reply::where('message_id', $messageid)->get();
 
-            return view('admin.inbox.reply')->with(compact('ticket'));   
+            return view('admin.inbox.reply', compact('message', 'replies'));   
+        }
+
+        public function Replied(Request $request){
+            /* dd($request->all()); */
+            Reply::create([
+                'sender_id' => Auth::guard('admin')->user()->vendor_id,
+                'receiver_id' => $request->receiver_id,
+                'message_id' => $request->message_id,
+                'message' => $request->message,
+            ]);
+
+            return redirect()->back();
         }
     
-    
+        
 
     public function orders(){
         Session::put('page','orders');

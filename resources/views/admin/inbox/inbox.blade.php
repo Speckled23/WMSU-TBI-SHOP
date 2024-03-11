@@ -52,7 +52,7 @@
                                         <td>{{$ticket['status']}}</td>
                                         <td>{{$ticket['created_at']}}</td>
                                         <td>
-                                        <a href="{{ route('reply_ticket',['ticket_id' => $ticket['id']]) }}" class="btn btn-primary">Reply</a>
+                                        <a href="{{ url('admin/reply/'. $ticket['id'])}}" class="btn btn-primary">Reply</a>
                                         </td>
                                     </tr>
                                     @endforeach

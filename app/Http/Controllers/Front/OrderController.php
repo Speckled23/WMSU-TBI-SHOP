@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrdersPruse;
 use App\Models\Message;
+use App\Models\Reply;
 use Validator;
 use Illuminate\Support\Facades\DB;
 use Auth;
@@ -147,10 +148,26 @@ class OrderController extends Controller
         }
 
 
-        public function message(){
-
-            return view('front.orders.message');
+        public function message($messagelist){
+            
+            $message = Message::where('id', $messagelist)->first();
+            $replies = Reply::where('message_id', $messagelist)->get();
+            /* dd($message); */ 
+            return view('front.orders.message',compact('message', 'replies'));
         }
-     
+
+        public function messageReply(Request $request){
+            /* dd($request->all()); */
+
+            Reply::create([
+                'sender_id' => $request->user_id,
+                'receiver_id' => $request->vendor_id,
+                'message_id' => $request->message_id,
+                'message' => $request->message,
+            ]);
+
+            return redirect()->back();
+        }
+        
     
 }

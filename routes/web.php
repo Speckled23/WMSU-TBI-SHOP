@@ -188,8 +188,8 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::get('inbox', 'OrderController@inbox');
 
         //reply
-        Route::get('reply/{ticket_id}', 'OrderController@reply')->name('reply_ticket');
-
+        Route::get('reply/{messageid}', 'OrderController@reply');
+        Route::post('reply/submit', 'OrderController@Replied')->name('reply.submit');
 
         // Order Invoices
         Route::get('orders/invoice/{id}','OrderController@viewOrderInvoice');
@@ -330,7 +330,8 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
 
         //Message
         Route::any('orders/inbox', 'OrderController@view_inbox');
-        Route::get('message/message', 'OrderController@message');
+        Route::get('message/message/{messagelist}', 'OrderController@message');
+        Route::post('message/message/submit', 'OrderController@messageReply')->name('message.submit');
 
 
         // Paypal Routes

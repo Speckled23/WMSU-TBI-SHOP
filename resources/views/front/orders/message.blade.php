@@ -17,19 +17,57 @@
 </div>
 
 <!-- Message form -->
-    <div class="container">
-        <div class="border border-dark-light m-3 p-3 rounded">
-            <div class="chat">
-                <div class="message">Hi there!</div>
-                <div class="message me">Hello!</div>
-                <div class="message">How are you?</div>
-                <div class="message me">I'm doing great, thanks!</div>
-            </div>
-            <div class="input-group mt-3">
-                <input type="text" class="form-control" placeholder="Type your message...">
-                <button class="btn btn-primary">Send</button>
-            </div>
+<div class="container">
+    <div class="border border-dark-light m-3 p-3 rounded">
+        <div class="border border-dark m-3 p-3 rounded">
+            <table class="table">
+                <tbody>
+                <thead>
+                    <tr>
+                            <td style="width: 5px;">
+                                <span style="color: #333; font-weight: bold;">{{$message->vendor_id}}:</span>
+                            </td>
+                            <td>
+                                {{$message->message}}
+                            </td>
+                        </tr>
+                </thead>
+                <tbody>
+                    @foreach($replies as $row)
+                        <tr>
+                            <td style="widthL 5px;">
+                                    <span style="color: #333; font-weight: bold;">
+                                    @if ($row->sender_id == Auth::id())
+                                        You:
+                                    @else
+                                        {{ $row->receiver_id}}:
+                                    @endif
+                                    </span>
+                            </td>
+                            <td>
+                                {{ $row->message }}
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+                </tbody>
+            </table>
         </div>
+        <div class=" m-3 p-3">
+            <form action="{{ route('message.submit') }}" method="POST">
+                @csrf
+                <input type="hidden" name="message_id" value="{{ $message->id }}" hidden>
+                <input type="hidden" name="vendor_id" value="{{ $message->vendor_id }}" hidden>
+                <input type="hidden" name="user_id" value="{{ Auth::id() }}" hidden>
+                <input type="text" name="message" class="form-control" placeholder="Type your message...">
+                <div class="input-group-append m-3 p-3 justify-content-end">
+                <button class="btn btn-primary" type="submit">Send</button>    
+            </form>
+        </div>
+    </div>
+</div>
+
+
     </div>
 <!-- Message form -->
 
