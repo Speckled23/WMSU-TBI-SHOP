@@ -7,9 +7,6 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Orders</h4>
-                        <a href="javascript:history.back()" class="back-link">
-                            <i class="fas fa-arrow-left"></i> Back
-                        </a>
                       
                         <div class='row d-flex justify-content-between'>
                             <a href="javascript:history.back()" class="back-link mx-3">
