@@ -16,7 +16,12 @@
                                    <thead>
                                    <tr>
                                         <td style="widthL 5px;">
-                                                <span style="color: #333; font-weight: bold;"> concern:  </span>
+                                                <span style="color: #333; font-weight: bold;">
+                                                     @php 
+                                                        $client_name = \App\Models\User::where('id', $message->user_id)->first();
+                                                    @endphp
+                                                    {{ $client_name->name }}:
+                                        </span>
                                         </td>
                                         <td>
                                             {{ $message->message }}
@@ -32,7 +37,10 @@
                                                     @if ($row->sender_id == Auth::guard('admin')->user()->vendor_id)
                                                         You:
                                                     @else
-                                                        {{ $row->receiver_id}}:
+                                                    @php 
+                                                        $user_name = \App\Models\User::where('id', $row->sender_id)->first();
+                                                    @endphp
+                                                        {{ $user_name->name }}:
                                                     @endif
                                                     </span>
                                             </td>
