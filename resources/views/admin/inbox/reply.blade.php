@@ -58,6 +58,7 @@
                                     <form action="{{ route('reply.submit') }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="message_id" value="{{ $message->id }}" hidden>
+                                        <input type="hidden" name="message_status" value="Completed" hidden>
                                         <input type="hidden" name="receiver_id" value="{{ $message->user_id }}" hidden>
                                         <input type="text" name="message" id="message" class="form-control" placeholder="Type your message here...">
                                         <!-- <label class="input-group-text btn btn-primary" for="image">

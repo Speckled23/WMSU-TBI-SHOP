@@ -87,7 +87,7 @@
                 <tr><td>Pincode</td><td>{{ $orderDetails['pincode']}}</td></tr>
                 <tr><td>Mobile</td><td>{{ $orderDetails['mobile']}}</td></tr>
             </table>
-            <a style="max-width: 150px; float: right; display: inline-block; background-color: red; color: white;"  @if($orderDetails['order_status']!="Cancelled" ) href="{{ url('cancel-order/'.$orderDetails['id']) }}" id="cancel_product" @endif class="btn btn-block btn-primary">Cancel Order</a>
+            <a   @if($orderDetails['order_status']!="Cancelled" ) href="{{ url('cancel-order/'.$orderDetails['id']) }}" id="cancel_product" @endif class="btn btn-block btn-primary">Cancel Order</a>
 
         </div>
        

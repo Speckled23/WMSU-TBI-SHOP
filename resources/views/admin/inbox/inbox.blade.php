@@ -62,7 +62,11 @@
                                         <td>{{$ticket['status']}}</td>
                                         <td>{{$ticket['created_at']}}</td>
                                         <td>
-                                        <a href="{{ url('admin/reply/'. $ticket['id'])}}" class="btn btn-primary">Reply</a>
+                                       
+
+                                        <a  
+                                        @if($ticket['status']!="Delivered" ) href="{{ url('admin/reply/'.$ticket['id']) }}" @endif class="btn btn-block btn-primary">Reply</a>
+                                        
                                         </td>
                                     </tr>
                                     @endforeach

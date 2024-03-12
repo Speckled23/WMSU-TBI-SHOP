@@ -57,6 +57,13 @@ class OrderController extends Controller
                 'message' => $request->message,
             ]);
 
+            $messageId=$request->message_id;
+
+            $message = Message::find($messageId); // Replace $messageId with the ID of the message you want to update
+            $message->update([
+                'status' => $request->message_status
+            ]);
+
             return redirect()->back();
         }
     

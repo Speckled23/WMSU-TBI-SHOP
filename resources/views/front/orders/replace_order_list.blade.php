@@ -41,7 +41,7 @@
                     <td>{{$messagelist->status}}</td>
                     <td>{{$messagelist->created_at}}</td>
                     <td>
-                        <a href="{{ url('message/message/'. $messagelist->id) }}"><u>Message</u></a>
+                        <a @if($messagelist->status!="Delivered" ) href="{{ url('message/message/'. $messagelist->id) }}" @endif class="btn btn-block btn-primary">Message</a>
                     </td>
                 </tr>
                 @endforeach

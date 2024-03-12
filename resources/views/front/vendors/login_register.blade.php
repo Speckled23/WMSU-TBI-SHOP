@@ -293,17 +293,21 @@
         });
 
         function togglePasswordVisibility(passwordFieldId) {
-        var passwordField = document.getElementById(passwordFieldId);
-        var showCheckbox = document.getElementById('showPassword1');
-        if (passwordFieldId === 'vendorregpassword') {
-            showCheckbox = document.getElementById('showPassword2');
-        }
-        if (showCheckbox.checked) {
-            passwordField.type = "text";
-        } else {
-            passwordField.type = "password";
-        }
+    var passwordField = document.getElementById(passwordFieldId);
+    var showCheckbox;
+
+    if (passwordFieldId === 'password') {
+        showCheckbox = document.getElementById('showPassword2');
+    } else if (passwordFieldId === 'vendorpassword') {
+        showCheckbox = document.getElementById('showPassword1');
     }
+
+    if (showCheckbox.checked) {
+        passwordField.type = "text";
+    } else {
+        passwordField.type = "password";
+    }
+}
 
     //gets fullname for default shopname
     document.addEventListener("DOMContentLoaded", function() {
