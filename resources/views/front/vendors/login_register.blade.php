@@ -316,6 +316,8 @@
         var middleInitialInput = document.getElementById("middle_initial");
         var suffixInput = document.getElementById("suffix");
         var shopNameInput = document.getElementById("shopname");
+        var shopMobile = document.getElementById("mobile");
+        var shopContact = document.getElementById("vendorshopcontact");
 
         function updateShopName() {
             var firstName = firstNameInput.value.trim();
@@ -334,10 +336,17 @@
             shopNameInput.value = fullName;
         }
 
+        function shopCon(){
+            var con = shopMobile.value;
+            
+            shopContact.value = con;
+        }
+
         firstNameInput.addEventListener("input", updateShopName);
         lastNameInput.addEventListener("input", updateShopName);
         middleInitialInput.addEventListener("input", updateShopName);
         suffixInput.addEventListener("input", updateShopName);
+        shopMobile.addEventListener("input", shopCon);
     });
 </script>
 
