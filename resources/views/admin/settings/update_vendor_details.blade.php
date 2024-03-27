@@ -50,7 +50,7 @@
                       </button>
                     </div>
                     @endif
-                    
+                    <!-- Edit Vendor Details -->
                     <form class="forms-sample" action="{{ url('admin/update-vendor-details/personal') }}" method="post" enctype="multipart/form-data">@csrf
                       <div class="row">
                         <div class="col-lg-6">

@@ -49,7 +49,7 @@
                     </button>
                   </div>
                   @endif
-                  
+                   <!-- Delivery Details -->
                   <form class="forms-sample" action="{{ url('admin/edit-shipping-charges/'.$shippingDetails['id']) }}" method="post">@csrf
                     <div class="form-group">
                       <label for="country">Barangay</label>

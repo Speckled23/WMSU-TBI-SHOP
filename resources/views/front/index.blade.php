@@ -52,6 +52,7 @@
                <a class="nav-link" data-toggle="tab" href="#men-featured-products">Featured Products</a>
             </li>
          </ul>
+         <!-- Product -->
       </div>
       <div class="wrapper-content">
          <div class="outer-area-tab">
@@ -299,6 +300,7 @@
                      </div>
                   </div>
                </div>
+               
                <div class="tab-pane fade" id="men-featured-products">
                   <div class="slider-fouc">
                      <div class="products-slider owl-carousel" data-item="4">

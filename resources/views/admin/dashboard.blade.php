@@ -1,5 +1,6 @@
 @extends('admin.layout.layout')
 @section('content')
+
 <div class="main-panel">
     <div class="content-wrapper">
         <div class="row">
@@ -13,6 +14,7 @@
                 </div>
             </div>
         </div>
+            <!-- Dashboard -->
         <div class="row">
             <div class="col-md-6 grid-margin transparent">  
                 <div class="row">
@@ -85,7 +87,7 @@
                 </div>
             </div>
         </div>
-        <!-- K -->
+          
         <div style="padding: 30px; color: black; position: static; left: 100px; top: 0;">
             <div>
                 <div>
@@ -111,6 +113,7 @@
             </div>
         </div>
         <!-- K -->
+                <!-- Data Analytics -->
         <div class = 'row'>
             <div class="col-md-6 grid-margin stretch-card">
                 <div class="card">

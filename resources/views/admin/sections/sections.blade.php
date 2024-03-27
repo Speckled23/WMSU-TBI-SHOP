@@ -41,6 +41,7 @@
                                         </th>
                                     </tr>
                                 </thead>
+                                    <!-- Section Details -->
                                 <tbody>
                                   @foreach($sections as $section)
                                     <tr>

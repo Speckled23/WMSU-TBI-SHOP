@@ -42,6 +42,7 @@
                                         </th>
                                     </tr>
                                 </thead>
+                                    <!-- Rating Details -->
                                 <tbody>
                                   @foreach($ratings as $rating)
                                     <tr>

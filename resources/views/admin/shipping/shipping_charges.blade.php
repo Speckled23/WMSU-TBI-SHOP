@@ -22,6 +22,7 @@
                             </button>
                           </div>
                         @endif
+                        <!-- Delivery Details -->
                         <div class="table-responsive pt-3">
                             <table id="shipping" class="table table-bordered">
                                 <thead>
